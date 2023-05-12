@@ -1,0 +1,51 @@
+header:
+    version: 8
+
+machine: mercury-aa1
+
+distro: nodistro
+
+target: core-image-minimal
+
+repos:
+
+    bitbake:
+        url: "https://git.openembedded.org/bitbake"
+        refspec: 2021-10.1-honister
+        layers:
+            .: excluded
+    
+    openembedded-core:
+        url: "https://git.openembedded.org/openembedded-core"
+        refspec: 2021-10.1-honister
+        layers:
+            meta:
+    
+    meta-intel-fpga:
+        url: "https://git.yoctoproject.org/meta-intel-fpga"
+        refspec: honister
+
+    meta-enclustra-socfpga:
+        layers:
+            meta-enclustra-socfpga:
+
+    meta-openembedded:
+        url: http://git.openembedded.org/meta-openembedded
+        refspec: c05ae80ba680887ac924c21536091be7a1173427
+        layers:
+            meta-oe:
+            meta-python:
+            meta-networking:
+
+local_conf_header:
+    arria10: |
+        PACKAGE_CLASSES ?= "package_ipk"
+        PATCHRESOLVE = "noop"
+        EXTRA_IMAGE_FEATURES:append = " ssh-server-dropbear"
+        EXTRA_IMAGE_FEATURES:append = " debug-tweaks"
+        require conf/distro/include/no-static-libs.inc
+        require conf/distro/include/yocto-uninative.inc
+        require conf/distro/include/security_flags.inc
+        INHERIT:append = " uninative"
+        DISTRO_FEATURES:append = " largefile systemd "
+        VIRTUAL-RUNTIME_init_manager = "systemd"

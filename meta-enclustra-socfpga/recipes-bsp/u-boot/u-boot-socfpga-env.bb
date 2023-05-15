@@ -1,0 +1,30 @@
+SUMMARY = "U-boot boot environment for Intel SoCFPGA devices"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
+
+FILESEXTRAPATHS:prepend := "${THISDIR}/env:"
+
+DEPENDS = "u-boot-mkenvimage-native"
+
+inherit deploy nopackages
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+SRC_URI:mercury-aa1 = "\
+	file://mercury-aa1-qspi_u-boot-env.txt \
+	"
+
+do_configure[noexec] = "1"
+do_install[noexec] = "1"
+
+do_compile:mercury-aa1() {
+	mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-aa1-qspi_u-boot-env.txt
+}
+
+do_deploy() {
+	install -d ${DEPLOYDIR}
+	install -m 0755 ${WORKDIR}/mercury-aa1-qspi_u-boot-env.txt ${DEPLOYDIR}/u-boot-env.txt
+	install -m 0644 ${WORKDIR}/uboot.env ${DEPLOYDIR}/u-boot-socfpga-${MACHINE}-${PV}-${PR}.env
+	ln -sf u-boot-socfpga-${MACHINE}-${PV}-${PR}.env ${DEPLOYDIR}/uboot.env
+}
+
+addtask do_deploy after do_compile before do_build

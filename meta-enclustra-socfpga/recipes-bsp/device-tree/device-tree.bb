@@ -14,18 +14,19 @@ KERNEL_INCLUDE = " \
 	${STAGING_KERNEL_DIR}/include/dt-bindings/interrupt-controller \
 	${STAGING_KERNEL_DIR}/include/dt-bindings/reset \
         "
+
 inherit devicetree
 
 PROVIDES = "virtual/dtb"
 
 COMPATIBLE_MACHINE = "(mercury-aa1)"
 
-SRC_URI:append:mercury-aa1 = "\
+SRC_URI = " \
 	file://mercury-aa1.dts \
 	"
 
 do_configure[depends] += "virtual/kernel:do_configure"
 
-do_configure:append:mercury-aa1() {
-
+do_deploy() {
+	install -Dm 0644 ${B}/mercury-aa1.dtb ${DEPLOYDIR}
 }

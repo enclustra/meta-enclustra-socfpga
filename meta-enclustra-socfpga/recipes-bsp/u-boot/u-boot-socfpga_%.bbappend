@@ -12,8 +12,8 @@ SRC_URI:append = " \
 	"
 
 do_compile:prepend:mercury-aa1() {
-	cp -r ${DEPLOY_DIR_IMAGE}/refdes_hps.xml ${S}/.
-	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/refdes_hps.xml ${S}/arch/arm/dts/socfpga_arria10_socdk_qspi_handoff.h
+	cp -r ${DEPLOY_DIR_IMAGE}/hps.xml ${S}/.
+	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_socdk_qspi_handoff.h
 }
 
 do_compile:append:mercury-aa1() {

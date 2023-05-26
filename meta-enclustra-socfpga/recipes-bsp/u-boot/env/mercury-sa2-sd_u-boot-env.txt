@@ -1,0 +1,14 @@
+RAM_ADDR_BITSTREAM=0x12000000
+RAM_ADDR_KERNEL=0x11000000
+RAM_ADDR_DEVICETREE=0x10000000
+RAM_ADDR_BOOT-SCRIPT=0x10800000
+
+loadaddr=0x01000000
+kernel_addr_r=0x01000000
+fdt_addr_r=0x02000000
+ramdisk_addr_r=0x02300000
+bootm_size=0x0a000000
+
+bootargs=earlycon console=ttyS0,115200 earlyprintk rw root=/dev/mmcblk0p2
+bootcmd=run sdboot
+sdboot=fatload mmc 0:1 ${RAM_ADDR_BOOT-SCRIPT} boot.scr; source ${RAM_ADDR_BOOT-SCRIPT}

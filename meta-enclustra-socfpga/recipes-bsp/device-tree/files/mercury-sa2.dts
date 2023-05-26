@@ -1,0 +1,22 @@
+#include "socfpga_cyclone5.dtsi"
+
+/ {
+	model = "Mercury+ SA2";
+	compatible = "altr,socfpga-cyclone5", "altr,socfpga";
+
+	chosen {
+		bootargs = "earlyprintk";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@0 {
+		name = "memory";
+		device_type = "memory";
+		reg = <0x0 0x80000000>; /* 2GB */
+	};
+};
+
+&mmc0 {
+	status = "okay";
+};
+

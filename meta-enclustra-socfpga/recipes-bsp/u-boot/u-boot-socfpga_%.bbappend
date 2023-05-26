@@ -2,18 +2,29 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 inherit deploy
 
+RDEPENDS_${PN} = "python"
+
 do_compile[deptask] = "do_deploy"
 
 SRC_URI:append = " \
 	file://mercury-aa1-qspi.dts \
 	file://mercury-aa1-qspi_defconfig \
+	file://mercury-sa2-sd.dts \
+	file://mercury-sa2-sd_defconfig \
 	file://fit_spl_fpga.its \
 	file://0001-Add-Enclustra-devicetree-to-Makefile.patch \
+	file://0002-Make-intel-scripts-python-3-compatible.patch \
 	"
 
 do_compile:prepend:mercury-aa1() {
 	cp -r ${DEPLOY_DIR_IMAGE}/hps.xml ${S}/.
 	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_socdk_qspi_handoff.h
+}
+
+do_compile:prepend:mercury-sa2() {
+	mkdir -p ${WORKDIR}/sa2-handoff/system_hps_0
+	cp -r ${DEPLOY_DIR_IMAGE}/sa2-handoff/system_hps_0/* ${WORKDIR}/sa2-handoff/system_hps_0/
+	${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/sa2-handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/
 }
 
 do_compile:append:mercury-aa1() {
@@ -34,6 +45,8 @@ do_deploy:append:mercury-aa1() {
 do_add_enclustra_files() {
 	cp ${WORKDIR}/mercury-aa1-qspi.dts ${S}/arch/arm/dts
 	cp ${WORKDIR}/mercury-aa1-qspi_defconfig ${S}/configs/
+	cp ${WORKDIR}/mercury-sa2-sd.dts ${S}/arch/arm/dts
+	cp ${WORKDIR}/mercury-sa2-sd_defconfig ${S}/configs/
 }
 
 addtask do_add_enclustra_files after do_patch before do_configure

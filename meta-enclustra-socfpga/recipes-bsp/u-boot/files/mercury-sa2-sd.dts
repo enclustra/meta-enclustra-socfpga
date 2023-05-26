@@ -1,0 +1,47 @@
+/dts-v1/;
+#include "socfpga_cyclone5.dtsi"
+#include "socfpga-common-u-boot.dtsi"
+
+/ {
+	model = "Enclustra Mercury+ SA2";
+	compatible = "altr,socfpga-cyclone5-socdk", "altr,socfpga-cyclone5", "altr,socfpga";
+
+	chosen {
+		bootargs = "earlyprintk";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		name = "memory";
+		device_type = "memory";
+		reg = <0x0 0x80000000>; /* 2GB */
+	};
+
+	soc {
+		clkmgr@ffd04000 {
+			clocks {
+				osc1 {
+					clock-frequency = <50000000>;
+				};
+			};
+		};
+	};
+};
+
+&mmc0 {
+	u-boot,dm-pre-reloc;
+	status = "okay";
+};
+
+&uart0 {
+	clock-frequency = <100000000>;
+	u-boot,dm-pre-reloc;
+};
+
+&l4_main_clk {
+	u-boot,dm-pre-reloc;
+};
+
+&watchdog0 {
+	status = "disabled";
+};

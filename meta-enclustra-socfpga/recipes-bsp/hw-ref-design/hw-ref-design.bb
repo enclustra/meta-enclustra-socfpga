@@ -1,7 +1,8 @@
 SUMMARY = "Exported reference design binaries"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-FILESEXTRAPATHS:prepend := "${THISDIR}/files/sa2-handoff/system_hps_0:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/mercury-aa1/:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/mercury-sa2/:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/mercury-sa2/handoff/:"
 
 inherit deploy
 

@@ -9,8 +9,9 @@ do_compile[deptask] = "do_deploy"
 SRC_URI:append = " \
 	file://mercury-aa1-qspi.dts \
 	file://mercury-aa1-qspi_defconfig \
-	file://mercury-sa2-sd.dts \
+	file://mercury-sa2.dts \
 	file://mercury-sa2-sd_defconfig \
+	file://mercury-sa2-qspi_defconfig \
 	file://fit_spl_fpga.its \
 	file://0001-Add-Enclustra-devicetree-to-Makefile.patch \
 	file://0002-Make-intel-scripts-python-3-compatible.patch \
@@ -45,8 +46,9 @@ do_deploy:append:mercury-aa1() {
 do_add_enclustra_files() {
 	cp ${WORKDIR}/mercury-aa1-qspi.dts ${S}/arch/arm/dts
 	cp ${WORKDIR}/mercury-aa1-qspi_defconfig ${S}/configs/
-	cp ${WORKDIR}/mercury-sa2-sd.dts ${S}/arch/arm/dts
+	cp ${WORKDIR}/mercury-sa2.dts ${S}/arch/arm/dts
 	cp ${WORKDIR}/mercury-sa2-sd_defconfig ${S}/configs/
+	cp ${WORKDIR}/mercury-sa2-qspi_defconfig ${S}/configs/
 }
 
 addtask do_add_enclustra_files after do_patch before do_configure

@@ -11,20 +11,23 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = "\
 	file://mercury-aa1-qspi_u-boot-env.txt \
-	file://mercury-sa2-sd_u-boot-env.txt \
+	file://mercury-sa2_u-boot-env.txt \
 	"
 
 do_configure[noexec] = "1"
 do_install[noexec] = "1"
 
-do_compile() {
+do_compile:mercury-aa1() {
 	mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-aa1-qspi_u-boot-env.txt
-	mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-sa2-sd_u-boot-env.txt
+}
+
+do_compile:mercury-sa2() {
+	mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-sa2_u-boot-env.txt
 }
 
 do_deploy(){
 	install -m 0644 ${WORKDIR}/uboot.env ${DEPLOYDIR}/u-boot-socfpga-${MACHINE}-${PV}-${PR}.env
-        ln -sf u-boot-socfpga-${MACHINE}-${PV}-${PR}.env ${DEPLOYDIR}/uboot.env
+	ln -sf u-boot-socfpga-${MACHINE}-${PV}-${PR}.env ${DEPLOYDIR}/uboot.env
 }
 
 do_deploy:prepend:mercury-aa1() {
@@ -33,8 +36,8 @@ do_deploy:prepend:mercury-aa1() {
 }
 
 do_deploy:prepend:mercury-sa2() {
-        install -d ${DEPLOYDIR}
-        install -m 0755 ${WORKDIR}/mercury-sa2-sd_u-boot-env.txt ${DEPLOYDIR}/u-boot-env.txt
+	install -d ${DEPLOYDIR}
+	install -m 0755 ${WORKDIR}/mercury-sa2_u-boot-env.txt ${DEPLOYDIR}/u-boot-env.txt
 }
 
 addtask do_deploy after do_compile before do_build

@@ -11,19 +11,19 @@ repos:
 
     bitbake:
         url: "https://git.openembedded.org/bitbake"
-        refspec: 2021-10.1-honister
+        refspec: 2022-10.4-langdale
         layers:
             .: excluded
     
     openembedded-core:
         url: "https://git.openembedded.org/openembedded-core"
-        refspec: 2021-10.1-honister
+        refspec: 2022-10.4-langdale
         layers:
             meta:
     
     meta-intel-fpga:
         url: "https://git.yoctoproject.org/meta-intel-fpga"
-        refspec: honister
+        refspec: langdale
 
     meta-enclustra-socfpga:
         layers:
@@ -31,7 +31,7 @@ repos:
 
     meta-openembedded:
         url: http://git.openembedded.org/meta-openembedded
-        refspec: c05ae80ba680887ac924c21536091be7a1173427
+        refspec: langdale
         layers:
             meta-oe:
             meta-python:

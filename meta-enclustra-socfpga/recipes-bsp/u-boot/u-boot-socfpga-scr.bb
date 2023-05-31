@@ -24,16 +24,10 @@ do_compile() {
 
 do_deploy() {
 	install -d ${DEPLOYDIR}
-}
-
-do_deploy:append:mercury-aa1() {
-	install -m 0755 ${WORKDIR}/u-boot-qspi.txt ${DEPLOYDIR}/u-boot.txt
-	install -m 0644 ${WORKDIR}/boot-qspi.scr ${DEPLOYDIR}/boot.scr
-}
-
-do_deploy:append:mercury-sa2() {
-        install -m 0755 ${WORKDIR}/u-boot-sd.txt ${DEPLOYDIR}/u-boot.txt
-        install -m 0644 ${WORKDIR}/boot-sd.scr ${DEPLOYDIR}/boot.scr
+	install -m 0755 ${WORKDIR}/u-boot-qspi.txt ${DEPLOYDIR}/u-boot-qspi.txt
+	install -m 0644 ${WORKDIR}/boot-qspi.scr ${DEPLOYDIR}/boot-qspi.scr
+	install -m 0755 ${WORKDIR}/u-boot-sd.txt ${DEPLOYDIR}/u-boot-sd.txt
+	install -m 0644 ${WORKDIR}/boot-sd.scr ${DEPLOYDIR}/boot-sd.scr
 }
 
 addtask do_deploy after do_compile before do_build

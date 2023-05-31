@@ -5,7 +5,7 @@ machine: mercury-sa2
 
 distro: nodistro
 
-target: core-image-minimal
+target: image-minimal-hwtest
 
 repos:
 

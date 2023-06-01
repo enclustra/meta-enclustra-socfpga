@@ -11,6 +11,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRC_URI = "\
 	file://mercury-aa1-qspi_u-boot-env.txt \
+	file://mercury-sa1_u-boot-env.txt \
 	file://mercury-sa2_u-boot-env.txt \
 	"
 
@@ -19,6 +20,10 @@ do_install[noexec] = "1"
 
 do_compile:mercury-aa1() {
 	mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-aa1-qspi_u-boot-env.txt
+}
+
+do_compile:mercury-sa1() {
+        mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-sa1_u-boot-env.txt
 }
 
 do_compile:mercury-sa2() {
@@ -33,6 +38,11 @@ do_deploy(){
 do_deploy:prepend:mercury-aa1() {
 	install -d ${DEPLOYDIR}
 	install -m 0755 ${WORKDIR}/mercury-aa1-qspi_u-boot-env.txt ${DEPLOYDIR}/u-boot-env.txt
+}
+
+do_deploy:prepend:mercury-sa1() {
+        install -d ${DEPLOYDIR}
+        install -m 0755 ${WORKDIR}/mercury-sa1_u-boot-env.txt ${DEPLOYDIR}/u-boot-env.txt
 }
 
 do_deploy:prepend:mercury-sa2() {

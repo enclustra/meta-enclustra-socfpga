@@ -19,16 +19,27 @@ inherit devicetree
 
 PROVIDES = "virtual/dtb"
 
-COMPATIBLE_MACHINE = "|mercury-aa1|mercury-sa2|"
+COMPATIBLE_MACHINE = "|mercury-aa1|mercury-sa1|mercury-sa2|"
 
 SRC_URI = " \
 	file://mercury-aa1.dts \
+	file://mercury-sa1.dts \
 	file://mercury-sa2.dts \
 	"
 
 do_configure[depends] += "virtual/kernel:do_configure"
 
 do_deploy() {
-	install -Dm 0644 ${B}/mercury-aa1.dtb ${DEPLOYDIR}
-	install -Dm 0644 ${B}/mercury-sa2.dtb ${DEPLOYDIR}
+}
+
+do_deploy:append:mercury-aa1() {
+	install -Dm 0644 ${B}/mercury-aa1.dtb ${DEPLOYDIR}/devicetree.dtb
+}
+
+do_deploy:append:mercury-sa1() {
+	install -Dm 0644 ${B}/mercury-sa1.dtb ${DEPLOYDIR}/devicetree.dtb
+}
+
+do_deploy:append:mercury-sa2() {
+	install -Dm 0644 ${B}/mercury-sa2.dtb ${DEPLOYDIR}/devicetree.dtb
 }

@@ -23,6 +23,6 @@ kernel_addr_r=0x01000000
 fdt_addr_r=0x02000000
 ramdisk_addr_r=0x02300000
 bootm_size=0x0a000000
-bootargs=earlycon console=ttyS0,115200 earlyprintk rw root=/dev/ram0
+bootargs=earlycon console=ttyS0,115200 rw root=/dev/ram0
 bootcmd=run qspiboot
 qspiboot=bridge enable LWHPS-to-FPGA; sf probe; sf read ${RAM_ADDR_BOOT-SCRIPT} ${QSPI_OFFSET_ADDR_BOOT-SCRIPT} ${SIZE_BOOT-SCRIPT}; source ${RAM_ADDR_BOOT-SCRIPT}

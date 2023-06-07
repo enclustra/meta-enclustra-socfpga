@@ -28,8 +28,8 @@ fdt_addr_r=0x02000000
 ramdisk_addr_r=0x02300000
 bootm_size=0x0a000000
 
-bootargs-sd=earlycon console=ttyS0,115200 earlyprintk rw root=/dev/mmcblk0p2
-bootargs-qspi=earlycon console=ttyS0,115200 earlyprintk rw root=/dev/ram0
+bootargs-sd=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2
+bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0
 mmcboot=setenv bootargs ${bootargs-sd}; fatload mmc 0:1 ${RAM_ADDR_BOOT-SCRIPT} boot-sd.scr; source ${RAM_ADDR_BOOT-SCRIPT}
 qspiboot=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${RAM_ADDR_BOOT-SCRIPT} ${QSPI_OFFSET_ADDR_BOOT-SCRIPT} ${SIZE_BOOT-SCRIPT}; source ${RAM_ADDR_BOOT-SCRIPT}
 bootcmd=if bootmode='sd'; then run mmcboot; else run qspiboot; fi

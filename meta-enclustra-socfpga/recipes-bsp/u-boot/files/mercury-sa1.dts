@@ -4,10 +4,9 @@
 
 / {
 	model = "Enclustra Mercury SA1";
-	compatible = "altr,socfpga-cyclone5-socdk", "altr,socfpga-cyclone5", "altr,socfpga";
+	compatible = "altr,socfpga-cyclone5", "altr,socfpga";
 
 	chosen {
-		bootargs = "earlyprintk";
 		stdout-path = "serial0:115200n8";
 	};
 
@@ -26,6 +25,19 @@
 			};
 		};
 	};
+};
+
+&l4_main_clk {
+        u-boot,dm-pre-reloc;
+};
+
+&watchdog0 {
+        status = "disabled";
+};
+
+&uart0 {
+        clock-frequency = <100000000>;
+        u-boot,dm-pre-reloc;
 };
 
 &mmc0 {
@@ -55,15 +67,46 @@
 	};
 };
 
-&uart0 {
-	clock-frequency = <100000000>;
-	u-boot,dm-pre-reloc;
+&i2c0 {
+	status = "okay";
 };
 
-&l4_main_clk {
-	u-boot,dm-pre-reloc;
+&gpio1 {
+	status = "okay";
 };
 
-&watchdog0 {
-	status = "disabled";
+&gmac1 {
+	status = "okay";
+	phy-mode = "rgmii";
+
+	rxd0-skew-ps = <420>;
+	rxd1-skew-ps = <420>;
+	rxd2-skew-ps = <420>;
+	rxd3-skew-ps = <420>;
+	rxdv-skew-ps = <420>;
+
+	txd0-skew-ps = <420>;
+	txd1-skew-ps = <420>;
+	txd2-skew-ps = <420>;
+	txd3-skew-ps = <420>;
+	txen-skew-ps = <420>;
+
+	rxc-skew-ps = <900>;
+	txc-skew-ps = <900>;
+
+        snps,reset-gpios = <&portb 15 1>;
+        snps,reset-active-low;
+        snps,reset-delays-us = <0 10000 100000>;
+
+	phy-handle = <&phy3>;
+
+	mdio0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "snps,dwmac-mdio";
+
+		phy3: ethernet-phy@3 {
+			reg = <3>;
+		};
+	};
 };

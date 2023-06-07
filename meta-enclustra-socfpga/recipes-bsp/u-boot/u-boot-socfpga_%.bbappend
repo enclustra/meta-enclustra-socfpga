@@ -7,7 +7,8 @@ RDEPENDS_${PN} = "python"
 do_compile[deptask] = "do_deploy"
 
 SRC_URI:append = " \
-	file://mercury-aa1-qspi.dts \
+	file://mercury-aa1.dts \
+	file://mercury-aa1-sd_defconfig \
 	file://mercury-aa1-qspi_defconfig \
 	file://mercury-sa1.dts \
 	file://mercury-sa1-sd_defconfig \
@@ -39,8 +40,12 @@ do_compile:prepend:mercury-sa2() {
 
 do_compile:append:mercury-aa1() {
 	cp -r ${DEPLOY_DIR_IMAGE}/fpga.rbf ${S}/.
-	cp ${B}/mercury-aa1-qspi_defconfig/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
-	cp ${B}/mercury-aa1-qspi_defconfig/u-boot.dtb ${S}/u-boot.dtb
+
+	for config in ${UBOOT_MACHINE}; do
+		cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
+		cp ${B}/${config}/u-boot.dtb ${S}/u-boot.dtb
+	done
+
 	cp ${WORKDIR}/fit_spl_fpga.its ${S}
 	mkimage -E -f ${S}/board/altera/arria10-socdk/fit_uboot.its ${B}/fit_uboot.itb
 	mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
@@ -53,7 +58,8 @@ do_deploy:append:mercury-aa1() {
 }
 
 do_add_enclustra_files() {
-	cp ${WORKDIR}/mercury-aa1-qspi.dts ${S}/arch/arm/dts
+	cp ${WORKDIR}/mercury-aa1.dts ${S}/arch/arm/dts
+	cp ${WORKDIR}/mercury-aa1-sd_defconfig ${S}/configs/
 	cp ${WORKDIR}/mercury-aa1-qspi_defconfig ${S}/configs/
 	cp ${WORKDIR}/mercury-sa1.dts ${S}/arch/arm/dts
 	cp ${WORKDIR}/mercury-sa1-sd_defconfig ${S}/configs/

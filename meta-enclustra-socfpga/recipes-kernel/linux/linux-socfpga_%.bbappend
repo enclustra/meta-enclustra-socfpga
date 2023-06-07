@@ -4,13 +4,13 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 unset KBUILD_DEFCONFIG
 
 SRC_URI:append = " \
-	file://mercury-aa1-qspi_defconfig \
+	file://mercury-aa1_defconfig \
 	file://mercury-sa1_defconfig \
 	file://mercury-sa2_defconfig \
 	"
 
 do_configure:prepend:mercury-aa1() {
-	cp ${WORKDIR}/mercury-aa1-qspi_defconfig ${S}/arch/arm/configs
+	cp ${WORKDIR}/mercury-aa1_defconfig ${S}/arch/arm/configs
 }
 
 do_configure:prepend:mercury-sa1() {

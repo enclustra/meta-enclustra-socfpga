@@ -10,7 +10,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Proprietary;md5=0557f9d92cf58f2
 
 SRC_URI:mercury-aa1 = "\
 	file://hps-aa1-qspi.xml \
+	file://hps-aa1-sd.xml \
 	file://fpga-aa1-qspi.rbf \
+	file://fpga-aa1-sd.rbf \
 	"
 
 SRC_URI:mercury-sa1 = "\
@@ -61,8 +63,15 @@ do_deploy() {
 }
 
 do_deploy:append:mercury-aa1() {
-	install -D -m 0644 ${WORKDIR}/hps-aa1-qspi.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-	install -D -m 0644 ${WORKDIR}/fpga-aa1-qspi.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+	if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-sd','true','false',d)}; then
+		install -D -m 0644 ${WORKDIR}/hps-aa1-sd.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+		install -D -m 0644 ${WORKDIR}/fpga-aa1-sd.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+	fi
+
+	if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-qspi','true','false',d)}; then
+		install -D -m 0644 ${WORKDIR}/hps-aa1-qspi.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+		install -D -m 0644 ${WORKDIR}/fpga-aa1-qspi.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+	fi
 }
 
 do_deploy:append:mercury-sa1() {

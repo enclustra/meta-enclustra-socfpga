@@ -38,6 +38,10 @@
 
 &mmc {
 	status = "okay";
+	broken-cd;
+	bus-width = <4>;
+	cap-sd-highspeed;
+	max-frequency = <24000000>;
 };
 
 &qspi {

@@ -2,7 +2,7 @@
   <system>
     <config name='VERSION' value='20.1' />
     <config name='DEVICE_FAMILY' value='Arria 10' />
-    <config name='TIME_AND_DATE' value='Wednesday June, 07, 2023 - 01:42:41 PM CEST' />
+    <config name='TIME_AND_DATE' value='Wednesday June, 07, 2023 - 06:22:22 PM CEST' />
     <config name='DMA_Enable' value='No No No No No No No No' />
     <config name='eosc1_clk_hz' value='33330000.0' />
     <config name='emac0_clk_hz' value='250000000' />
@@ -66,25 +66,48 @@
     <peripheral name='pll_clock_out' used='false' />
   </peripherals>
   <csr>
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_7.sel' value='0' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_6.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_7.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_5.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_8.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_4.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_9.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_3.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_10.sel' value='15' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_2.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_11.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_12.sel' value='10' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_13.sel' value='10' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_1.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_14.sel' value='10' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_12.sel' value='4' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_15.sel' value='10' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_11.sel' value='4' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_16.sel' value='13' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_10.sel' value='4' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_17.sel' value='13' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_8.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_9.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_7.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_6.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_5.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_4.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_3.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_2.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_1.sel' value='4' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_12.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_10.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_11.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_9.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_8.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_7.sel' value='8' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_6.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_5.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_4.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_3.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_2.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_1.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_4.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_5.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_6.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_7.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_8.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_9.sel' value='8' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_10.sel' value='15' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_11.sel' value='15' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_12.sel' value='10' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_14.sel' value='10' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_13.sel' value='10' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_15.sel' value='10' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_16.sel' value='13' />
-    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_17.sel' value='13' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_12.sel' value='15' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_11.sel' value='15' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_10.sel' value='3' />
@@ -92,42 +115,19 @@
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_8.sel' value='3' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_7.sel' value='3' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_6.sel' value='10' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_5.sel' value='10' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_4.sel' value='10' />
+    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_5.sel' value='10' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_3.sel' value='10' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_2.sel' value='10' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q4_1.sel' value='10' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_12.sel' value='1' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_11.sel' value='1' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_10.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_4.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_9.sel' value='15' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_5.sel' value='8' />
     <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_8.sel' value='0' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_7.sel' value='0' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_6.sel' value='15' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_5.sel' value='15' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_4.sel' value='15' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_4.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_2.sel' value='15' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_3.sel' value='15' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_3.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q3_1.sel' value='15' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_2.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_12.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_11.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_1.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_10.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_12.sel' value='8' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_9.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_11.sel' value='8' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_8.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_10.sel' value='8' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_7.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_9.sel' value='8' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_6.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_8.sel' value='8' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q2_5.sel' value='4' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_7.sel' value='8' />
-    <config name='i_io48_pin_mux_shared_3v_io_grp.pinmux_shared_io_q1_6.sel' value='8' />
+    <config name='i_io48_pin_mux_dedicated_io_grp.pinmux_dedicated_io_6.sel' value='8' />
     <config name='i_io48_pin_mux_fpga_interface_grp.pinmux_rgmii0_usefpga.sel' value='0' />
     <config name='i_io48_pin_mux_fpga_interface_grp.pinmux_rgmii1_usefpga.sel' value='0' />
     <config name='i_io48_pin_mux_fpga_interface_grp.pinmux_rgmii2_usefpga.sel' value='0' />
@@ -203,7 +203,7 @@
   </csr>
   <csr />
   <!-- This section was added by Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition -->
-  <!-- Generated on Wed Jun 07 13:44:58 2023 -->
+  <!-- Generated on Wed Jun 07 18:23:55 2023 -->
   <csr>
     <!-- OSC_CLK_1_HPS -->
     <config name='i_io48_pin_mux_dedicated_io_grp.configuration_dedicated_io_1.rtrim'        value='1' />

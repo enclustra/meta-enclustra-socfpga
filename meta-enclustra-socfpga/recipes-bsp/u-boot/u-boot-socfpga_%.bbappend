@@ -7,7 +7,8 @@ RDEPENDS_${PN} = "python"
 do_compile[deptask] = "do_deploy"
 
 SRC_URI:append = " \
-	file://mercury-aa1.dts \
+	file://mercury-aa1-sd.dts \
+	file://mercury-aa1-qspi.dts \
 	file://mercury-aa1-sd_defconfig \
 	file://mercury-aa1-qspi_defconfig \
 	file://mercury-sa1.dts \
@@ -23,7 +24,7 @@ SRC_URI:append = " \
 
 do_compile:prepend:mercury-aa1() {
 	cp -r ${DEPLOY_DIR_IMAGE}/hps.xml ${S}/.
-	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_socdk_qspi_handoff.h
+	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_handoff.h
 }
 
 do_compile:prepend:mercury-sa1() {
@@ -58,7 +59,8 @@ do_deploy:append:mercury-aa1() {
 }
 
 do_add_enclustra_files() {
-	cp ${WORKDIR}/mercury-aa1.dts ${S}/arch/arm/dts
+	cp ${WORKDIR}/mercury-aa1-sd.dts ${S}/arch/arm/dts
+	cp ${WORKDIR}/mercury-aa1-qspi.dts ${S}/arch/arm/dts
 	cp ${WORKDIR}/mercury-aa1-sd_defconfig ${S}/configs/
 	cp ${WORKDIR}/mercury-aa1-qspi_defconfig ${S}/configs/
 	cp ${WORKDIR}/mercury-sa1.dts ${S}/arch/arm/dts

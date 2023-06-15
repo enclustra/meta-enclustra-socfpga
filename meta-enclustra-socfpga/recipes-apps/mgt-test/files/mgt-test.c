@@ -4,10 +4,11 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <time.h>
 
 #define MGT_BASE    0xFF280000
 #define MGT_LEN     0x1000
-#define VERSION     "0.1"
+#define VERSION     "0.2"
 
 uint32_t* mem = NULL;
 off_t page_offset = 0;
@@ -49,6 +50,16 @@ int mem_init()
     return 0;
 }
 
+uint64_t get_time_ms()
+{
+    struct timespec time;
+    if (clock_gettime(CLOCK_REALTIME, &time))
+    {
+        return 0;
+    }
+    return (time.tv_sec * 1000) + (time.tv_nsec / 1000000);
+}
+
 int mgt_test()
 {
     printf("MGT test version %s\r\n", VERSION);
@@ -61,20 +72,23 @@ int mgt_test()
     mem_read(0x211 * 4);
     mem_read(0x212 * 4);
 
+    // Request bus access
+
+
     // Enable reset
     printf("Enable reset\r\n");
-    mem_write(0x2e2 * 4, 0xf0);
-    mem_write(0x2e2 * 4, 0xfa);
-    mem_write(0x2e2 * 4, 0xff);
+    mem_write(0x2e2 * 4, 0xf0); // get software control of reset
+    mem_write(0x2e2 * 4, 0xfa); // enable digital reset
+    mem_write(0x2e2 * 4, 0xff); // enable analog reset
 
-    // Enable PRBS generator
+    // Enable PRBS 31 generator in 64bit mode
     printf("Enable PRBS generator\r\n");
-    mem_modify(0x006 * 4, 0x4c, 0xcf);
+    mem_modify(0x006 * 4, 0x44, 0xcf);
     mem_modify(0x007 * 4, 0x00, 0xf0);
     mem_modify(0x008 * 4, 0x10, 0x70);
     mem_modify(0x110 * 4, 0x03, 0x07);
 
-    // Enable PRBS checker
+    // Enable PRBS 31 checker in 64bit mode
     printf("Enable PRBS checker\r\n");
     mem_modify(0x00a * 4, 0x80, 0x80);
     mem_modify(0x00b * 4, 0x0c, 0xfc);
@@ -88,58 +102,54 @@ int mgt_test()
 
     // Enable PRBS counter
     printf("Enable PRBS counter\r\n");
-    mem_modify(0x300 * 4, 0x01, 0x01);
-    mem_modify(0x300 * 4, 0x02, 0x02);
-    mem_modify(0x300 * 4, 0x00, 0x02);
+    mem_modify(0x300 * 4, 0x01, 0x01); // enable counter
+    mem_modify(0x300 * 4, 0x02, 0x02); // reset
+    mem_modify(0x300 * 4, 0x00, 0x02); // clear reset
+
+    uint64_t start_time_ms = get_time_ms();
 
     // Check result
-    printf("Read result\r\n");
-    for (int time=0; time<30; time+=3)
-    {
-        uint64_t error_counter = 0;
-        uint64_t bit_counter = 0;
+    sleep(10);
 
-        sleep(3);
+    // Capture snapshot of counter registers
+    mem_modify(0x300 * 4, 0x04, 0x04);
+    uint64_t end_time_ms = get_time_ms();
 
-        mem_modify(0x300 * 4, 0x04, 0x04);
+    uint64_t error_counter = 0;
+    error_counter |= (uint64_t)mem_read(0x301 * 4);
+    error_counter |= (uint64_t)mem_read(0x302 * 4) << 8;
+    error_counter |= (uint64_t)mem_read(0x303 * 4) << 16;
+    error_counter |= (uint64_t)mem_read(0x304 * 4) << 24;
+    error_counter |= (uint64_t)mem_read(0x305 * 4) << 32;
+    error_counter |= (uint64_t)mem_read(0x306 * 4) << 40;
+    error_counter |= (uint64_t)mem_read(0x307 * 4) << 48;
 
-        error_counter |= (uint64_t)mem_read(0x301 * 4);
-        error_counter |= (uint64_t)mem_read(0x302 * 4) << 8;
-        error_counter |= (uint64_t)mem_read(0x303 * 4) << 16;
-        error_counter |= (uint64_t)mem_read(0x304 * 4) << 24;
-        error_counter |= (uint64_t)mem_read(0x305 * 4) << 32;
-        error_counter |= (uint64_t)mem_read(0x306 * 4) << 40;
-        error_counter |= (uint64_t)mem_read(0x307 * 4) << 48;
+    uint64_t bit_counter = 0;
+    bit_counter |= (uint64_t)mem_read(0x30d * 4);
+    bit_counter |= (uint64_t)mem_read(0x30e * 4) << 8;
+    bit_counter |= (uint64_t)mem_read(0x30f * 4) << 16;
+    bit_counter |= (uint64_t)mem_read(0x310 * 4) << 24;
+    bit_counter |= (uint64_t)mem_read(0x311 * 4) << 32;
+    bit_counter |= (uint64_t)mem_read(0x312 * 4) << 40;
+    bit_counter |= (uint64_t)mem_read(0x313 * 4) << 48;
 
-        bit_counter |= (uint64_t)mem_read(0x30d * 4);
-        bit_counter |= (uint64_t)mem_read(0x30e * 4) << 8;
-        bit_counter |= (uint64_t)mem_read(0x30f * 4) << 16;
-        bit_counter |= (uint64_t)mem_read(0x310 * 4) << 24;
-        bit_counter |= (uint64_t)mem_read(0x311 * 4) << 32;
-        bit_counter |= (uint64_t)mem_read(0x312 * 4) << 40;
-        bit_counter |= (uint64_t)mem_read(0x313 * 4) << 48;
+    // check if channel is locked (rx_is_lockedtodata)
+    uint32_t locked_to_data = mem_read(0x280 * 4) & 0x01;
+    uint32_t locked_to_ref = (mem_read(0x280 * 4) & 0x02) >> 1;
 
-        mem_modify(0x300 * 4, 0x00, 0x04);
+    // calculate BER and data rate
+    double bit_double = (double)bit_counter;
+    double error_double = (double)error_counter;
+    double running_time_ms = (double)(end_time_ms - start_time_ms);
 
-        // check if channel is locked (rx_is_lockedtodata)
-        uint32_t locked_to_data = mem_read(0x280 * 4) & 0x01;
-        uint32_t locked_to_ref = (mem_read(0x280 * 4) & 0x02) >> 1;
+    double rate = ((bit_double / running_time_ms) / 1000) * 31; // * 31 because PRBS31
+    double ber = (error_double + 1.0) / bit_double;
 
-        // calculate BER and data rate
-        double bit_double = (double)bit_counter;
-        double error_double = (double)error_counter;
-        double time_double = (double)time;
+    printf("status after %.1f seconds:\r\n", running_time_ms/1000);
+    printf("locked: clock %i, data %i\r\n", locked_to_ref, locked_to_data);
+    printf("bits: %.0f, errors: %.0f\r\n", bit_double, error_double);
+    printf("rate: %.0f Mbps, ber: %f\r\n", rate, ber);
 
-        double rate = bit_double / time_double;
-        double ber = (error_double + 1.0) / bit_double;
-
-        printf("status after %i s:\r\n", time);
-        printf("locked: clock %i, data %i\r\n", locked_to_ref, locked_to_data);
-        printf("bits: %.0f, errors: %.0f\r\n", bit_double, error_double);
-        printf("rate: %.3f, ber: %f\r\n", rate, ber);
-    }
-
-    printf("Test done\r\n");
     return 0;
 }
 

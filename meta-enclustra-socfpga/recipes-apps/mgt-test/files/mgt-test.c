@@ -12,7 +12,7 @@
 #define MGT_LEN     0x1000
 #define PLL_LEN     0x1000
 #define REFCLK_MHZ  125
-#define VERSION     "0.3"
+#define VERSION     "0.4"
 
 #define debug_print(...) printf("\x1b[0m" __VA_ARGS__)
 #define info_print(...) printf("\x1b[33m" __VA_ARGS__)
@@ -67,9 +67,32 @@ int mgt_test()
 {
     info_print("MGT test version %s\r\n", VERSION);
 
-    // Check if fPLL is locked
+    // Check if fPLL is locked (read from capability register needs no bus access check)
     uint32_t lock = mem_read(pll_mem, 0x280 * 4) & 0x01;
     info_print("fPLL lock status: %i\r\n", lock);
+
+    // Check bus access
+    uint32_t busy = mem_read(pll_mem, 0x280 * 4) & 0x04;
+    if (busy)
+    {
+        info_print("Bus is busy\r\n");
+        return -1;
+    }
+
+    // PLL recalibration
+    mem_write(pll_mem, 0x100 * 4, 0x02);
+    mem_write(pll_mem, 0x000 * 4, 0x01);
+
+    // Wait until calibration has finished
+    while (1)
+    {
+        uint32_t status = mem_read(pll_mem, 0x280 * 4) & 0x06;
+        if (status == 0x00)
+        {
+            break;
+        }
+        sleep(1);
+    }
 
     // Print data rate
     uint32_t pll_m = ((mem_read(pll_mem, 0x12c * 4) & 0x01) << 8) | mem_read(pll_mem, 0x12b * 4);
@@ -78,11 +101,36 @@ int mgt_test()
     uint32_t data_rate = 2 * REFCLK_MHZ / pll_n * pll_m / pll_l;
     info_print("Data rate: %i Mbps\r\n", data_rate);
 
+    // Check bus access
+    busy = mem_read(mgt_mem, 0x281 * 4) & 0x04;
+    if (busy)
+    {
+        info_print("Bus is busy\r\n");
+        return -1;
+    }
+
+    // Channel calibration
+    mem_write(mgt_mem, 0x100 * 4, 0x22);
+    mem_write(mgt_mem, 0x000 * 4, 0x01);
+
+    // Wait until calibration has finished
+    while (1)
+    {
+        uint32_t status = mem_read(pll_mem, 0x281 * 4) & 0x07;
+        if (status == 0x00)
+        {
+            break;
+        }
+        sleep(1);
+    }
+
     // Enable reset
     debug_print("Enable reset\r\n");
     mem_write(mgt_mem, 0x2e2 * 4, 0xf0); // get software control of reset
     mem_write(mgt_mem, 0x2e2 * 4, 0xfa); // enable digital reset
     mem_write(mgt_mem, 0x2e2 * 4, 0xff); // enable analog reset
+
+    sleep(1); // without sleep, we only read 0xff
 
     // Enable PRBS 31 generator in 64bit mode
     debug_print("Enable PRBS generator\r\n");
@@ -114,6 +162,9 @@ int mgt_test()
     // Check result
     sleep(10);
 
+    // Disable PRBS counter
+    mem_modify(mgt_mem, 0x300 * 4, 0x00, 0x01);
+
     // Capture snapshot of counter registers
     mem_modify(mgt_mem, 0x300 * 4, 0x04, 0x04);
     uint64_t end_time_ms = get_time_ms();
@@ -141,7 +192,7 @@ int mgt_test()
     uint32_t locked_to_ref = (mem_read(mgt_mem, 0x280 * 4) & 0x02) >> 1;
 
     // Calculate BER and data rate
-    double bit_double = (double)bit_counter;
+    double bit_double = (double)bit_counter * 64.0;
     double error_double = (double)error_counter;
     double running_time_ms = (double)(end_time_ms - start_time_ms);
     double ber = (error_double + 1.0) / bit_double;

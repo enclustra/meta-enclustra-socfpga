@@ -9,6 +9,10 @@ SRC_URI:append = " \
 	file://mercury-sa2_defconfig \
 	"
 
+SRC_URI:append = " \
+	file://0001-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
+	"
+
 do_configure:prepend:mercury-aa1() {
 	cp ${WORKDIR}/mercury-aa1_defconfig ${S}/arch/arm/configs
 }

@@ -1,32 +1,77 @@
-From ba6e7a417916f2fd1bdee2d08f11bd4069bed773 Mon Sep 17 00:00:00 2001
+From 0f6c6325f90aef634ed2adce9875580ae35bc410 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Fri, 9 Jun 2023 15:35:39 +0200
+Date: Wed, 19 Jul 2023 19:00:43 +0200
 Subject: [PATCH] SI5338 configuration
 
 ---
- board/altera/arria10-socdk/Makefile        |   1 +
- board/altera/arria10-socdk/si5338_config.c | 164 +++++++++++++++++++++
- board/altera/arria10-socdk/si5338_config.h |  12 ++
- board/altera/arria10-socdk/socfpga.c       |   9 ++
- 4 files changed, 186 insertions(+)
- create mode 100644 board/altera/arria10-socdk/si5338_config.c
- create mode 100644 board/altera/arria10-socdk/si5338_config.h
+ board/enclustra/mercury_aa1/mercury_aa1.c |   4 +
+ drivers/misc/Kconfig                      |   6 +
+ drivers/misc/Makefile                     |   1 +
+ drivers/misc/si5338_config.c              | 166 ++++++++++++++++++++++
+ drivers/misc/si5338_config.h              |  12 ++
+ include/enclustra/si5338_config.h         |   7 +
+ 6 files changed, 196 insertions(+)
+ create mode 100644 drivers/misc/si5338_config.c
+ create mode 100644 drivers/misc/si5338_config.h
+ create mode 100644 include/enclustra/si5338_config.h
 
-diff --git a/board/altera/arria10-socdk/Makefile b/board/altera/arria10-socdk/Makefile
-index 80d0004346..f9939283a9 100644
---- a/board/altera/arria10-socdk/Makefile
-+++ b/board/altera/arria10-socdk/Makefile
-@@ -3,3 +3,4 @@
- # Copyright (C) 2015 Altera Corporation <www.altera.com>
+diff --git a/board/enclustra/mercury_aa1/mercury_aa1.c b/board/enclustra/mercury_aa1/mercury_aa1.c
+index ebff861fe1..8dbf7db059 100644
+--- a/board/enclustra/mercury_aa1/mercury_aa1.c
++++ b/board/enclustra/mercury_aa1/mercury_aa1.c
+@@ -9,6 +9,7 @@
+ #include <init.h>
+ #include <asm/io.h>
+ #include <enclustra/eeprom-mac.h>
++#include <enclustra/si5338_config.h>
  
- obj-y	:= socfpga.o
-+obj-y	+= si5338_config.o
-diff --git a/board/altera/arria10-socdk/si5338_config.c b/board/altera/arria10-socdk/si5338_config.c
+ /* Enclustra vendor ID */
+ #define ENCLUSTRA_MAC               0xF7B020
+@@ -95,6 +96,9 @@ int configure_mac(void)
+ 
+ int board_late_init(void)
+ {
++#ifdef CONFIG_SI5338_CONFIGURATION
++	si5338_init();
++#endif
+ 	int ret;
+ 	ret = configure_mac();
+ 	return ret;
+diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+index 0643c7ab9b..a17a53e759 100644
+--- a/drivers/misc/Kconfig
++++ b/drivers/misc/Kconfig
+@@ -83,6 +83,12 @@ config ENCLUSTRA_EEPROM_MAC
+ 	  Reads the MAC address out of the EEPROM and configures the MAC
+ 	  Addresses in the environment.
+ 
++config SI5338_CONFIGURATION
++        bool "Configure SI5338"
++	depends on MISC
++        help
++          Configure SI5338 clock generator device
++
+ config GATEWORKS_SC
+ 	bool "Gateworks System Controller Support"
+ 	depends on MISC
+diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+index 938f1a76f1..615bcb5b3d 100644
+--- a/drivers/misc/Makefile
++++ b/drivers/misc/Makefile
+@@ -36,6 +36,7 @@ obj-$(CONFIG_ATSHA204A) += atsha204a-i2c.o
+ obj-$(CONFIG_CBMEM_CONSOLE) += cbmem_console.o
+ obj-$(CONFIG_DS4510)  += ds4510.o
+ obj-$(CONFIG_ENCLUSTRA_EEPROM_MAC) += eeprom-mac.o
++obj-$(CONFIG_SI5338_CONFIGURATION) += si5338_config.o
+ obj-$(CONFIG_FSL_DEVICE_DISABLE) += fsl_devdis.o
+ obj-$(CONFIG_FSL_IFC) += fsl_ifc.o
+ obj-$(CONFIG_FSL_IIM) += fsl_iim.o
+diff --git a/drivers/misc/si5338_config.c b/drivers/misc/si5338_config.c
 new file mode 100644
-index 0000000000..3875d38ae6
+index 0000000000..2dbbb8164a
 --- /dev/null
-+++ b/board/altera/arria10-socdk/si5338_config.c
-@@ -0,0 +1,164 @@
++++ b/drivers/misc/si5338_config.c
+@@ -0,0 +1,166 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * Copyright (C) 2022 Enclustra GmbH
@@ -191,11 +236,13 @@ index 0000000000..3875d38ae6
 +
 +        return 0;
 +};
-diff --git a/board/altera/arria10-socdk/si5338_config.h b/board/altera/arria10-socdk/si5338_config.h
++
++EXPORT_SYMBOL_GPL(si5338_init);
+diff --git a/drivers/misc/si5338_config.h b/drivers/misc/si5338_config.h
 new file mode 100644
 index 0000000000..54a538b0a0
 --- /dev/null
-+++ b/board/altera/arria10-socdk/si5338_config.h
++++ b/drivers/misc/si5338_config.h
 @@ -0,0 +1,12 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
@@ -209,23 +256,19 @@ index 0000000000..54a538b0a0
 +int si5338_init(void);
 +
 +#endif
-diff --git a/board/altera/arria10-socdk/socfpga.c b/board/altera/arria10-socdk/socfpga.c
-index 4c466cb944..5e7b3ae726 100644
---- a/board/altera/arria10-socdk/socfpga.c
-+++ b/board/altera/arria10-socdk/socfpga.c
-@@ -4,3 +4,12 @@
-  */
- 
- #include <common.h>
-+#include <i2c.h>
-+#include <linux/delay.h>
-+#include "si5338_config.h"
+diff --git a/include/enclustra/si5338_config.h b/include/enclustra/si5338_config.h
+new file mode 100644
+index 0000000000..d88483849f
+--- /dev/null
++++ b/include/enclustra/si5338_config.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * (C) Copyright 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
 +
-+int board_late_init(void)
-+{
-+    si5338_init();
-+    return 0;
-+}
++int si5338_init(void);
 -- 
 2.25.1
 

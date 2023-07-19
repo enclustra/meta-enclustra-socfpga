@@ -59,6 +59,7 @@
 
 &gmac0 {
 	status = "okay";
+	/delete-property/ mac-address;
 	phy-mode = "rgmii";
 	phy-addr = <3>;
 	phy-handle = <&phy3>;

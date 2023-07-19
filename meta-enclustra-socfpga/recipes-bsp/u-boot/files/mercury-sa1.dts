@@ -15,29 +15,23 @@
 		device_type = "memory";
 		reg = <0x0 0x40000000>; /* 1GB */
 	};
+};
 
-	soc {
-		clkmgr@ffd04000 {
-			clocks {
-				osc1 {
-					clock-frequency = <50000000>;
-				};
-			};
-		};
-	};
+&osc1 {
+	clock-frequency = <50000000>;
 };
 
 &l4_main_clk {
-        u-boot,dm-pre-reloc;
+	u-boot,dm-pre-reloc;
 };
 
 &watchdog0 {
-        status = "disabled";
+	status = "disabled";
 };
 
 &uart0 {
-        clock-frequency = <100000000>;
-        u-boot,dm-pre-reloc;
+	clock-frequency = <100000000>;
+	u-boot,dm-pre-reloc;
 };
 
 &mmc0 {
@@ -69,44 +63,12 @@
 
 &i2c0 {
 	status = "okay";
-};
+	clock-frequency = <100000>;
 
-&gpio1 {
-	status = "okay";
-};
-
-&gmac1 {
-	status = "okay";
-	phy-mode = "rgmii";
-
-	rxd0-skew-ps = <420>;
-	rxd1-skew-ps = <420>;
-	rxd2-skew-ps = <420>;
-	rxd3-skew-ps = <420>;
-	rxdv-skew-ps = <420>;
-
-	txd0-skew-ps = <420>;
-	txd1-skew-ps = <420>;
-	txd2-skew-ps = <420>;
-	txd3-skew-ps = <420>;
-	txen-skew-ps = <420>;
-
-	rxc-skew-ps = <900>;
-	txc-skew-ps = <900>;
-
-        snps,reset-gpios = <&portb 15 1>;
-        snps,reset-active-low;
-        snps,reset-delays-us = <0 10000 100000>;
-
-	phy-handle = <&phy3>;
-
-	mdio0 {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		compatible = "snps,dwmac-mdio";
-
-		phy3: ethernet-phy@3 {
-			reg = <3>;
-		};
+	atsha204a: atsha204a@64 {
+		status = "okay";
+		compatible = "atmel,atsha204a";
+		reg = <0x64>;
 	};
 };
+

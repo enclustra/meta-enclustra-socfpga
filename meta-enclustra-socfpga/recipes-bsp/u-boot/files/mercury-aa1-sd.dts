@@ -11,6 +11,7 @@
 	compatible = "altr,socfpga-arria10", "altr,socfpga";
 
 	aliases {
+		ethernet0 = &gmac0;
 		serial0 = &uart1;
 		spi0 = &qspi;
 		i2c0 = &i2c1;
@@ -26,21 +27,15 @@
 		reg = <0x0 0x80000000>; /* 2GB */
 	};
 
-	soc {
-		clkmgr@ffd04000 {
-			clocks {
-				osc1 {
-					clock-frequency = <33330000>;
-				};
-			};
-		};
-	};
-
 	fs_loader0: fs-loader {
 		u-boot,dm-pre-reloc;
 		compatible = "u-boot,fs-loader";
 		phandlepart = <&mmc 1>;
 	};
+};
+
+&osc1 {
+	clock-frequency = <33330000>;
 };
 
 &fpga_mgr {
@@ -78,6 +73,13 @@
 	/* Max value set according to HW spec */
 	i2c-scl-falling-time-ns = <300>;
 	status = "okay";
+	clock-frequency = <100000>;
+
+	atsha204a: atsha204a@64 {
+		status = "okay";
+		compatible = "atmel,atsha204a";
+		reg = <0x64>;
+	};
 };
 
 &mmc {
@@ -127,3 +129,36 @@
 	u-boot,dm-pre-reloc;
 	status = "disabled";
 };
+
+&gmac0 {
+	status = "okay";
+	/delete-property/ mac-address;
+	phy-mode = "rgmii";
+	phy-addr = <3>;
+	phy-handle = <&phy3>;
+
+	mdio0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "snps,dwmac-mdio";
+
+		phy3: ethernet-phy@3 {
+			reg = <3>;
+			rxd0-skew-ps = <420>;
+			rxd1-skew-ps = <420>;
+			rxd2-skew-ps = <420>;
+			rxd3-skew-ps = <420>;
+			rxdv-skew-ps = <420>;
+
+			txd0-skew-ps = <420>;
+			txd1-skew-ps = <420>;
+			txd2-skew-ps = <420>;
+			txd3-skew-ps = <420>;
+			txen-skew-ps = <420>;
+
+			rxc-skew-ps = <1680>;
+			txc-skew-ps = <900>;
+		};
+	};
+};
+

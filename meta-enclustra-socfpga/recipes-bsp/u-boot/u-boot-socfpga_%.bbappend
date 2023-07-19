@@ -20,13 +20,15 @@ SRC_URI:append = " \
 	file://fit_spl_fpga.its \
 	file://0001-Add-Enclustra-devicetree-to-Makefile.patch \
 	file://0002-Make-intel-scripts-python-3-compatible.patch \
-	file://0003-SI5338-configuration.patch \
+	file://0003-AA1-board-files-added.patch \
+	file://0004-Enclustra-MAC-address-readout-from-EEPROM.patch \
+	file://0005-SI5338-configuration.patch \
 	file://Si5338-RevB-Registers.h \
 	"
 
 do_compile:prepend:mercury-aa1() {
 	cp -r ${DEPLOY_DIR_IMAGE}/hps.xml ${S}/.
-	cp -r ${WORKDIR}/Si5338-RevB-Registers.h ${S}/board/altera/arria10-socdk/
+	cp -r ${WORKDIR}/Si5338-RevB-Registers.h ${S}/drivers/misc/
 	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_handoff.h
 }
 

@@ -1,0 +1,5 @@
+bitbake
+build
+meta-intel-fpga
+meta-openembedded
+openembedded-core

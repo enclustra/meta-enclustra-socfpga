@@ -1,8 +1,15 @@
+From c218406fa1d6ba2a75992d0004b3cdb0f20e2950 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Mon, 4 Sep 2023 16:42:04 +0000
+Subject: [PATCH 3/5] AA1 board files added
+
+Repatched:
 From cba91822fc222545636950761493712c035b82d4 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Wed, 19 Jul 2023 18:14:49 +0200
 Subject: [PATCH] AA1 board files added
 
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  arch/arm/mach-socfpga/Kconfig             |   7 ++
  board/enclustra/mercury_aa1/Kconfig       |  15 ++++
@@ -18,10 +25,10 @@ Subject: [PATCH] AA1 board files added
  create mode 100644 include/configs/socfpga_mercury_aa1.h
 
 diff --git a/arch/arm/mach-socfpga/Kconfig b/arch/arm/mach-socfpga/Kconfig
-index 9b00e4fd08..30cce224ae 100644
+index 71eda42dfb..c6fc753baf 100644
 --- a/arch/arm/mach-socfpga/Kconfig
 +++ b/arch/arm/mach-socfpga/Kconfig
-@@ -223,6 +223,10 @@ config TARGET_SOCFPGA_TERASIC_SOCKIT
+@@ -270,6 +270,10 @@ config TARGET_SOCFPGA_TERASIC_SOCKIT
  	bool "Terasic SoCkit (Cyclone V)"
  	select TARGET_SOCFPGA_CYCLONE5
  
@@ -32,15 +39,15 @@ index 9b00e4fd08..30cce224ae 100644
  endchoice
  
  config SYS_BOARD
-@@ -247,6 +251,7 @@ config SYS_BOARD
+@@ -295,6 +299,7 @@ config SYS_BOARD
  	default "sr1500" if TARGET_SOCFPGA_SR1500
  	default "stratix10-socdk" if TARGET_SOCFPGA_STRATIX10_SOCDK
  	default "vining_fpga" if TARGET_SOCFPGA_SOFTING_VINING_FPGA
 +	default "mercury_aa1" if TARGET_SOCFPGA_ENCLUSTRA_AA1
  
  config SYS_VENDOR
- 	default "intel" if TARGET_SOCFPGA_AGILEX_N6010
-@@ -267,6 +272,7 @@ config SYS_VENDOR
+ 	default "intel" if TARGET_SOCFPGA_AGILEX5_SOCDK
+@@ -316,6 +321,7 @@ config SYS_VENDOR
  	default "terasic" if TARGET_SOCFPGA_TERASIC_DE10_NANO
  	default "terasic" if TARGET_SOCFPGA_TERASIC_DE10_STANDARD
  	default "terasic" if TARGET_SOCFPGA_TERASIC_SOCKIT
@@ -48,7 +55,7 @@ index 9b00e4fd08..30cce224ae 100644
  
  config SYS_SOC
  	default "socfpga"
-@@ -293,5 +299,6 @@ config SYS_CONFIG_NAME
+@@ -343,5 +349,6 @@ config SYS_CONFIG_NAME
  	default "socfpga_sr1500" if TARGET_SOCFPGA_SR1500
  	default "socfpga_stratix10_socdk" if TARGET_SOCFPGA_STRATIX10_SOCDK
  	default "socfpga_vining_fpga" if TARGET_SOCFPGA_SOFTING_VINING_FPGA
@@ -252,5 +259,5 @@ index 0000000000..1ce0977dec
 +
 +#endif	/* __CONFIG_SOCFGPA_MERCURY_AA1_H__ */
 -- 
-2.25.1
+2.34.1
 

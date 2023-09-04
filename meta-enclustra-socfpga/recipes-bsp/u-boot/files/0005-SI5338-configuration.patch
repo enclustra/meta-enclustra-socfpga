@@ -1,7 +1,7 @@
-From 0f6c6325f90aef634ed2adce9875580ae35bc410 Mon Sep 17 00:00:00 2001
+From 0dc8cc688d3dbaf529fc03493354ec5afd26b997 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Wed, 19 Jul 2023 19:00:43 +0200
-Subject: [PATCH] SI5338 configuration
+Subject: [PATCH 5/5] SI5338 configuration
 
 ---
  board/enclustra/mercury_aa1/mercury_aa1.c |   4 +
@@ -270,5 +270,5 @@ index 0000000000..d88483849f
 +
 +int si5338_init(void);
 -- 
-2.25.1
+2.34.1
 

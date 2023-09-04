@@ -1,7 +1,7 @@
-From 923dff667fd821807a0c1591f877b323112a506a Mon Sep 17 00:00:00 2001
+From cc58890ec650985e84549d53d517ad8f158d369b Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Fri, 26 May 2023 15:01:45 +0200
-Subject: [PATCH] Make intel scripts python 3 compatible
+Subject: [PATCH 2/5] Make intel scripts python 3 compatible
 
 ---
  .../cv_bsp_generator/cv_bsp_generator.py        | 11 ++++++-----
@@ -279,5 +279,5 @@ index 19c30aced6..7b856866f0 100755
          self.file.write("\n%s\n" % ("#endif /* " + self.sentinel + " */"))
 +
 -- 
-2.25.1
+2.34.1
 

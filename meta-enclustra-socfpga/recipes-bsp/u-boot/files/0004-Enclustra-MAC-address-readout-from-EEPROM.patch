@@ -1,8 +1,15 @@
+From 19a00c9aae7750ba36e527665f00e2358359c47d Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Mon, 4 Sep 2023 16:46:44 +0000
+Subject: [PATCH 4/5] Enclustra MAC address readout from EEPROM
+
+Repatched:
 From 061b0fa215cd17034845c03cd6ca83f5810b0e0f Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Wed, 19 Jul 2023 15:43:03 +0200
 Subject: [PATCH] Enclustra MAC address readout from EEPROM
 
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  drivers/misc/Kconfig           |  8 +++++
  drivers/misc/Makefile          |  1 +
@@ -127,5 +134,5 @@ index 0000000000..3ec69ca3a3
 +
 +int atsha204_get_mac(u8 *buffer);
 -- 
-2.25.1
+2.34.1
 

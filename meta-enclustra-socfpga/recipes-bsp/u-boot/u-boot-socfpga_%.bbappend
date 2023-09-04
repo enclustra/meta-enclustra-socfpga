@@ -4,6 +4,8 @@ inherit deploy
 
 RDEPENDS_${PN} = "python"
 
+DEPENDS:append = "hw-ref-design"
+
 do_compile[deptask] = "do_deploy"
 
 ## TODO aa1/sa1/sa2 sources - possible to overload?

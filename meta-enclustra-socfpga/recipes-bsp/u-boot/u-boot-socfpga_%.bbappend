@@ -6,6 +6,7 @@ RDEPENDS_${PN} = "python"
 
 do_compile[deptask] = "do_deploy"
 
+## TODO aa1/sa1/sa2 sources - possible to overload?
 SRC_URI:append = " \
 	file://mercury-aa1-sd.dts \
 	file://mercury-aa1-qspi.dts \
@@ -63,6 +64,7 @@ do_deploy:append:mercury-aa1() {
 	install -m 744 ${B}/fit_spl_fpga.itb ${DEPLOYDIR}/fit_spl_fpga.itb
 }
 
+## TODO adds aa1/sa1/sa2 files - possible to overload?
 do_add_enclustra_files() {
 	cp ${WORKDIR}/mercury-aa1-sd.dts ${S}/arch/arm/dts
 	cp ${WORKDIR}/mercury-aa1-qspi.dts ${S}/arch/arm/dts

@@ -2,7 +2,8 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 inherit deploy
 
-RDEPENDS_${PN} = "python"
+## probably not needed
+#RDEPENDS_${PN} = "python"
 
 DEPENDS:append = "hw-ref-design"
 

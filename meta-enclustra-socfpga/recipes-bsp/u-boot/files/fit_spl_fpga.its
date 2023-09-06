@@ -10,15 +10,23 @@
 	description = "FIT image with FPGA bistream";
 	#address-cells = <1>;
 
-	images {
-		fpga-periph-1 {
-			description = "FPGA peripheral bitstream";
-			data = /incbin/("./fpga.rbf");
-			type = "fpga";
-			arch = "arm";
-			compression = "none";
-		};
-	};
+        images {
+               fpga-periph-1 {
+                        description = "FPGA peripheral bitstream";
+                        data = /incbin/("./periph.rbf");
+                        type = "fpga";
+                        arch = "arm";
+                        compression = "none";
+                };
+
+                fpga-core-1 {
+                        description = "FPGA core bitstream";
+                        data = /incbin/("./core.rbf");
+                        type = "fpga";
+                        arch = "arm";
+                        compression = "none";
+                };
+        };
 
 	configurations {
 		default = "config-1";

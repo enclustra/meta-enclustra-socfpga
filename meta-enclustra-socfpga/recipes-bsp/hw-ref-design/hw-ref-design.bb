@@ -8,12 +8,16 @@ inherit deploy
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Proprietary;md5=0557f9d92cf58f2ccdd50f62f8ac0b28"
 
+EBE_RELEASE := "update"
 SRC_URI:mercury-aa1 = "\
-	file://hps-aa1-qspi.xml \
-	file://hps-aa1-sd.xml \
-	file://fpga-aa1-qspi.rbf \
-	file://fpga-aa1-sd.rbf \
+	http://www.enclustra.com/binaries/enclustra-bsp/${EBE_RELEASE}/refdes/ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=aa14802i3 \
+        http://www.enclustra.com/binaries/enclustra-bsp/${EBE_RELEASE}/refdes/ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=aa12702i2 \
+        http://www.enclustra.com/binaries/enclustra-bsp/${EBE_RELEASE}/refdes/ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=aa12703e4 \
 	"
+
+SRC_URI[aa14802i3.sha256sum] = "8596579fd774028be8bcc88d6aca391c2e3e6ddca3ec094bda3512cc0defebd7"
+SRC_URI[aa12702i2.sha256sum] = "c87b5889fd16b14f66b8d3e5183e97efc7ef36b0fe3d23c8c81ac5c5bbd357b2"
+SRC_URI[aa12703e4.sha256sum] = "fdc8dbd287563b8989f296656262ca559ec668163e76c853d80d9e005a3f9236"
 
 SRC_URI:mercury-sa1 = "\
 	file://fpga-sa1.rbf \
@@ -57,21 +61,39 @@ S ?= "${WORKDIR}/${MACHINE}"
 
 PROVIDES = "virtual/bitstream"
 
+do_fetch[depends] += "unzip-native:do_populate_sysroot"
+
+do_unpack() {
+}
+
+do_unpack:append:mercury-aa1() {
+#        ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-480-2I3-D12E-NFX3_PE1.zip" -d ${S}
+#        ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-2I2-D11E-NFX3_PE1.zip" -d ${S}
+        ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-3E4-D11E-NFX3_PE1.zip" -d ${S}
+}
+
 do_deploy[nostamp] = "1"
 
 do_deploy() {
 }
 
+# TODO improve this...      
 do_deploy:append:mercury-aa1() {
 	if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-sd','true','false',d)}; then
-		install -D -m 0644 ${WORKDIR}/hps-aa1-sd.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-		install -D -m 0644 ${WORKDIR}/fpga-aa1-sd.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+                # TODO further types     
+		install -D -m 0644 ${B}/sdmmc/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+                install -D -m 0644 ${B}/sdmmc/Mercury_AA1_PE1.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
+                install -D -m 0644 ${B}/sdmmc/Mercury_AA1_PE1.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
 	fi
 
 	if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-qspi','true','false',d)}; then
-		install -D -m 0644 ${WORKDIR}/hps-aa1-qspi.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-		install -D -m 0644 ${WORKDIR}/fpga-aa1-qspi.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+		install -D -m 0644 ${B}/qspi/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+                install -D -m 0644 ${B}/qspi/Mercury_AA1_PE1.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
+                install -D -m 0644 ${B}/qspi/Mercury_AA1_PE1.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
 	fi
+
+        ## TODO rm
+#        unzip binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip
 }
 
 do_deploy:append:mercury-sa1() {

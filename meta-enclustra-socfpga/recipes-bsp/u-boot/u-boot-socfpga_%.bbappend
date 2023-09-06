@@ -49,7 +49,8 @@ do_compile:prepend:mercury-sa2() {
 }
 
 do_compile:append:mercury-aa1() {
-	cp -r ${DEPLOY_DIR_IMAGE}/fpga.rbf ${S}/.
+	cp -r ${DEPLOY_DIR_IMAGE}/core.rbf ${S}/.
+	cp -r ${DEPLOY_DIR_IMAGE}/periph.rbf ${S}/.
 
 	for config in ${UBOOT_MACHINE}; do
 		cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin

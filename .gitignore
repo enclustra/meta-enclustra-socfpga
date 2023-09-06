@@ -3,3 +3,8 @@ build
 meta-intel-fpga
 meta-openembedded
 openembedded-core
+
+## backups
+*.orig
+*~
+*.swp

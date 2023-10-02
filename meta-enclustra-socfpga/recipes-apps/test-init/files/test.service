@@ -1,8 +1,0 @@
-[Unit]
-Description=Startup script for production test
-
-[Service]
-ExecStart=/usr/bin/pt-autostart.sh
-
-[Install]
-WantedBy=multi-user.target

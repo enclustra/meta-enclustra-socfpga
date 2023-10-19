@@ -35,9 +35,9 @@ do_unpack() {
 }
 
 do_unpack:append:mercury-aa1() {
-#    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-480-2I3-D12E-NFX3_PE1.zip" -d ${S}
+    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-480-2I3-D12E-NFX3_PE1.zip" -d ${S}
 #    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-2I2-D11E-NFX3_PE1.zip" -d ${S}
-    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-3E4-D11E-NFX3_PE1.zip" -d ${S}
+#    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-3E4-D11E-NFX3_PE1.zip" -d ${S}
 }
 
 do_unpack:append:mercury_sa1() {

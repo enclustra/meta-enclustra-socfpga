@@ -22,7 +22,7 @@ do_install[noexec] = "1"
 do_compile() {
 }
 
-do_compile:append:mercury-aa1() {
+do_compile:append:aa1-module() {
 	if [ ${UBOOT_CONFIG} = "mercury-aa1-sd" ]; then
 		mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-aa1-sd_u-boot-env.txt
 	fi
@@ -31,11 +31,11 @@ do_compile:append:mercury-aa1() {
 	fi
 }
 
-do_compile:append:mercury-sa1() {
+do_compile:append:sa1-module() {
         mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-sa1_u-boot-env.txt
 }
 
-do_compile:append:mercury-sa2() {
+do_compile:append:sa2-module() {
 	mkenvimage -s 0x80000 -o "${WORKDIR}/uboot.env" ${WORKDIR}/mercury-sa2_u-boot-env.txt
 }
 

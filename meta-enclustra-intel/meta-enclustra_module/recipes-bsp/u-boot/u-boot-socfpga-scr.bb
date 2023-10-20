@@ -21,17 +21,17 @@ do_install[noexec] = "1"
 do_compile() {
 }
 
-do_compile:append:mercury-sa1() {
+do_compile:append:sa1-module() {
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "QSPI Script" -d "${WORKDIR}/u-boot-qspi.txt" ${WORKDIR}/boot-qspi.scr
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "SD Card Script" -d "${WORKDIR}/u-boot-sd.txt" ${WORKDIR}/boot-sd.scr
 }
 
-do_compile:append:mercury-sa2() {
+do_compile:append:sa2-module() {
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "QSPI Script" -d "${WORKDIR}/u-boot-qspi.txt" ${WORKDIR}/boot-qspi.scr
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "SD Card Script" -d "${WORKDIR}/u-boot-sd.txt" ${WORKDIR}/boot-sd.scr
 }
 
-do_compile:append:mercury-aa1() {
+do_compile:append:aa1-module() {
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "QSPI Script" -d "${WORKDIR}/u-boot-qspi.txt" ${WORKDIR}/boot-qspi.scr
 	mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "SD Card Script" -d "${WORKDIR}/u-boot-sd-aa1.txt" ${WORKDIR}/boot-sd.scr
 }

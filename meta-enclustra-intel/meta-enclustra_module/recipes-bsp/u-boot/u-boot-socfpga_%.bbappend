@@ -30,25 +30,25 @@ SRC_URI:append = " \
 	file://Si5338-RevB-Registers.h \
 	"
 
-do_compile:prepend:mercury-aa1() {
+do_compile:prepend:aa1-module() {
 	cp -r ${DEPLOY_DIR_IMAGE}/hps.xml ${S}/.
 	cp -r ${WORKDIR}/Si5338-RevB-Registers.h ${S}/drivers/misc/
 	${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_handoff.h
 }
 
-do_compile:prepend:mercury-sa1() {
+do_compile:prepend:sa1-module() {
         mkdir -p ${WORKDIR}/sa1-handoff/system_hps_0
         cp -r ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0/* ${WORKDIR}/sa1-handoff/system_hps_0/
         ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/sa1-handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/
 }
 
-do_compile:prepend:mercury-sa2() {
+do_compile:prepend:sa2-module() {
 	mkdir -p ${WORKDIR}/sa2-handoff/system_hps_0
 	cp -r ${DEPLOY_DIR_IMAGE}/sa2-handoff/system_hps_0/* ${WORKDIR}/sa2-handoff/system_hps_0/
 	${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/sa2-handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/
 }
 
-do_compile:append:mercury-aa1() {
+do_compile:append:aa1-module() {
 	cp -r ${DEPLOY_DIR_IMAGE}/core.rbf ${S}/.
 	cp -r ${DEPLOY_DIR_IMAGE}/periph.rbf ${S}/.
 
@@ -62,7 +62,7 @@ do_compile:append:mercury-aa1() {
 	mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
 }
 
-do_deploy:append:mercury-aa1() {
+do_deploy:append:aa1-module() {
 	install -d ${DEPLOYDIR}
 	install -m 744 ${B}/fit_uboot.itb ${DEPLOYDIR}/fit_uboot.itb
 	install -m 744 ${B}/fit_spl_fpga.itb ${DEPLOYDIR}/fit_spl_fpga.itb

@@ -13,14 +13,14 @@ SRC_URI:append = " \
 	file://0001-Add-atsha204a-driver-with-support-to-read-OTP-region.patch \
 	"
 
-do_configure:prepend:mercury-aa1() {
+do_configure:prepend:aa1-module() {
 	cp ${WORKDIR}/mercury-aa1_defconfig ${S}/arch/arm/configs
 }
 
-do_configure:prepend:mercury-sa1() {
+do_configure:prepend:sa1-module() {
 	cp ${WORKDIR}/mercury-sa1_defconfig ${S}/arch/arm/configs
 }
 
-do_configure:prepend:mercury-sa2() {
+do_configure:prepend:sa2-module() {
 	cp ${WORKDIR}/mercury-sa2_defconfig ${S}/arch/arm/configs
 }

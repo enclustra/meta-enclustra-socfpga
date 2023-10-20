@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Note: This applies only to the Mercury AA1 module family
+ *
+ * Copyright (C) 2023 Enclustra GmbH
+ */
+/dts-v1/;
+/plugin/;
+
+/// {
+//	fs_loader0: fs-loader {
+//		compatible = "u-boot,fs-loader";
+//		phandlepart = <&mmc 1>;
+//	};
+//};
+//
+//&fpga_mgr {
+//	firmware-loader = <&fs_loader0>;
+//	altr,bitstream = "bitstream.itb";
+//};

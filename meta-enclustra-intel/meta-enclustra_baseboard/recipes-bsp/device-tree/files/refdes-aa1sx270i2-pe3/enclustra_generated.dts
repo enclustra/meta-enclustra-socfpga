@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2023 Enclustra GmbH
+ */
+
+/dts-v1/;
+
+#include "ME-AA1-270-2I2-D11E-NFX3.dtsi"
+#include "socfpga_arria10.dtsi"
+#include "socfpga_enclustra_mercury_aa1.dtsi"
+#include "socfpga_enclustra_mercury_pe3.dtsi"

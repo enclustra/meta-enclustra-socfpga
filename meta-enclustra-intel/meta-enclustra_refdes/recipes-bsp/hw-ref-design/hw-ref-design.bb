@@ -5,7 +5,7 @@ inherit deploy
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Proprietary;md5=0557f9d92cf58f2ccdd50f62f8ac0b28"
 
-SRC_URI:mercury-aa1 = "\
+SRC_URI:aa1-module = "\
     http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=aa14802i3pe1 \
     http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=aa12702i2pe1 \
     http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=aa12703e4pe1 \
@@ -34,7 +34,7 @@ do_fetch[depends] += "unzip-native:do_populate_sysroot"
 do_unpack() {
 }
 
-do_unpack:append:mercury-aa1() {
+do_unpack:append:aa1-module() {
     ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-480-2I3-D12E-NFX3_PE1.zip" -d ${S}
 #    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-2I2-D11E-NFX3_PE1.zip" -d ${S}
 #    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-3E4-D11E-NFX3_PE1.zip" -d ${S}
@@ -54,7 +54,7 @@ do_deploy() {
 }
 
 # TODO improve this...      
-do_deploy:append:mercury-aa1() {
+do_deploy:append:aa1-module() {
     if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-sd','true','false',d)}; then
         # TODO further types     
         install -D -m 0644 ${B}/sdmmc/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml

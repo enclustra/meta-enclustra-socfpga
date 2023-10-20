@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Note: This applies only to the Mercury AA1 module family
+ *
+ * Copyright (C) 2023 Enclustra GmbH
+ */
+/dts-v1/;
+/plugin/;
+
+&mmc {
+	status = "disabled";
+};

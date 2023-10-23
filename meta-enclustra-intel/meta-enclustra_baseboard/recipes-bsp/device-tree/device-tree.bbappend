@@ -47,6 +47,7 @@ do_deploy() {
 	install -Dm 0644 ${B}/${MACHINE}.dtb ${DEPLOYDIR}/devicetree.dtb
 }
 
+COMPATIBLE_MACHINE += "|pe1-generic|pe3-generic|st1-generic"
 
 
                       

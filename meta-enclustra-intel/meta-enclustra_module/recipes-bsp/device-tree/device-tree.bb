@@ -3,14 +3,13 @@ DESCRIPTION = "Devicetree addons for Intel SoCFPGA Development module"
 SECTION = "bsp"
 
 LICENSE = "MIT & GPL-2.0-only"
-
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI:append:aa1-module := " file://mercury-aa1.dts:"
-SRC_URI:append:sa1-module := " file://mercury-sa1.dts:"
-SRC_URI:append:sa2-module := " file://mercury-sa2.dts:"
+SRC_URI:append:aa1-module := " file://socfpga_enclustra_mercury_aa1.dtsi:"
+SRC_URI:append:sa1-module := " file://socfpga_enclustra_mercury_sa1.dtsi:"
+SRC_URI:append:sa2-module := " file://socfpga_enclustra_mercury_sa2.dtsi:"
 
-
+COMPATIBLE_MACHINE = "|aa1-module|sa1-module|sa2-module|refdes-aa1sx270e3-pe1|refdes-aa1sx270e3-pe3|refdes-aa1sx270e3-st1|refdes-aa1sx270i2-pe1|refdes-aa1sx270i2-pe3|refdes-aa1sx270i2-st1|refdes-aa1sx480i2-pe1|refdes-aa1sx480i2-pe3|refdes-aa1sx480i2-st1|refdes-sa1-pe1|refdes-sa1-pe3|refdes-sa1-st1|refdes-sa2-pe1|refdes-sa2-pe3|refdes-sa2-st1"
 
                        
 # FILESEXTRAPATHS:prepend := "${THISDIR}/files:"

@@ -24,9 +24,10 @@ FILESEXTRAPATHS:prepend:refdes-sa2-st1 := "${THISDIR}/files/refdes-sa2-st1:"
 #...
 
 SRC_URI:append = " file://enclustra_generated.dts"
-SRC_URI:append:pe1-generic = "file://socfpga_enclustra_mercury_pe1.dtsi"
-SRC_URI:append:pe3-generic = "file://socfpga_enclustra_mercury_pe3.dtsi"
-SRC_URI:append:st1-generic = "file://socfpga_enclustra_mercury_st1.dtsi"
+
+SRC_URI:append:pe1-generic = " file://socfpga_enclustra_mercury_pe1.dtsi"
+SRC_URI:append:pe3-generic = " file://socfpga_enclustra_mercury_pe3.dtsi"
+SRC_URI:append:st1-generic = " file://socfpga_enclustra_mercury_st1.dtsi"
 
 KERNEL_INCLUDE = " \
         ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts \
@@ -44,7 +45,7 @@ PROVIDES = "virtual/dtb"
 do_configure[depends] += "virtual/kernel:do_configure"
 
 do_deploy() {
-	install -Dm 0644 ${B}/${MACHINE}.dtb ${DEPLOYDIR}/devicetree.dtb
+        install -Dm 0644 ${B}/enclustra_generated.dtb ${DEPLOYDIR}/devicetree.dtb
 }
 
 COMPATIBLE_MACHINE += "|pe1-generic|pe3-generic|st1-generic"

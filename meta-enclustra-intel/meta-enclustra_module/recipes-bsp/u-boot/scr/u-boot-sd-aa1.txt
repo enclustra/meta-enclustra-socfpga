@@ -1,4 +1,0 @@
-bridge enable LWHPS-to-FPGA;
-fatload mmc 0:1 ${RAM_ADDR_KERNEL} uImage
-fatload mmc 0:1 ${RAM_ADDR_DEVICETREE} devicetree.dtb
-bootm ${RAM_ADDR_KERNEL} - ${RAM_ADDR_DEVICETREE}

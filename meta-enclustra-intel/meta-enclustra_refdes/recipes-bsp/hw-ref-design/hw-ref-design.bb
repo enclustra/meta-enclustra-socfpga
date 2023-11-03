@@ -76,8 +76,14 @@ do_deploy[nostamp] = "1"
 do_deploy() {
 }
 
-# TODO improve this...      
 do_deploy:append:aa1-module() {
+     install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
+     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
+}
+
+#do_deploy:append:aa1-module() {
+## TODO rm              
 # TODO use, or replace by UBOOT_CONFIG                                 
 #    ENCLUSTRA_BOOTMODE="sdmmc"
 #    if ${@bb.utils.contains('UBOOT_CONFIG','sdmmc','true','false',d)}; then
@@ -86,21 +92,14 @@ do_deploy:append:aa1-module() {
 #        ENCLUSTRA_BOOTMODE="qspi"
 #    fi
 
-## TODO rm              
-     install -D -m 0644 ${B}/sdmmc/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-     install -D -m 0644 ${B}/sdmmc/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-     install -D -m 0644 ${B}/sdmmc/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
+#     install -D -m 0644 ${B}/sdmmc/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+#     install -D -m 0644 ${B}/sdmmc/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
+#     install -D -m 0644 ${B}/sdmmc/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
 
 ## TODO uncomment                   
 #     install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
 #     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
 #     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
-
-
-
-
-
-
 
 
     
@@ -117,24 +116,34 @@ do_deploy:append:aa1-module() {
 #        install -D -m 0644 ${B}/qspi/Mercury_AA1_PE1.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
 #    fi
 
-        ## TODO rm
+## TODO rm
 #        unzip binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip
-}
+#}
+
+do_deploy:append:sa1-module() {
+## TODO test if possible
+#do_deploy:append:sa1-module:sa2-module() {
+
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
 
 
-do_deploy:append:sa1-module:sa2-module() {
-    ENCLUSTRA_BOOTMODE="sdmmc"
-    if ${@bb.utils.contains('UBOOT_CONFIG','sdmmc','true','false',d)}; then
-        ENCLUSTRA_BOOTMODE="sdmmc"
-    elif ${@bb.utils.contains('UBOOT_CONFIG','qspi','true','false',d)}; then
-        ENCLUSTRA_BOOTMODE="qspi"
-    elif ${@bb.utils.contains('UBOOT_CONFIG','emmc','true','false',d)}; then
-        ENCLUSTRA_BOOTMODE="emmc"
-    fi
-
-    install -D -m 0644 ${B}/${ENCLUSTRA_BOOTMODE}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-    install -D -m 0644 ${B}/${ENCLUSTRA_BOOTMODE}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-    install -D -m 0644 ${B}/${ENCLUSTRA_BOOTMODE}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
+## TODO                                                   
+#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-sd','true','false',d)}; then
+#        cp -r ${B}/sdmmc/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
+#	install -D -m 0644 ${B}/sdmmc/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+#    fi
+#
+#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-qspi','true','false',d)}; then
+#        cp -r ${B}/qspi/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
+#	install -D -m 0644 ${B}/qspi/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+#    fi
+#
+#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-emmc','true','false',d)}; then
+#        cp -r ${B}/emmc/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
+#	install -D -m 0644 ${B}/emmc/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
+#    fi
 }
 
 #do_deploy:append:mercury-sa2() {

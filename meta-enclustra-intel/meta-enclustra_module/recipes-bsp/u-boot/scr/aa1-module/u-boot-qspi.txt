@@ -1,5 +1,7 @@
-bridge enable LWHPS-to-FPGA;
-sf read ${RAM_ADDR_KERNEL} ${QSPI_OFFSET_ADDR_KERNEL} ${SIZE_KERNEL}
-sf read ${RAM_ADDR_DEVICETREE} ${QSPI_OFFSET_ADDR_DEVICETREE} ${SIZE_DEVICETREE}
-sf read ${RAM_ADDR_ROOTFS} ${QSPI_OFFSET_ADDR_ROOTFS} ${SIZE_ROOTFS}
-bootm ${RAM_ADDR_KERNEL} ${RAM_ADDR_ROOTFS} ${RAM_ADDR_DEVICETREE}
+bridge enable HPS-to-FPGA
+bridge enable FPGA-to-HPS
+sf probe
+sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
+sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
+sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
+bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}

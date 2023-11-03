@@ -1,0 +1,965 @@
+From 7bd085949d82e743ec6d6983457c620533ff8011 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Fri, 3 Nov 2023 13:12:16 +0000
+Subject: [PATCH 3/5] Add Enclustra board files
+
+From cba91822fc222545636950761493712c035b82d4 Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Wed, 19 Jul 2023 18:14:49 +0200
+Subject: [PATCH 3/5] AA1 board files added
+
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
+---
+ arch/arm/mach-socfpga/Kconfig             |  21 ++
+ board/enclustra/mercury_aa1/Kconfig       |  15 ++
+ board/enclustra/mercury_aa1/MAINTAINERS   |   5 +
+ board/enclustra/mercury_aa1/Makefile      |   1 +
+ board/enclustra/mercury_aa1/bitstream.its |  32 +++
+ board/enclustra/mercury_aa1/mercury_aa1.c | 278 ++++++++++++++++++++++
+ board/enclustra/mercury_sa1/Kconfig       |  15 ++
+ board/enclustra/mercury_sa1/MAINTAINERS   |   5 +
+ board/enclustra/mercury_sa1/Makefile      |   1 +
+ board/enclustra/mercury_sa1/mercury_sa1.c | 210 ++++++++++++++++
+ board/enclustra/mercury_sa2/Kconfig       |  15 ++
+ board/enclustra/mercury_sa2/MAINTAINERS   |   5 +
+ board/enclustra/mercury_sa2/Makefile      |   1 +
+ board/enclustra/mercury_sa2/mercury_sa2.c | 157 ++++++++++++
+ include/configs/socfpga_mercury_aa1.h     |  43 ++++
+ 15 files changed, 804 insertions(+)
+ create mode 100644 board/enclustra/mercury_aa1/Kconfig
+ create mode 100644 board/enclustra/mercury_aa1/MAINTAINERS
+ create mode 100644 board/enclustra/mercury_aa1/Makefile
+ create mode 100644 board/enclustra/mercury_aa1/bitstream.its
+ create mode 100644 board/enclustra/mercury_aa1/mercury_aa1.c
+ create mode 100644 board/enclustra/mercury_sa1/Kconfig
+ create mode 100644 board/enclustra/mercury_sa1/MAINTAINERS
+ create mode 100644 board/enclustra/mercury_sa1/Makefile
+ create mode 100644 board/enclustra/mercury_sa1/mercury_sa1.c
+ create mode 100644 board/enclustra/mercury_sa2/Kconfig
+ create mode 100644 board/enclustra/mercury_sa2/MAINTAINERS
+ create mode 100644 board/enclustra/mercury_sa2/Makefile
+ create mode 100644 board/enclustra/mercury_sa2/mercury_sa2.c
+ create mode 100644 include/configs/socfpga_mercury_aa1.h
+
+diff --git a/arch/arm/mach-socfpga/Kconfig b/arch/arm/mach-socfpga/Kconfig
+index 71eda42dfb..8619947c73 100644
+--- a/arch/arm/mach-socfpga/Kconfig
++++ b/arch/arm/mach-socfpga/Kconfig
+@@ -270,6 +270,18 @@ config TARGET_SOCFPGA_TERASIC_SOCKIT
+ 	bool "Terasic SoCkit (Cyclone V)"
+ 	select TARGET_SOCFPGA_CYCLONE5
+ 
++config TARGET_SOCFPGA_ENCLUSTRA_AA1
++	bool "Enclustra Mercury+ AA1"
++	select TARGET_SOCFPGA_ARRIA10
++
++config TARGET_SOCFPGA_ENCLUSTRA_SA1
++	bool "Enclustra Mercury SA1"
++	select TARGET_SOCFPGA_CYCLONE5
++
++config TARGET_SOCFPGA_ENCLUSTRA_SA2
++	bool "Enclustra Mercury SA2"
++	select TARGET_SOCFPGA_CYCLONE5
++
+ endchoice
+ 
+ config SYS_BOARD
+@@ -295,6 +307,9 @@ config SYS_BOARD
+ 	default "sr1500" if TARGET_SOCFPGA_SR1500
+ 	default "stratix10-socdk" if TARGET_SOCFPGA_STRATIX10_SOCDK
+ 	default "vining_fpga" if TARGET_SOCFPGA_SOFTING_VINING_FPGA
++	default "mercury_aa1" if TARGET_SOCFPGA_ENCLUSTRA_AA1
++	default "mercury_sa1" if TARGET_SOCFPGA_ENCLUSTRA_SA1
++	default "mercury_sa2" if TARGET_SOCFPGA_ENCLUSTRA_SA2
+ 
+ config SYS_VENDOR
+ 	default "intel" if TARGET_SOCFPGA_AGILEX5_SOCDK
+@@ -316,6 +331,9 @@ config SYS_VENDOR
+ 	default "terasic" if TARGET_SOCFPGA_TERASIC_DE10_NANO
+ 	default "terasic" if TARGET_SOCFPGA_TERASIC_DE10_STANDARD
+ 	default "terasic" if TARGET_SOCFPGA_TERASIC_SOCKIT
++	default "enclustra" if TARGET_SOCFPGA_ENCLUSTRA_AA1
++	default "enclustra" if TARGET_SOCFPGA_ENCLUSTRA_SA1
++	default "enclustra" if TARGET_SOCFPGA_ENCLUSTRA_SA2
+ 
+ config SYS_SOC
+ 	default "socfpga"
+@@ -343,5 +361,8 @@ config SYS_CONFIG_NAME
+ 	default "socfpga_sr1500" if TARGET_SOCFPGA_SR1500
+ 	default "socfpga_stratix10_socdk" if TARGET_SOCFPGA_STRATIX10_SOCDK
+ 	default "socfpga_vining_fpga" if TARGET_SOCFPGA_SOFTING_VINING_FPGA
++	default "socfpga_mercury_aa1" if TARGET_SOCFPGA_ENCLUSTRA_AA1
++	default "socfpga_mercury_sa1" if TARGET_SOCFPGA_ENCLUSTRA_SA1
++	default "socfpga_mercury_sa2" if TARGET_SOCFPGA_ENCLUSTRA_SA2
+ 
+ endif
+diff --git a/board/enclustra/mercury_aa1/Kconfig b/board/enclustra/mercury_aa1/Kconfig
+new file mode 100644
+index 0000000000..d770a48e14
+--- /dev/null
++++ b/board/enclustra/mercury_aa1/Kconfig
+@@ -0,0 +1,15 @@
++if TARGET_SOCFPGA_ENCLUSTRA_AA1
++
++config SYS_CPU
++	default "armv7"
++
++config SYS_BOARD
++	default "mercury_aa1"
++
++config SYS_VENDOR
++	default "enclustra"
++
++config SYS_CONFIG_NAME
++	default "socfpga_mercury_aa1"
++
++endif
+diff --git a/board/enclustra/mercury_aa1/MAINTAINERS b/board/enclustra/mercury_aa1/MAINTAINERS
+new file mode 100644
+index 0000000000..2281876598
+--- /dev/null
++++ b/board/enclustra/mercury_aa1/MAINTAINERS
+@@ -0,0 +1,5 @@
++Enclustra Mercury+ AA1
++M:	<info@enclustra.com>
++S:	Maintained
++F:	board/enclustra/mercury_aa1/
++F:	include/configs/socfpga_mercury_aa1.h
+diff --git a/board/enclustra/mercury_aa1/Makefile b/board/enclustra/mercury_aa1/Makefile
+new file mode 100644
+index 0000000000..2a10231b33
+--- /dev/null
++++ b/board/enclustra/mercury_aa1/Makefile
+@@ -0,0 +1 @@
++obj-y	:= mercury_aa1.o
+diff --git a/board/enclustra/mercury_aa1/bitstream.its b/board/enclustra/mercury_aa1/bitstream.its
+new file mode 100644
+index 0000000000..aa18c2d10d
+--- /dev/null
++++ b/board/enclustra/mercury_aa1/bitstream.its
+@@ -0,0 +1,32 @@
++/dts-v1/;
++
++/ {
++	description = "FIT image with FPGA bistream";
++	#address-cells = <1>;
++
++	images {
++		fpga-periph-1 {
++			description = "FPGA peripheral bitstream";
++			data = /incbin/("bitstream-periph.rbf");
++			type = "fpga";
++			arch = "arm";
++			compression = "none";
++		};
++
++		fpga-core-1 {
++			description = "FPGA core bitstream";
++			data = /incbin/("bitstream-core.rbf");
++			type = "fpga";
++			arch = "arm";
++			compression = "none";
++		};
++	};
++
++	configurations {
++		default = "config-1";
++		config-1 {
++			description = "Boot with FPGA early IO release config";
++			fpga = "fpga-periph-1", "fpga-core-1";
++		};
++	};
++};
+diff --git a/board/enclustra/mercury_aa1/mercury_aa1.c b/board/enclustra/mercury_aa1/mercury_aa1.c
+new file mode 100644
+index 0000000000..47a8c59aa1
+--- /dev/null
++++ b/board/enclustra/mercury_aa1/mercury_aa1.c
+@@ -0,0 +1,278 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Copyright (C) 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#include <common.h>
++#include <command.h>
++#include <env.h>
++#include <init.h>
++#include <dm/uclass.h>
++#include <asm-generic/gpio.h>
++#include <asm/io.h>
++#include <enclustra/eeprom-mac.h>
++#include <enclustra/si5338_config.h>
++
++/* Enclustra vendor ID */
++#define ENCLUSTRA_MAC               0xF7B020
++
++/* Default MAC address */
++#define ENCLUSTRA_ETHADDR_DEFAULT "20:B0:F7:01:02:03"
++#define ENCLUSTRA_ETH1ADDR_DEFAULT "20:B0:F7:01:02:04"
++
++/* Pin muxing */
++#if !defined(CONFIG_SPL_BUILD)
++
++#define ALTERA_NONE 0
++#define ALTERA_MMC 1
++#define ALTERA_QSPI 2
++#define ALTERA_EMMC 3
++#define MMC_CLK_DIV 0x9
++#define QSPI_CLK_DIV 0x384
++#define ALTERA_PINMUX_OFFS 0xffd07200
++#define ALTERA_CLKMGR_MAINPLL_CNTR6CLK_BASE 0xFFD04078
++
++static int altera_current_storage = ALTERA_NONE;
++
++#endif
++
++static struct eeprom_mem eeproms[] = {
++	{ .mac_reader = atsha204_get_mac },
++};
++
++int configure_mac(void)
++{
++	int i;
++	u8 hwaddr[6] = {0, 0, 0, 0, 0, 0};
++	u32 hwaddr_h;
++	char hwaddr_str[18];
++	bool hwaddr_set = false;
++
++#ifdef CONFIG_ENCLUSTRA_EEPROM_MAC
++
++	if (env_get("ethaddr")) {
++		/* Address is already set */
++		return 0;
++	}
++
++	for (i = 0; i < ARRAY_SIZE(eeproms); i++) {
++		if (eeproms[i].mac_reader(hwaddr))
++			continue;
++
++		/* Check if the value is a valid mac registered for
++		 * Enclustra  GmbH
++		 */
++		hwaddr_h = hwaddr[0] | hwaddr[1] << 8 | hwaddr[2] << 16;
++		if ((hwaddr_h & 0xFFFFFF) != ENCLUSTRA_MAC)
++			continue;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("ethaddr", hwaddr_str);
++
++		/* increment MAC addr */
++		hwaddr_h = (hwaddr[3] << 16) | (hwaddr[4] << 8) | hwaddr[5];
++		hwaddr_h = (hwaddr_h + 1) & 0xFFFFFF;
++		hwaddr[3] = (hwaddr_h >> 16) & 0xFF;
++		hwaddr[4] = (hwaddr_h >> 8) & 0xFF;
++		hwaddr[5] = hwaddr_h & 0xFF;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("eth1addr", hwaddr_str);
++
++		hwaddr_set = true;
++		break;
++	}
++
++	if (!hwaddr_set) {
++		env_set("ethaddr", ENCLUSTRA_ETHADDR_DEFAULT);
++		env_set("eth1addr", ENCLUSTRA_ETH1ADDR_DEFAULT);
++	}
++
++#endif
++	return 0;
++}
++
++int board_late_init(void)
++{
++#ifdef CONFIG_SI5338_CONFIGURATION
++	si5338_init();
++#endif
++	int ret;
++	ret = configure_mac();
++	return ret;
++}
++
++#if !defined(CONFIG_SPL_BUILD)
++
++static void set_mux_mmc (void)
++{
++	u32 pinmux_arr[] = {0x0c, 0x8,  // IO4 connected to SDMMC
++                        0x10, 0x8,  // IO5
++                        0x14, 0x8,  // IO6
++                        0x18, 0x8,  // IO7
++                        0x1c, 0x8,  // IO8
++                        0x20, 0x8,  // IO9
++                        0x24, 0xf,  // IO10 connected to GPIO
++                        0x28, 0xf,  // IO11
++                        0x2c, 0xf,  // IO12
++                        0x30, 0xf,  // IO13
++                        0x34, 0xf,  // IO14
++                        0x38, 0xf}; // IO15
++	u32 len, i, offset, value;
++	len = sizeof(pinmux_arr)/sizeof(u32);
++	for (i=0; i<len; i+=2) {
++		offset = pinmux_arr[i];
++		value = pinmux_arr[i+1];
++		writel(value, ALTERA_PINMUX_OFFS + offset);
++	}
++}
++
++static void set_mux_emmc (void)
++{
++	u32 pinmux_arr[] = {0x0c, 0x8,  // IO4
++                        0x10, 0x8,  // IO5
++                        0x14, 0x8,  // IO6
++                        0x18, 0x8,  // IO7
++                        0x1c, 0x8,  // IO8
++                        0x20, 0x8,  // IO9
++                        0x24, 0xf,  // IO10
++                        0x28, 0xf,  // IO11
++                        0x2c, 0x8,  // IO12
++                        0x30, 0x8,  // IO13
++                        0x34, 0x8,  // IO14
++                        0x38, 0x8}; // IO15
++	u32 len, i, offset, value;
++	len = sizeof(pinmux_arr)/sizeof(u32);
++	for (i=0; i<len; i+=2) {
++		offset = pinmux_arr[i];
++		value = pinmux_arr[i+1];
++		writel(value, ALTERA_PINMUX_OFFS + offset);
++	}
++}
++
++static void set_mux_qspi (void)
++{
++	u32 pinmux_arr[] = {0x0c, 0x4,  // IO4 connected to QSPI
++                        0x10, 0x4,  // IO5
++                        0x14, 0x4,  // IO6
++                        0x18, 0x4,  // IO7
++                        0x1c, 0x4,  // IO8
++                        0x20, 0x4,  // IO9
++                        0x24, 0xf,  // IO10
++                        0x28, 0xf,  // IO11
++                        0x2c, 0xf,  // IO12
++                        0x30, 0xf,  // IO13
++                        0x34, 0xf,  // IO14
++                        0x38, 0xf}; // IO15
++	u32 len, i, offset, value;
++	len = sizeof(pinmux_arr)/sizeof(u32);
++	for (i=0; i<len; i+=2) {
++		offset = pinmux_arr[i];
++		value = pinmux_arr[i+1];
++		writel(value, ALTERA_PINMUX_OFFS + offset);
++	}
++}
++
++void altera_set_storage (int store)
++{
++	if (store == altera_current_storage)
++		return;
++
++	unsigned int gpio_flash_sel;
++	unsigned int gpio_flash_oe;
++
++	if (gpio_lookup_name("portb5", NULL, NULL, &gpio_flash_oe))
++	{
++		printf("ERROR: GPIO not found\n");
++		return;
++	}
++
++	if (gpio_request(gpio_flash_oe, "flash_oe"))
++	{
++		printf("ERROR: GPIO request failed\n");
++		return;
++	}
++
++	if (gpio_lookup_name("portc6", NULL, NULL, &gpio_flash_sel))
++	{
++		printf("ERROR: GPIO not found\n");
++		return;
++	}
++
++	if (gpio_request(gpio_flash_sel, "flash_sel"))
++	{
++		printf("ERROR: GPIO request failed\n");
++		return;
++	}
++
++	switch (store)
++	{
++		case ALTERA_MMC:
++			set_mux_mmc();
++			gpio_direction_output(gpio_flash_sel, 0);
++			gpio_direction_output(gpio_flash_oe, 0);
++			altera_current_storage = ALTERA_MMC;
++			writel(MMC_CLK_DIV, ALTERA_CLKMGR_MAINPLL_CNTR6CLK_BASE);
++			break;
++		case ALTERA_EMMC:
++			set_mux_emmc();
++			gpio_direction_output(gpio_flash_sel, 1);
++			gpio_direction_output(gpio_flash_oe, 1);
++			altera_current_storage = ALTERA_EMMC;
++			writel(MMC_CLK_DIV, ALTERA_CLKMGR_MAINPLL_CNTR6CLK_BASE);
++			break;
++		case ALTERA_QSPI:
++			set_mux_qspi();
++			gpio_direction_output(gpio_flash_sel, 1);
++			gpio_direction_output(gpio_flash_oe, 0);
++			altera_current_storage = ALTERA_QSPI;
++			writel(QSPI_CLK_DIV, ALTERA_CLKMGR_MAINPLL_CNTR6CLK_BASE );
++			break;
++		default:
++			altera_current_storage = ALTERA_NONE;
++			break;
++	}
++
++	gpio_free(gpio_flash_sel);
++	gpio_free(gpio_flash_oe);
++}
++
++int altera_set_storage_cmd(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
++{
++	if(argc != 2)
++		return CMD_RET_USAGE;
++	if(!strcmp(argv[1], "MMC"))
++		altera_set_storage(ALTERA_MMC);
++	else if (!strcmp(argv[1], "QSPI"))
++		altera_set_storage(ALTERA_QSPI);
++	else if (!strcmp(argv[1], "EMMC"))
++		altera_set_storage(ALTERA_EMMC);
++	else return CMD_RET_USAGE;
++
++	return CMD_RET_SUCCESS;
++}
++
++U_BOOT_CMD(altera_set_storage, 2, 0, altera_set_storage_cmd, "Set non volatile memory access", "<MMC|QSPI|EMMC> - Set access for the selected memory device");
++
++#endif
+diff --git a/board/enclustra/mercury_sa1/Kconfig b/board/enclustra/mercury_sa1/Kconfig
+new file mode 100644
+index 0000000000..626bb6a7ae
+--- /dev/null
++++ b/board/enclustra/mercury_sa1/Kconfig
+@@ -0,0 +1,15 @@
++if TARGET_SOCFPGA_ENCLUSTRA_SA1
++
++config SYS_CPU
++	default "armv7"
++
++config SYS_BOARD
++	default "mercury_sa1"
++
++config SYS_VENDOR
++	default "enclustra"
++
++config SYS_CONFIG_NAME
++	default "socfpga_mercury_sa1"
++
++endif
+diff --git a/board/enclustra/mercury_sa1/MAINTAINERS b/board/enclustra/mercury_sa1/MAINTAINERS
+new file mode 100644
+index 0000000000..52b69dc9ed
+--- /dev/null
++++ b/board/enclustra/mercury_sa1/MAINTAINERS
+@@ -0,0 +1,5 @@
++Enclustra Mercury SA1
++M:	<info@enclustra.com>
++S:	Maintained
++F:	board/enclustra/mercury_sa1/
++F:	include/configs/socfpga_mercury_sa1.h
+diff --git a/board/enclustra/mercury_sa1/Makefile b/board/enclustra/mercury_sa1/Makefile
+new file mode 100644
+index 0000000000..7d752d0459
+--- /dev/null
++++ b/board/enclustra/mercury_sa1/Makefile
+@@ -0,0 +1 @@
++obj-y	:= mercury_sa1.o
+diff --git a/board/enclustra/mercury_sa1/mercury_sa1.c b/board/enclustra/mercury_sa1/mercury_sa1.c
+new file mode 100644
+index 0000000000..228bbcec23
+--- /dev/null
++++ b/board/enclustra/mercury_sa1/mercury_sa1.c
+@@ -0,0 +1,210 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Copyright (C) 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#include <common.h>
++#include <command.h>
++#include <linux/delay.h>
++#include <env.h>
++#include <init.h>
++#include <dm/uclass.h>
++#include <asm-generic/gpio.h>
++#include <asm/io.h>
++#include <enclustra/eeprom-mac.h>
++#include <enclustra/si5338_config.h>
++
++/* Enclustra vendor ID */
++#define ENCLUSTRA_MAC 0xF7B020
++
++/* Default MAC address */
++#define ENCLUSTRA_ETHADDR_DEFAULT "20:B0:F7:01:02:03"
++#define ENCLUSTRA_ETH1ADDR_DEFAULT "20:B0:F7:01:02:04"
++
++/* Pin muxing */
++#if !defined(CONFIG_SPL_BUILD)
++
++#define GPIO_NR_USB_RESET_N 0
++#define GPIO_NR_ETH_RESET_N 44
++#define GPIO_NR_EMMC_EN_N 53
++
++#define ALTERA_NONE 0
++#define ALTERA_MMC 1
++#define ALTERA_EMMC 2
++
++static int altera_current_storage = ALTERA_NONE;
++
++#endif
++
++static struct eeprom_mem eeproms[] = {
++	{ .mac_reader = ds28_get_mac },
++};
++
++int configure_mac(void)
++{
++	int i;
++	u8 hwaddr[6] = {0, 0, 0, 0, 0, 0};
++	u32 hwaddr_h;
++	char hwaddr_str[18];
++	bool hwaddr_set = false;
++
++#ifdef CONFIG_ENCLUSTRA_EEPROM_MAC
++
++	if (env_get("ethaddr")) {
++		/* Address is already set */
++		return 0;
++	}
++
++	for (i = 0; i < ARRAY_SIZE(eeproms); i++) {
++		if (eeproms[i].mac_reader(hwaddr))
++			continue;
++
++		/* Check if the value is a valid mac registered for
++		 * Enclustra  GmbH
++		 */
++		hwaddr_h = hwaddr[0] | hwaddr[1] << 8 | hwaddr[2] << 16;
++		if ((hwaddr_h & 0xFFFFFF) != ENCLUSTRA_MAC)
++			continue;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("ethaddr", hwaddr_str);
++
++		/* increment MAC addr */
++		hwaddr_h = (hwaddr[3] << 16) | (hwaddr[4] << 8) | hwaddr[5];
++		hwaddr_h = (hwaddr_h + 1) & 0xFFFFFF;
++		hwaddr[3] = (hwaddr_h >> 16) & 0xFF;
++		hwaddr[4] = (hwaddr_h >> 8) & 0xFF;
++		hwaddr[5] = hwaddr_h & 0xFF;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("eth1addr", hwaddr_str);
++
++		hwaddr_set = true;
++		break;
++	}
++
++	if (!hwaddr_set) {
++		env_set("ethaddr", ENCLUSTRA_ETHADDR_DEFAULT);
++		env_set("eth1addr", ENCLUSTRA_ETH1ADDR_DEFAULT);
++	}
++
++#endif
++	return 0;
++}
++
++#if !defined(CONFIG_SPL_BUILD)
++
++void release_eth_reset(void)
++{
++	gpio_direction_output(GPIO_NR_ETH_RESET_N, 1);
++}
++
++void release_usb_reset(void)
++{
++	gpio_direction_output(GPIO_NR_USB_RESET_N, 1);
++}
++
++#endif
++
++int board_early_init_r(void)
++{
++#if !defined(CONFIG_SPL_BUILD)
++	if (gpio_request(GPIO_NR_EMMC_EN_N, "emmc_en_n"))
++	{
++		printf("ERROR: EMMC enable GPIO request failed\n");
++		return -1;
++	}
++
++	if (gpio_request(GPIO_NR_ETH_RESET_N, "eth_reset_n"))
++	{
++		printf("ERROR: ETH reset GPIO request failed\n");
++		return -1;
++	}
++
++	if (gpio_request(GPIO_NR_USB_RESET_N, "usb_reset_n"))
++	{
++		printf("ERROR: USB reset GPIO request failed\n");
++		return -1;
++	}
++
++	release_eth_reset();
++	release_usb_reset();
++	udelay(100);
++
++#endif
++
++	return 0;
++}
++
++int board_late_init(void)
++{
++#ifdef CONFIG_SI5338_CONFIGURATION
++	si5338_init();
++#endif
++
++	int ret;
++	ret = configure_mac();
++
++	return ret;
++}
++
++#if !defined(CONFIG_SPL_BUILD)
++
++void altera_set_storage (int store)
++{
++	if (store == altera_current_storage)
++		return;
++
++	switch (store)
++	{
++		case ALTERA_MMC:
++			gpio_direction_output(GPIO_NR_EMMC_EN_N, 1);
++			altera_current_storage = ALTERA_MMC;
++			break;
++		case ALTERA_EMMC:
++			gpio_direction_output(GPIO_NR_EMMC_EN_N, 0);
++			altera_current_storage = ALTERA_EMMC;
++			break;
++		default:
++			altera_current_storage = ALTERA_NONE;
++			break;
++	}
++}
++
++int altera_set_storage_cmd(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
++{
++	if(argc != 2)
++		return CMD_RET_USAGE;
++	if(!strcmp(argv[1], "MMC"))
++		altera_set_storage(ALTERA_MMC);
++	else if (!strcmp(argv[1], "EMMC"))
++		altera_set_storage(ALTERA_EMMC);
++	else return CMD_RET_USAGE;
++
++	return CMD_RET_SUCCESS;
++}
++
++U_BOOT_CMD(altera_set_storage, 2, 0, altera_set_storage_cmd, "Set non volatile memory access", "<MMC|EMMC> - Set access for the selected memory device");
++
++#endif
+diff --git a/board/enclustra/mercury_sa2/Kconfig b/board/enclustra/mercury_sa2/Kconfig
+new file mode 100644
+index 0000000000..b1451ef70d
+--- /dev/null
++++ b/board/enclustra/mercury_sa2/Kconfig
+@@ -0,0 +1,15 @@
++if TARGET_SOCFPGA_ENCLUSTRA_SA1
++
++config SYS_CPU
++	default "armv7"
++
++config SYS_BOARD
++	default "mercury_sa2"
++
++config SYS_VENDOR
++	default "enclustra"
++
++config SYS_CONFIG_NAME
++	default "socfpga_mercury_sa2"
++
++endif
+diff --git a/board/enclustra/mercury_sa2/MAINTAINERS b/board/enclustra/mercury_sa2/MAINTAINERS
+new file mode 100644
+index 0000000000..b7747cbf68
+--- /dev/null
++++ b/board/enclustra/mercury_sa2/MAINTAINERS
+@@ -0,0 +1,5 @@
++Enclustra Mercury+ SA2
++M:	<info@enclustra.com>
++S:	Maintained
++F:	board/enclustra/mercury_sa2/
++F:	include/configs/socfpga_mercury_sa2.h
+diff --git a/board/enclustra/mercury_sa2/Makefile b/board/enclustra/mercury_sa2/Makefile
+new file mode 100644
+index 0000000000..cb9295dbb3
+--- /dev/null
++++ b/board/enclustra/mercury_sa2/Makefile
+@@ -0,0 +1 @@
++obj-y	:= mercury_sa2.o
+diff --git a/board/enclustra/mercury_sa2/mercury_sa2.c b/board/enclustra/mercury_sa2/mercury_sa2.c
+new file mode 100644
+index 0000000000..deedc14113
+--- /dev/null
++++ b/board/enclustra/mercury_sa2/mercury_sa2.c
+@@ -0,0 +1,157 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Copyright (C) 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#include <common.h>
++#include <command.h>
++#include <linux/delay.h>
++#include <env.h>
++#include <init.h>
++#include <dm/uclass.h>
++#include <asm-generic/gpio.h>
++#include <asm/io.h>
++#include <enclustra/eeprom-mac.h>
++#include <enclustra/si5338_config.h>
++
++/* Enclustra vendor ID */
++#define ENCLUSTRA_MAC 0xF7B020
++
++/* Default MAC address */
++#define ENCLUSTRA_ETHADDR_DEFAULT "20:B0:F7:01:02:03"
++#define ENCLUSTRA_ETH1ADDR_DEFAULT "20:B0:F7:01:02:04"
++
++/* Peripheral reset */
++#if !defined(CONFIG_SPL_BUILD)
++
++#define GPIO_NR_USB_RESET_N 0
++#define GPIO_NR_ETH0_RESET_N 44
++
++#endif
++
++static struct eeprom_mem eeproms[] = {
++	{ .mac_reader = atsha204_get_mac },
++};
++
++int configure_mac(void)
++{
++	int i;
++	u8 hwaddr[6] = {0, 0, 0, 0, 0, 0};
++	u32 hwaddr_h;
++	char hwaddr_str[18];
++	bool hwaddr_set = false;
++
++#ifdef CONFIG_ENCLUSTRA_EEPROM_MAC
++
++	if (env_get("ethaddr")) {
++		/* Address is already set */
++		return 0;
++	}
++
++	for (i = 0; i < ARRAY_SIZE(eeproms); i++) {
++		if (eeproms[i].mac_reader(hwaddr))
++			continue;
++
++		/* Check if the value is a valid mac registered for
++		 * Enclustra  GmbH
++		 */
++		hwaddr_h = hwaddr[0] | hwaddr[1] << 8 | hwaddr[2] << 16;
++		if ((hwaddr_h & 0xFFFFFF) != ENCLUSTRA_MAC)
++			continue;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("ethaddr", hwaddr_str);
++
++		/* increment MAC addr */
++		hwaddr_h = (hwaddr[3] << 16) | (hwaddr[4] << 8) | hwaddr[5];
++		hwaddr_h = (hwaddr_h + 1) & 0xFFFFFF;
++		hwaddr[3] = (hwaddr_h >> 16) & 0xFF;
++		hwaddr[4] = (hwaddr_h >> 8) & 0xFF;
++		hwaddr[5] = hwaddr_h & 0xFF;
++
++		/* Format the address using a string */
++		sprintf(hwaddr_str,
++			"%02X:%02X:%02X:%02X:%02X:%02X",
++			hwaddr[0],
++			hwaddr[1],
++			hwaddr[2],
++			hwaddr[3],
++			hwaddr[4],
++			hwaddr[5]);
++
++		/* Set the actual env variable */
++		env_set("eth1addr", hwaddr_str);
++
++		hwaddr_set = true;
++		break;
++	}
++
++	if (!hwaddr_set) {
++		env_set("ethaddr", ENCLUSTRA_ETHADDR_DEFAULT);
++		env_set("eth1addr", ENCLUSTRA_ETH1ADDR_DEFAULT);
++	}
++
++#endif
++	return 0;
++}
++
++#if !defined(CONFIG_SPL_BUILD)
++
++void release_eth0_reset(void)
++{
++	gpio_direction_output(GPIO_NR_ETH0_RESET_N, 1);
++}
++
++void release_usb_reset(void)
++{
++	gpio_direction_output(GPIO_NR_USB_RESET_N, 1);
++}
++
++#endif
++
++int board_early_init_r(void)
++{
++#if !defined(CONFIG_SPL_BUILD)
++	if (gpio_request(GPIO_NR_ETH0_RESET_N, "eth0_reset_n"))
++	{
++		printf("ERROR: ETH0 reset GPIO request failed\n");
++		return -1;
++	}
++
++	if (gpio_request(GPIO_NR_USB_RESET_N, "usb_reset_n"))
++	{
++		printf("ERROR: USB reset GPIO request failed\n");
++		return -1;
++	}
++
++	release_eth0_reset();
++	release_usb_reset();
++	udelay(100);
++#endif
++
++	return 0;
++}
++
++int board_late_init(void)
++{
++#ifdef CONFIG_SI5338_CONFIGURATION
++	si5338_init();
++#endif
++
++	int ret;
++	ret = configure_mac();
++
++	return ret;
++}
++
+diff --git a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mercury_aa1.h
+new file mode 100644
+index 0000000000..1ce0977dec
+--- /dev/null
++++ b/include/configs/socfpga_mercury_aa1.h
+@@ -0,0 +1,43 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#ifndef __CONFIG_SOCFGPA_MERCURY_AA1_H__
++#define __CONFIG_SOCFGPA_MERCURY_AA1_H__
++
++#include <asm/arch/base_addr_a10.h>
++
++/*
++ * U-Boot general configurations
++ */
++
++/* Memory configurations  */
++#define PHYS_SDRAM_1_SIZE		0x80000000
++
++/*
++ * Serial / UART configurations
++ */
++#define CONFIG_SYS_NS16550_MEM32
++#define CONFIG_SYS_BAUDRATE_TABLE {4800, 9600, 19200, 38400, 57600, 115200}
++#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x100000
++
++/*
++ * L4 OSC1 Timer 0
++ */
++/* reload value when timer count to zero */
++#define TIMER_LOAD_VAL			0xFFFFFFFF
++
++/* The rest of the configuration is shared */
++#include <configs/socfpga_common.h>
++
++/*
++ * L4 Watchdog
++ */
++#ifdef CONFIG_HW_WATCHDOG
++#undef CONFIG_DW_WDT_BASE
++#define CONFIG_DW_WDT_BASE		SOCFPGA_L4WD1_ADDRESS
++#endif
++
++#endif	/* __CONFIG_SOCFGPA_MERCURY_AA1_H__ */
+-- 
+2.34.1
+

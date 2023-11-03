@@ -1,15 +1,27 @@
-From b6289bf5fb894a09886bc47b3ba36bef6c82b47e Mon Sep 17 00:00:00 2001
-From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Tue, 18 Jul 2023 15:51:02 +0200
+From 898513a59774d5e1432085350a1847a790ceea28 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Thu, 7 Sep 2023 13:55:47 +0000
 Subject: [PATCH] Add atsha204a driver with support to read OTP region
 
+Repatched:
+From 3fa4d1db2dfb8fe6c1cb94ee096cd56c93287b6d Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Fri, 14 Oct 2022 18:09:49 +0200
+Subject: [PATCH] Add atsha204a driver with support to read OTP region
+
+- modernize slightly, according to:
+  https://www.kernel.org/doc/Documentation/timers/timers-howto.txt
+
+- Refac: Simplify __init and __exit for i2c by initializer macro
+
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  drivers/staging/Kconfig                     |   2 +
  drivers/staging/Makefile                    |   1 +
  drivers/staging/atsha204-i2c/Kconfig        |  12 +
  drivers/staging/atsha204-i2c/Makefile       |   1 +
- drivers/staging/atsha204-i2c/atsha204-i2c.c | 720 ++++++++++++++++++++
- 5 files changed, 736 insertions(+)
+ drivers/staging/atsha204-i2c/atsha204-i2c.c | 705 ++++++++++++++++++++
+ 5 files changed, 721 insertions(+)
  create mode 100644 drivers/staging/atsha204-i2c/Kconfig
  create mode 100644 drivers/staging/atsha204-i2c/Makefile
  create mode 100644 drivers/staging/atsha204-i2c/atsha204-i2c.c
@@ -62,10 +74,10 @@ index 000000000000..609a6580141a
 +obj-$(CONFIG_ATSHA204_I2C) += atsha204-i2c.o
 diff --git a/drivers/staging/atsha204-i2c/atsha204-i2c.c b/drivers/staging/atsha204-i2c/atsha204-i2c.c
 new file mode 100644
-index 000000000000..8305791ce03e
+index 000000000000..3727327991a1
 --- /dev/null
 +++ b/drivers/staging/atsha204-i2c/atsha204-i2c.c
-@@ -0,0 +1,720 @@
+@@ -0,0 +1,705 @@
 +/* -*- mode: c; c-file-style: "linux" -*- */
 +/*
 +* I2C Driver for Atmel ATSHA204 over I2C
@@ -75,7 +87,7 @@ index 000000000000..8305791ce03e
 +* This program is free software; you can redistribute  it and/or modify it
 +* under the terms of the GNU General Public License version 2 as
 +* published by the Free Software Foundation.
-+ */
++*/
 +#include <linux/module.h>
 +#include <linux/kernel.h>
 +#include <linux/init.h>
@@ -212,7 +224,11 @@ index 000000000000..8305791ce03e
 +		buf[0] = 0;
 +		i2c_transfer(client->adapter, &msg, 1);
 +		/* Delay for tWHI before reading the response. */
-+		udelay(client->addr == 0x60 ? ATECC108_W_HI : ATSHA204_W_HI);
++		if (client->addr == 0x60) {
++			udelay(ATECC108_W_HI);
++		} else {
++			usleep_range((ATSHA204_W_HI - 500), ATSHA204_W_HI);
++		}
 +		/* Read the response. */
 +		if (4 == i2c_master_recv(client, buf, 4)) {
 +			dev_dbg(dev, "Chip is awake\n");
@@ -547,27 +563,9 @@ index 000000000000..8305791ce03e
 +
 +	atsha204_i2c_wakeup(client);
 +	atsha204_i2c_sleep(client);
-+
-+
-+
 +}
 +
 +MODULE_DEVICE_TABLE(i2c, atsha204_i2c_id);
-+
-+static struct i2c_driver atsha204_i2c_driver;
-+
-+static int __init atsha204_i2c_init(void)
-+{
-+	return i2c_add_driver(&atsha204_i2c_driver);
-+}
-+
-+
-+static void __exit atsha204_i2c_driver_cleanup(void)
-+{
-+	i2c_del_driver(&atsha204_i2c_driver);
-+}
-+module_init(atsha204_i2c_init);
-+module_exit(atsha204_i2c_driver_cleanup);
 +
 +static const struct file_operations atsha204_i2c_fops = {
 +	.owner = THIS_MODULE,
@@ -606,7 +604,6 @@ index 000000000000..8305791ce03e
 +						     struct i2c_client *client)
 +{
 +	struct atsha204_chip *chip;
-+	int rc;
 +
 +	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 +	if (chip == NULL)
@@ -640,8 +637,7 @@ index 000000000000..8305791ce03e
 +	return NULL;
 +}
 +
-+int atsha204_i2c_probe(struct i2c_client *client,
-+		       const struct i2c_device_id *id)
++int atsha204_i2c_probe(struct i2c_client *client)
 +{
 +	int result = -1;
 +	struct device *dev = &client->dev;
@@ -774,19 +770,19 @@ index 000000000000..8305791ce03e
 +
 +static struct i2c_driver atsha204_i2c_driver = {
 +	.driver = {
-+		.name = "atsha204a",
++		.name = "atsha204-i2c",
 +		.owner = THIS_MODULE,
 +	},
-+	.probe = atsha204_i2c_probe,
++	.probe_new = atsha204_i2c_probe,
 +	.remove = atsha204_i2c_remove,
 +	.id_table = atsha204_i2c_id,
 +};
++module_i2c_driver(atsha204_i2c_driver);
 +
 +MODULE_AUTHOR("Josh Datko <jbd@cryptotronix.com");
 +MODULE_DESCRIPTION("Atmel ATSHA204 driver");
 +MODULE_VERSION(ATSHA204_I2C_VERSION);
 +MODULE_LICENSE("GPL");
-\ No newline at end of file
 -- 
-2.25.1
+2.34.1
 

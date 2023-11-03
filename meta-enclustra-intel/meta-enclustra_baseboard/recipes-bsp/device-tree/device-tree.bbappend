@@ -25,6 +25,12 @@ FILESEXTRAPATHS:prepend:refdes-sa2-st1 := "${THISDIR}/files/refdes-sa2-st1:"
 
 SRC_URI:append = " file://enclustra_generated.dts"
 
+## TODO use the sdmmc / qspi overlays where needed depending on the ${UBOOT_CONFIG} - implement!!!                    
+## NB: don't replace emmc/sdmmc/qspi here by UBOOT_CONFIG - would fail, if file is not there...
+SRC_URI:append = " file://socfpga_enclustra_mercury_emmc_overlay.dtsi"
+SRC_URI:append = " file://socfpga_enclustra_mercury_sdmmc_overlay.dtsi"
+SRC_URI:append = " file://socfpga_enclustra_mercury_qspi_overlay.dtsi"
+
 SRC_URI:append:pe1-generic = " file://socfpga_enclustra_mercury_pe1.dtsi"
 SRC_URI:append:pe3-generic = " file://socfpga_enclustra_mercury_pe3.dtsi"
 SRC_URI:append:st1-generic = " file://socfpga_enclustra_mercury_st1.dtsi"

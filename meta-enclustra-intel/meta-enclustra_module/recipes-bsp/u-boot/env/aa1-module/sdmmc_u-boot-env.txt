@@ -26,6 +26,7 @@ kernel_addr_r=0x01000000
 fdt_addr_r=0x02000000
 ramdisk_addr_r=0x02300000
 bootm_size=0x0a000000
+ram_addr_bitstream=0x13000000
 
 bootargs-sd=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2
 mmcboot=setenv bootargs ${bootargs-sd}; fatload mmc 0:1 ${RAM_ADDR_BOOT-SCRIPT} boot-sd.scr; source ${RAM_ADDR_BOOT-SCRIPT}

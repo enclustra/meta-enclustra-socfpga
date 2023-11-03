@@ -1,0 +1,3 @@
+&qspi {
+	status = "disabled";
+};

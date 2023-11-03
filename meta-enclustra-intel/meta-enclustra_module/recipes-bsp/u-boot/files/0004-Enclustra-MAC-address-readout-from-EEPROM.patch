@@ -1,9 +1,8 @@
-From 19a00c9aae7750ba36e527665f00e2358359c47d Mon Sep 17 00:00:00 2001
+From 052c1e6a083c3a0206e171e0788e7adbcf91c9f7 Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
-Date: Mon, 4 Sep 2023 16:46:44 +0000
+Date: Fri, 3 Nov 2023 13:57:01 +0000
 Subject: [PATCH 4/5] Enclustra MAC address readout from EEPROM
 
-Repatched:
 From 061b0fa215cd17034845c03cd6ca83f5810b0e0f Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Wed, 19 Jul 2023 15:43:03 +0200
@@ -11,14 +10,37 @@ Subject: [PATCH] Enclustra MAC address readout from EEPROM
 
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
- drivers/misc/Kconfig           |  8 +++++
- drivers/misc/Makefile          |  1 +
- drivers/misc/eeprom-mac.c      | 60 ++++++++++++++++++++++++++++++++++
- include/enclustra/eeprom-mac.h | 11 +++++++
- 4 files changed, 80 insertions(+)
+ board/enclustra/mercury_aa1/mercury_aa1.c |  4 -
+ drivers/misc/Kconfig                      |  8 ++
+ drivers/misc/Makefile                     |  1 +
+ drivers/misc/eeprom-mac.c                 | 98 +++++++++++++++++++++++
+ include/enclustra/eeprom-mac.h            | 14 ++++
+ 5 files changed, 121 insertions(+), 4 deletions(-)
  create mode 100644 drivers/misc/eeprom-mac.c
  create mode 100644 include/enclustra/eeprom-mac.h
 
+diff --git a/board/enclustra/mercury_aa1/mercury_aa1.c b/board/enclustra/mercury_aa1/mercury_aa1.c
+index 47a8c59aa1..3bba96c3c0 100644
+--- a/board/enclustra/mercury_aa1/mercury_aa1.c
++++ b/board/enclustra/mercury_aa1/mercury_aa1.c
+@@ -12,7 +12,6 @@
+ #include <asm-generic/gpio.h>
+ #include <asm/io.h>
+ #include <enclustra/eeprom-mac.h>
+-#include <enclustra/si5338_config.h>
+ 
+ /* Enclustra vendor ID */
+ #define ENCLUSTRA_MAC               0xF7B020
+@@ -115,9 +114,6 @@ int configure_mac(void)
+ 
+ int board_late_init(void)
+ {
+-#ifdef CONFIG_SI5338_CONFIGURATION
+-	si5338_init();
+-#endif
+ 	int ret;
+ 	ret = configure_mac();
+ 	return ret;
 diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
 index d9da836675..0643c7ab9b 100644
 --- a/drivers/misc/Kconfig
@@ -52,16 +74,36 @@ index 183d92b6e0..938f1a76f1 100644
  obj-$(CONFIG_FSL_IIM) += fsl_iim.o
 diff --git a/drivers/misc/eeprom-mac.c b/drivers/misc/eeprom-mac.c
 new file mode 100644
-index 0000000000..d27865297d
+index 0000000000..e4d737b339
 --- /dev/null
 +++ b/drivers/misc/eeprom-mac.c
-@@ -0,0 +1,60 @@
+@@ -0,0 +1,98 @@
 +#include <common.h>
 +#include <linux/compat.h>
 +#include <dm.h>
 +#include <i2c.h>
 +#include <enclustra/eeprom-mac.h>
 +#include <atsha204a-i2c.h>
++
++static int i2c_get_device(uint chip_addr, int alen, struct udevice **devp)
++{
++	struct dm_i2c_chip *chip;
++	int ret;
++
++	ret = i2c_get_chip_for_busnum(DS28_SYS_I2C_EEPROM_BUS, chip_addr,
++			alen, devp);
++	if (ret)
++		return ret;
++
++	chip = dev_get_parent_plat(*devp);
++	if (chip->offset_len != alen) {
++		printf("I2C chip %x: requested alen %d does not match chip "
++			"offset_len %d\n", chip_addr, alen, chip->offset_len);
++		return -EADDRNOTAVAIL;
++	}
++
++	return 0;
++}
 +
 +static struct udevice *get_atsha204a_dev(void)
 +{
@@ -75,6 +117,22 @@ index 0000000000..d27865297d
 +	return dev;
 +}
 +
++int ds28_get_mac(u8 *buffer)
++{
++	int ret;
++	struct udevice *dev;
++
++	ret = i2c_get_device(DS28_I2C_ADDR, 1, &dev);
++	if (ret != 0)
++		return ret;
++
++	return dm_i2c_read(dev,
++			0x10,
++			buffer,
++			6);
++}
++EXPORT_SYMBOL_GPL(ds28_get_mac);
++
 +int atsha204_get_mac(u8 *buffer)
 +{
 +	int ret;
@@ -86,6 +144,8 @@ index 0000000000..d27865297d
 +		return -ENODEV;
 +
 +#ifdef CONFIG_ATSHA204A
++	/* We put the device to sleep first, to make sure it is in a defined state */
++	atsha204a_sleep(dev);
 +	ret = atsha204a_wakeup(dev);
 +
 +	if (ret)
@@ -118,20 +178,23 @@ index 0000000000..d27865297d
 +EXPORT_SYMBOL_GPL(atsha204_get_mac);
 diff --git a/include/enclustra/eeprom-mac.h b/include/enclustra/eeprom-mac.h
 new file mode 100644
-index 0000000000..3ec69ca3a3
+index 0000000000..4d84b880ee
 --- /dev/null
 +++ b/include/enclustra/eeprom-mac.h
-@@ -0,0 +1,11 @@
+@@ -0,0 +1,14 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
-+ * (C) Copyright 2021 Enclustra GmbH
++ * (C) Copyright 2023 Enclustra GmbH
 + * <info@enclustra.com>
 + */
++#define DS28_I2C_ADDR 0x5C
++#define DS28_SYS_I2C_EEPROM_BUS 0
 +
 +struct eeprom_mem {
 +    int (*mac_reader)(u8 *buffer);
 +};
 +
++int ds28_get_mac(u8 *buffer);
 +int atsha204_get_mac(u8 *buffer);
 -- 
 2.34.1

@@ -1,8 +1,14 @@
+From 113a28a0897cf4aeb6c21d84980419693fe0dc8f Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Fri, 3 Nov 2023 14:13:10 +0000
+Subject: [PATCH 5/5] SI5338-configuration
+
 From 0dc8cc688d3dbaf529fc03493354ec5afd26b997 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Wed, 19 Jul 2023 19:00:43 +0200
 Subject: [PATCH 5/5] SI5338 configuration
 
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  board/enclustra/mercury_aa1/mercury_aa1.c |   4 +
  drivers/misc/Kconfig                      |   6 +
@@ -16,18 +22,18 @@ Subject: [PATCH 5/5] SI5338 configuration
  create mode 100644 include/enclustra/si5338_config.h
 
 diff --git a/board/enclustra/mercury_aa1/mercury_aa1.c b/board/enclustra/mercury_aa1/mercury_aa1.c
-index ebff861fe1..8dbf7db059 100644
+index 3bba96c3c0..47a8c59aa1 100644
 --- a/board/enclustra/mercury_aa1/mercury_aa1.c
 +++ b/board/enclustra/mercury_aa1/mercury_aa1.c
-@@ -9,6 +9,7 @@
- #include <init.h>
+@@ -12,6 +12,7 @@
+ #include <asm-generic/gpio.h>
  #include <asm/io.h>
  #include <enclustra/eeprom-mac.h>
 +#include <enclustra/si5338_config.h>
  
  /* Enclustra vendor ID */
  #define ENCLUSTRA_MAC               0xF7B020
-@@ -95,6 +96,9 @@ int configure_mac(void)
+@@ -114,6 +115,9 @@ int configure_mac(void)
  
  int board_late_init(void)
  {

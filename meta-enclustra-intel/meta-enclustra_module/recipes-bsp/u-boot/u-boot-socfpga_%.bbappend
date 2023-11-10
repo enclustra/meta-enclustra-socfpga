@@ -8,6 +8,11 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files/devicetree:"
 
 ## TODO currently probably not needed   
 DEPENDS:append = " hw-ref-design"
+
+
+## TODO use .h files instead of u-boot-socfpga-env approach - not working out here                                        
+
+
 DEPENDS:append = " u-boot-socfpga-env"
 DEPENDS:append = " xxd-native"
 

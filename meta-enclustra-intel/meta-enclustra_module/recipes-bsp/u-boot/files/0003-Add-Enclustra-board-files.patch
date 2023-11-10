@@ -1,16 +1,15 @@
-From 7bd085949d82e743ec6d6983457c620533ff8011 Mon Sep 17 00:00:00 2001
-From: Lothar Rubusch <lothar.rubusch@enclustra.com>
-Date: Fri, 3 Nov 2023 13:12:16 +0000
-Subject: [PATCH 3/5] Add Enclustra board files
-
-From cba91822fc222545636950761493712c035b82d4 Mon Sep 17 00:00:00 2001
+From 99b3ba01109b282a8f55cbcba74b428f29fccf17 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Wed, 19 Jul 2023 18:14:49 +0200
-Subject: [PATCH 3/5] AA1 board files added
+Subject: [PATCH] AA1 board files added
 
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  arch/arm/mach-socfpga/Kconfig             |  21 ++
+ board/enclustra/bootscripts/qspi-aa1.cmd  |   7 +
+ board/enclustra/bootscripts/qspi.cmd      |   9 +
+ board/enclustra/bootscripts/sd-aa1.cmd    |   5 +
+ board/enclustra/bootscripts/sd.cmd        |   7 +
  board/enclustra/mercury_aa1/Kconfig       |  15 ++
  board/enclustra/mercury_aa1/MAINTAINERS   |   5 +
  board/enclustra/mercury_aa1/Makefile      |   1 +
@@ -24,8 +23,14 @@ Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
  board/enclustra/mercury_sa2/MAINTAINERS   |   5 +
  board/enclustra/mercury_sa2/Makefile      |   1 +
  board/enclustra/mercury_sa2/mercury_sa2.c | 157 ++++++++++++
- include/configs/socfpga_mercury_aa1.h     |  43 ++++
- 15 files changed, 804 insertions(+)
+ include/configs/socfpga_mercury_aa1.h     |  71 ++++++
+ include/configs/socfpga_mercury_sa1.h     |  47 ++++
+ include/configs/socfpga_mercury_sa2.h     |  47 ++++
+ 21 files changed, 954 insertions(+)
+ create mode 100644 board/enclustra/bootscripts/qspi-aa1.cmd
+ create mode 100644 board/enclustra/bootscripts/qspi.cmd
+ create mode 100644 board/enclustra/bootscripts/sd-aa1.cmd
+ create mode 100644 board/enclustra/bootscripts/sd.cmd
  create mode 100644 board/enclustra/mercury_aa1/Kconfig
  create mode 100644 board/enclustra/mercury_aa1/MAINTAINERS
  create mode 100644 board/enclustra/mercury_aa1/Makefile
@@ -40,6 +45,8 @@ Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
  create mode 100644 board/enclustra/mercury_sa2/Makefile
  create mode 100644 board/enclustra/mercury_sa2/mercury_sa2.c
  create mode 100644 include/configs/socfpga_mercury_aa1.h
+ create mode 100644 include/configs/socfpga_mercury_sa1.h
+ create mode 100644 include/configs/socfpga_mercury_sa2.h
 
 diff --git a/arch/arm/mach-socfpga/Kconfig b/arch/arm/mach-socfpga/Kconfig
 index 71eda42dfb..8619947c73 100644
@@ -93,6 +100,58 @@ index 71eda42dfb..8619947c73 100644
 +	default "socfpga_mercury_sa2" if TARGET_SOCFPGA_ENCLUSTRA_SA2
  
  endif
+diff --git a/board/enclustra/bootscripts/qspi-aa1.cmd b/board/enclustra/bootscripts/qspi-aa1.cmd
+new file mode 100644
+index 0000000000..01740f720c
+--- /dev/null
++++ b/board/enclustra/bootscripts/qspi-aa1.cmd
+@@ -0,0 +1,7 @@
++bridge enable HPS-to-FPGA
++bridge enable FPGA-to-HPS
++sf probe
++sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
++sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
++sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
++bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
+diff --git a/board/enclustra/bootscripts/qspi.cmd b/board/enclustra/bootscripts/qspi.cmd
+new file mode 100644
+index 0000000000..dc3f47760c
+--- /dev/null
++++ b/board/enclustra/bootscripts/qspi.cmd
+@@ -0,0 +1,9 @@
++sf probe
++sf read ${ram_addr_bitstream} ${qspi_offset_addr_bitstream} ${size_bitstream}
++fpga load 0 ${ram_addr_bitstream} ${size_bitstream}
++bridge enable HPS-to-FPGA
++bridge enable FPGA-to-HPS
++sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
++sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
++sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
++bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
+diff --git a/board/enclustra/bootscripts/sd-aa1.cmd b/board/enclustra/bootscripts/sd-aa1.cmd
+new file mode 100644
+index 0000000000..bc6ccd58bf
+--- /dev/null
++++ b/board/enclustra/bootscripts/sd-aa1.cmd
+@@ -0,0 +1,5 @@
++bridge enable HPS-to-FPGA
++bridge enable FPGA-to-HPS
++fatload mmc 0:1 ${ram_addr_kernel} uImage
++fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
++bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
+diff --git a/board/enclustra/bootscripts/sd.cmd b/board/enclustra/bootscripts/sd.cmd
+new file mode 100644
+index 0000000000..aceca34015
+--- /dev/null
++++ b/board/enclustra/bootscripts/sd.cmd
+@@ -0,0 +1,7 @@
++fatload mmc 0:1 ${ram_addr_bitstream} fpga.rbf
++fpga load 0 ${ram_addr_bitstream} 0x${filesize}
++bridge enable HPS-to-FPGA;
++bridge enable FPGA-to-HPS
++fatload mmc 0:1 ${ram_addr_kernel} uImage
++fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
++bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
 diff --git a/board/enclustra/mercury_aa1/Kconfig b/board/enclustra/mercury_aa1/Kconfig
 new file mode 100644
 index 0000000000..d770a48e14
@@ -913,10 +972,10 @@ index 0000000000..deedc14113
 +
 diff --git a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mercury_aa1.h
 new file mode 100644
-index 0000000000..1ce0977dec
+index 0000000000..da4bdc586b
 --- /dev/null
 +++ b/include/configs/socfpga_mercury_aa1.h
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,71 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2023 Enclustra GmbH
@@ -942,6 +1001,34 @@ index 0000000000..1ce0977dec
 +#define CONFIG_SYS_BAUDRATE_TABLE {4800, 9600, 19200, 38400, 57600, 115200}
 +#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x100000
 +
++/* U-Boot environment */
++#define SOCFPGA_BOOT_SETTINGS \
++    "qspi_offset_addr_spl=0x0\0" \
++    "qspi_offset_addr_u-boot=0x100000\0" \
++    "qspi_offset_addr_u-boot-env=0x180000\0" \
++    "qspi_offset_addr_boot-script=0x200000\0" \
++    "qspi_offset_addr_devicetree=0x280000\0" \
++    "qspi_offset_addr_bitstream=0x300000\0" \
++    "qspi_offset_addr_kernel=0x1000000\0" \
++    "qspi_offset_addr_rootfs=0x2000000\0" \
++    "size_spl=0x100000\0" \
++    "size_u-boot=0x80000\0" \
++    "size_u-boot-env=0x80000\0" \
++    "size_boot-script=0x80000\0" \
++    "size_devicetree=0x80000\0" \
++    "size_bitstream=0xD00000\0" \
++    "size_kernel=0x1000000\0" \
++    "size_rootfs=0x2000000\0" \
++    "ram_addr_rootfs=0x12000000\0" \
++    "ram_addr_kernel=0x11000000\0" \
++    "ram_addr_devicetree=0x10000000\0" \
++    "ram_addr_boot-script=0x10800000\0" \
++    "bootm_size=0x0a000000\0" \
++    "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3\0" \
++    "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
++    "qspiboot=source ${ram_addr_boot-script}\0"
++
 +/*
 + * L4 OSC1 Timer 0
 + */
@@ -960,6 +1047,112 @@ index 0000000000..1ce0977dec
 +#endif
 +
 +#endif	/* __CONFIG_SOCFGPA_MERCURY_AA1_H__ */
+diff --git a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mercury_sa1.h
+new file mode 100644
+index 0000000000..23b9aa3462
+--- /dev/null
++++ b/include/configs/socfpga_mercury_sa1.h
+@@ -0,0 +1,47 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#ifndef __CONFIG_SOCFGPA_MERCURY_SA1_H__
++#define __CONFIG_SOCFGPA_MERCURY_SA1_H__
++
++#include <asm/arch/base_addr_ac5.h>
++
++/* Memory configurations */
++#define PHYS_SDRAM_1_SIZE		0x40000000
++
++/* U-Boot environment */
++#define SOCFPGA_BOOT_SETTINGS \
++    "qspi_offset_addr_spl=0x0\0" \
++    "qspi_offset_addr_u-boot=0x100000\0" \
++    "qspi_offset_addr_u-boot-env=0x180000\0" \
++    "qspi_offset_addr_boot-script=0x200000\0" \
++    "qspi_offset_addr_devicetree=0x280000\0" \
++    "qspi_offset_addr_bitstream=0x300000\0" \
++    "qspi_offset_addr_kernel=0x1000000\0" \
++    "qspi_offset_addr_rootfs=0x2000000\0" \
++    "size_spl=0x100000\0" \
++    "size_u-boot=0x80000\0" \
++    "size_u-boot-env=0x80000\0" \
++    "size_boot-script=0x80000\0" \
++    "size_devicetree=0x80000\0" \
++    "size_bitstream=0xD00000\0" \
++    "size_kernel=0x1000000\0" \
++    "size_rootfs=0x2000000\0" \
++    "ram_addr_bitstream=0x13000000\0" \
++    "ram_addr_rootfs=0x12000000\0" \
++    "ram_addr_kernel=0x11000000\0" \
++    "ram_addr_devicetree=0x10000000\0" \
++    "ram_addr_boot-script=0x10800000\0" \
++    "bootm_size=0x0a000000\0" \
++    "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
++    "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
++    "qspiboot=source ${ram_addr_boot-script}\0"
++
++/* The rest of the configuration is shared */
++#include <configs/socfpga_common.h>
++
++#endif	/* __CONFIG_SOCFGPA_MERCURY_SA1_H__ */
+diff --git a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mercury_sa2.h
+new file mode 100644
+index 0000000000..2635756b9c
+--- /dev/null
++++ b/include/configs/socfpga_mercury_sa2.h
+@@ -0,0 +1,47 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2023 Enclustra GmbH
++ * <info@enclustra.com>
++ */
++
++#ifndef __CONFIG_SOCFGPA_MERCURY_SA2_H__
++#define __CONFIG_SOCFGPA_MERCURY_SA2_H__
++
++#include <asm/arch/base_addr_ac5.h>
++
++/* Memory configurations */
++#define PHYS_SDRAM_1_SIZE		0x40000000
++
++/* U-Boot environment */
++#define SOCFPGA_BOOT_SETTINGS \
++    "qspi_offset_addr_spl=0x0\0" \
++    "qspi_offset_addr_u-boot=0x100000\0" \
++    "qspi_offset_addr_u-boot-env=0x180000\0" \
++    "qspi_offset_addr_boot-script=0x200000\0" \
++    "qspi_offset_addr_devicetree=0x280000\0" \
++    "qspi_offset_addr_bitstream=0x300000\0" \
++    "qspi_offset_addr_kernel=0x1000000\0" \
++    "qspi_offset_addr_rootfs=0x2000000\0" \
++    "size_spl=0x100000\0" \
++    "size_u-boot=0x80000\0" \
++    "size_u-boot-env=0x80000\0" \
++    "size_boot-script=0x80000\0" \
++    "size_devicetree=0x80000\0" \
++    "size_bitstream=0xD00000\0" \
++    "size_kernel=0x1000000\0" \
++    "size_rootfs=0x2000000\0" \
++    "ram_addr_bitstream=0x13000000\0" \
++    "ram_addr_rootfs=0x12000000\0" \
++    "ram_addr_kernel=0x11000000\0" \
++    "ram_addr_devicetree=0x10000000\0" \
++    "ram_addr_boot-script=0x10800000\0" \
++    "bootm_size=0x0a000000\0" \
++    "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
++    "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
++    "qspiboot=source ${ram_addr_boot-script}\0"
++
++/* The rest of the configuration is shared */
++#include <configs/socfpga_common.h>
++
++#endif	/* __CONFIG_SOCFGPA_MERCURY_SA2_H__ */
 -- 
 2.34.1
 

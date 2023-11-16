@@ -15,14 +15,14 @@ repos:
 #2022-10.4-langdale
         layers:
             .: excluded
-    
+
     openembedded-core:
         url: "https://git.openembedded.org/openembedded-core"
         refspec: 2023-04.2-mickledore
 #2022-10.4-langdale
         layers:
             meta:
-    
+
     meta-intel-fpga:
         url: "https://git.yoctoproject.org/meta-intel-fpga"
         refspec: mickledore

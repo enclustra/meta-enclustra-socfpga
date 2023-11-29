@@ -1,15 +1,16 @@
-From 6862058608a26fc2e9a7aa795bf8bbafcd654bf4 Mon Sep 17 00:00:00 2001
+From 91ef61ca1016c30073dc9556186a43bc11f972a3 Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
-Date: Fri, 3 Nov 2023 12:54:45 +0000
-Subject: [PATCH 1/5] Add Enclustra devicetree to Makefile
+Date: Fri, 24 Nov 2023 08:47:08 +0000
+Subject: [PATCH 1/8] Add Enclustra devicetree to Makefile
 
+Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  arch/arm/dts/Makefile | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 62d48b4a45..ea79c4304c 100644
+index 62d48b4a45..83f579713c 100644
 --- a/arch/arm/dts/Makefile
 +++ b/arch/arm/dts/Makefile
 @@ -457,7 +457,8 @@ dtb-$(CONFIG_ARCH_SOCFPGA) +=				\
@@ -17,8 +18,8 @@ index 62d48b4a45..ea79c4304c 100644
  	socfpga_stratix10_socdk.dtb			\
  	socfpga_stratix10_socdk_nand.dtb                \
 -	socfpga_stratix10_socdk_qspi.dtb
-+	socfpga_stratix10_socdk_qspi.dtb	\
-+	enclustra_generated.dtb
++	socfpga_stratix10_socdk_qspi.dtb		\
++	enclustra_generated.dtb				\
  
  dtb-$(CONFIG_TARGET_DRA7XX_EVM) += dra72-evm.dtb dra7-evm.dtb	\
  	dra72-evm-revc.dtb dra71-evm.dtb dra76-evm.dtb

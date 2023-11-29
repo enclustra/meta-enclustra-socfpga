@@ -1,0 +1,54 @@
+From cc66d65ff70a391c81bfd1348ea5792f154db488 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Fri, 24 Nov 2023 17:35:44 +0000
+Subject: [PATCH] yocto: adjust rootfs partition to wic image layout
+
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
+---
+ include/configs/socfpga_mercury_aa1.h | 2 +-
+ include/configs/socfpga_mercury_sa1.h | 2 +-
+ include/configs/socfpga_mercury_sa2.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mercury_aa1.h
+index da4bdc586b..6e0a5c86cd 100644
+--- a/include/configs/socfpga_mercury_aa1.h
++++ b/include/configs/socfpga_mercury_aa1.h
+@@ -47,7 +47,7 @@
+     "ram_addr_boot-script=0x10800000\0" \
+     "bootm_size=0x0a000000\0" \
+     "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
+-    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2\0" \
+     "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
+     "qspiboot=source ${ram_addr_boot-script}\0"
+ 
+diff --git a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mercury_sa1.h
+index 23b9aa3462..e464b937e7 100644
+--- a/include/configs/socfpga_mercury_sa1.h
++++ b/include/configs/socfpga_mercury_sa1.h
+@@ -37,7 +37,7 @@
+     "ram_addr_boot-script=0x10800000\0" \
+     "bootm_size=0x0a000000\0" \
+     "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
+-    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p2\0" \
+     "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
+     "qspiboot=source ${ram_addr_boot-script}\0"
+ 
+diff --git a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mercury_sa2.h
+index 2635756b9c..209e2d6762 100644
+--- a/include/configs/socfpga_mercury_sa2.h
++++ b/include/configs/socfpga_mercury_sa2.h
+@@ -37,7 +37,7 @@
+     "ram_addr_boot-script=0x10800000\0" \
+     "bootm_size=0x0a000000\0" \
+     "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
+-    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p2\0" \
+     "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
+     "qspiboot=source ${ram_addr_boot-script}\0"
+ 
+-- 
+2.34.1
+

@@ -19,12 +19,16 @@ DEPENDS:append = " xxd-native"
 SRC_URI:append = " \
     file://fit_spl_fpga.its \
     file://0001-Add-Enclustra-devicetree-to-Makefile.patch \
-    file://0002-Make-intel-scripts-python3-compatible.patch \
+    file://0002-Make-intel-scripts-python-3-compatible.patch \
     file://0003-Add-Enclustra-board-files.patch \
     file://0004-Enclustra-MAC-address-readout-from-EEPROM.patch \
-    file://0005-SI5338-configuration.patch \
+    file://0005-Add-SI5338-configuration.patch \
+    file://0100-yocto-adjust-rootfs-partition-to-wic-image-layout.patch \
     file://Si5338-RevB-Registers.h \
 "
+
+## TODO check if this is also needed or not           
+#     file://0008-Rest-Remaining-u-boot-changesets.patch 
 
 ## TODO to be extended by more UBOOT_CONFIG modes
 SRC_URI:append:aa1-module = " \

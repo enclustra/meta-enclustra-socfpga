@@ -1,10 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+/*
+ * Copyright (C) 2023 Enclustra GmbH - https://www.enclustra.com
+ */
+
 /dts-v1/;
 
-#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
 #include "socfpga_arria10.dtsi"
 #include "socfpga_arria10-u-boot.dtsi"
 #include "socfpga_arria10_handoff.h"
 #include "socfpga_arria10-handoff.dtsi"
 #include "socfpga_arria10_handoff_u-boot.dtsi"
 #include "socfpga_enclustra_mercury_aa1.dtsi"
-#include "socfpga_enclustra_mercury_aa1_UBOOT_CONFIG_boot.dtsi"
+#include "socfpga_enclustra_mercury_aa1_mmc_boot.dtsi"
+#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
+
+// TODO legacy
+//#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
+//#include "socfpga_arria10.dtsi"
+//#include "socfpga_arria10-u-boot.dtsi"
+//#include "socfpga_arria10_handoff.h"
+//#include "socfpga_arria10-handoff.dtsi"
+//#include "socfpga_arria10_handoff_u-boot.dtsi"
+//#include "socfpga_enclustra_mercury_aa1.dtsi"
+//#include "socfpga_enclustra_mercury_aa1_UBOOT_CONFIG_boot.dtsi"

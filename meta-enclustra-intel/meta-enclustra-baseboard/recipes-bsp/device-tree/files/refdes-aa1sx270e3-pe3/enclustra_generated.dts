@@ -1,11 +1,22 @@
-// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
 /*
- * Copyright (C) 2023 Enclustra GmbH
+ * Copyright (C) 2023 Enclustra GmbH - https://www.enclustra.com
  */
 
 /dts-v1/;
 
-#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
 #include "socfpga_arria10.dtsi"
 #include "socfpga_enclustra_mercury_aa1.dtsi"
 #include "socfpga_enclustra_mercury_pe3.dtsi"
+// TODO needed here? or dynamic overlay and fix in u-boot?
+// TODO should be socfpga_enclustra_mercury_emmc_overlay.dtsi
+// TODO should be socfpga_enclustra_mercury_sdmmc_overlay.dtsi
+// TODO should be socfpga_enclustra_mercury_qspi_overlay.dtsi
+//#include "socfpga_enclustra_mercury_aa1_mmc_boot.dtsi"
+#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
+
+// TODO legacy
+//#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
+//#include "socfpga_arria10.dtsi"
+//#include "socfpga_enclustra_mercury_aa1.dtsi"
+//#include "socfpga_enclustra_mercury_pe3.dtsi"

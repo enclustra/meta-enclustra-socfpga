@@ -1,10 +1,9 @@
-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
 /*
- * Copyright (C) 2022 Enclustra GmbH
- * <info@enclustra.com>
+ * Copyright (C) 2023 Enclustra GmbH - https://www.enclustra.com
  */
 
-&i2c1 {
+&i2c_encl {
 
 	i2c-mux@74 {
 		status = "okay";

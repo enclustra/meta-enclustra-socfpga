@@ -32,7 +32,7 @@ SRC_URI:append = " \
 
 ## TODO to be extended by more UBOOT_CONFIG modes
 SRC_URI:append:aa1-module = " \
-    file://socfpga_mercury_aa1_sdmmc_defconfig \
+    file://socfpga_enclustra_mercury_aa1_sdmmc_defconfig \
     file://socfpga_enclustra_mercury_aa1.dtsi \
     file://socfpga_enclustra_mercury_aa1_${UBOOT_CONFIG}_boot.dtsi \
 "
@@ -50,14 +50,14 @@ SRC_URI:append:aa1sx480i2-module = " \
 "
 
 SRC_URI:append:sa1-module = " \
-    file://socfpga_mercury_sa1_${UBOOT_CONFIG}_defconfig \
+    file://socfpga_enclustra_mercury_sa1_${UBOOT_CONFIG}_defconfig \
     file://ME-SA1-C6-7I-D10.dtsi \
     file://socfpga_enclustra_mercury_sa1.dtsi \
 "
 
 # TODO .dtsi files missing for sa2
 SRC_URI:append:sa2-module = " \
-    file://socfpga_mercury_sa2_${UBOOT_CONFIG}_defconfig \
+    file://socfpga_enclustra_mercury_sa2_${UBOOT_CONFIG}_defconfig \
 "
 
 ## TODO adds aa1/sa1/sa2 files - possible to overload?
@@ -68,7 +68,7 @@ do_add_enclustra_files() {
 do_add_enclustra_files:append:aa1-module() {
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_${UBOOT_CONFIG}_boot.dtsi ${S}/arch/arm/dts
-    cp ${WORKDIR}/socfpga_mercury_aa1_${UBOOT_CONFIG}_defconfig ${S}/configs
+    cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_${UBOOT_CONFIG}_defconfig ${S}/configs
 
 ## TODO rm    
 #    cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_mmc_boot.dtsi ${S}/arch/arm/dts
@@ -97,17 +97,17 @@ do_add_enclustra_files:append:sa1-module() {
     cp ${WORKDIR}/socfpga_enclustra_mercury_sa1.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_mercury_sa1_${UBOOT_CONFIG}_defconfig ${S}/configs
 
-#    cp ${WORKDIR}/socfpga_mercury_sa1_emmc_defconfig ${S}/configs
-#    cp ${WORKDIR}/socfpga_mercury_sa1_qspi_defconfig ${S}/configs
-#    cp ${WORKDIR}/socfpga_mercury_sa1_sdmmc_defconfig ${S}/configs
+#    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1_emmc_defconfig ${S}/configs
+#    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1_qspi_defconfig ${S}/configs
+#    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1_sdmmc_defconfig ${S}/configs
 }
 
 do_add_enclustra_files:append:sa2-module() {
 # TODO dts                                           
-    cp ${WORKDIR}/socfpga_mercury_sa2_${UBOOT_CONFIG}_defconfig ${S}/configs
+    cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_${UBOOT_CONFIG}_defconfig ${S}/configs
 
-#    cp ${WORKDIR}/socfpga_mercury_sa2_qspi_defconfig ${S}/configs
-#    cp ${WORKDIR}/socfpga_mercury_sa2_sdmmc_defconfig ${S}/configs
+#    cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_qspi_defconfig ${S}/configs
+#    cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_sdmmc_defconfig ${S}/configs
 }
 addtask do_add_enclustra_files after do_patch before do_configure
 

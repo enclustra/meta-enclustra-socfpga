@@ -6,6 +6,7 @@ LICENSE = "MIT & GPL-2.0-only"
 FILESEXTRAPATHS:prepend = "${THISDIR}/files:"
 
 ## TODO decide where to place the (sd)mmc overlay and naming         
+## TODO either use "_sdmmc_boot.dtsi" - or _sdmmc_overlay.dtsi in baseboard layer                    
 SRC_URI:append:aa1-module = " file://socfpga_enclustra_mercury_aa1.dtsi file://socfpga_enclustra_mercury_aa1_sdmmc_boot.dtsi file://socfpga_enclustra_mercury_sdmmc_overlay.dtsi"
 SRC_URI:append:sa1-module = " file://socfpga_enclustra_mercury_sa1.dtsi file://ME-SA1-C6-7I-D10.dtsi"
 SRC_URI:append:sa2-module = " file://socfpga_enclustra_mercury_sa2.dtsi"

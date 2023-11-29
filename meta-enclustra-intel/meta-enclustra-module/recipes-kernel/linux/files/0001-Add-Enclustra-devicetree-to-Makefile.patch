@@ -1,0 +1,25 @@
+From f2ed93fe06191c2e578a1405efd092ed2520ce89 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Fri, 24 Nov 2023 14:40:43 +0000
+Subject: [PATCH 1/5] Add Enclustra devicetree to Makefile
+
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
+---
+ arch/arm/boot/dts/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 6aa7dc4db2fc..f3f05df293b1 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1170,6 +1170,7 @@ dtb-$(CONFIG_ARCH_S5PV210) += \
+ 	s5pv210-smdkv210.dtb \
+ 	s5pv210-torbreck.dtb
+ dtb-$(CONFIG_ARCH_INTEL_SOCFPGA) += \
++	enclustra_generated.dtb \
+ 	socfpga_arria5_socdk.dtb \
+ 	socfpga_arria10_chameleonv3.dtb \
+ 	socfpga_arria10_socdk_nand.dtb \
+-- 
+2.34.1
+

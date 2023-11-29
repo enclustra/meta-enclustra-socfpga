@@ -1,0 +1,94 @@
+From 29ee53ac47dfada370ae498a3659871a3f552b89 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Thu, 23 Nov 2023 20:25:49 +0000
+Subject: [PATCH 5/5] rest: indifferent
+
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
+---
+ arch/arm/configs/socfpga_defconfig              |  5 ++++-
+ arch/arm64/boot/dts/intel/socfpga_n5x_socdk.dts |  1 -
+ drivers/crypto/intel_fcs_main.c                 | 12 ------------
+ 3 files changed, 4 insertions(+), 14 deletions(-)
+
+diff --git a/arch/arm/configs/socfpga_defconfig b/arch/arm/configs/socfpga_defconfig
+index c74b3e617f42..e46acb8aaff8 100644
+--- a/arch/arm/configs/socfpga_defconfig
++++ b/arch/arm/configs/socfpga_defconfig
+@@ -18,6 +18,7 @@ CONFIG_VFP=y
+ CONFIG_NEON=y
+ CONFIG_MODULES=y
+ CONFIG_MODULE_UNLOAD=y
++CONFIG_CMA=y
+ CONFIG_NET=y
+ CONFIG_PACKET=y
+ CONFIG_UNIX=y
+@@ -80,7 +81,6 @@ CONFIG_TOUCHSCREEN_STMPE=y
+ # CONFIG_SERIO_SERPORT is not set
+ CONFIG_SERIO_AMBAKMI=y
+ CONFIG_LEGACY_PTY_COUNT=16
+-CONFIG_NEWHAVEN_LCD=y
+ CONFIG_SERIAL_8250=y
+ CONFIG_SERIAL_8250_CONSOLE=y
+ CONFIG_SERIAL_8250_NR_UARTS=2
+@@ -158,6 +158,9 @@ CONFIG_NFSD_V3_ACL=y
+ CONFIG_NFSD_V4=y
+ CONFIG_NLS_CODEPAGE_437=y
+ CONFIG_NLS_ISO8859_1=y
++CONFIG_CRYPTO_DEV_ATMEL_SHA204A=y
++# CONFIG_XZ_DEC_ARMTHUMB is not set
++CONFIG_DMA_CMA=y
+ CONFIG_PRINTK_TIME=y
+ CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT=y
+ CONFIG_MAGIC_SYSRQ=y
+diff --git a/arch/arm64/boot/dts/intel/socfpga_n5x_socdk.dts b/arch/arm64/boot/dts/intel/socfpga_n5x_socdk.dts
+index 3a4d3a115a13..5462c29d1b57 100644
+--- a/arch/arm64/boot/dts/intel/socfpga_n5x_socdk.dts
++++ b/arch/arm64/boot/dts/intel/socfpga_n5x_socdk.dts
+@@ -102,7 +102,6 @@ partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+-			rsu-handle = <&qspi_boot>;
+ 
+ 			qspi_boot: partition@0 {
+ 				label = "Boot and fpga data";
+diff --git a/drivers/crypto/intel_fcs_main.c b/drivers/crypto/intel_fcs_main.c
+index 1d631143d1f1..2e628af93c0c 100644
+--- a/drivers/crypto/intel_fcs_main.c
++++ b/drivers/crypto/intel_fcs_main.c
+@@ -3672,7 +3672,6 @@ static long fcs_ioctl(struct file *file, unsigned int cmd,
+ 		break;
+ 
+ 	default:
+-		mutex_unlock(&priv->lock);
+ 		dev_warn(dev, "shouldn't be here [0x%x]\n", cmd);
+ 		break;
+ 	}
+@@ -3919,16 +3918,6 @@ static int fcs_driver_probe(struct platform_device *pdev)
+ 			dev_err(dev, "can't register RNG device (%d)\n", ret);
+ 			return ret;
+ 		}
+-	} else {
+-		/* Notes of registering /dev/hwrng:
+-		 * 1 For now, /dev/hwrng is not supported on Agilex devices
+-		 *   due to hardware implementation.
+-		 * 2 It means On Agilex devices, /dev/hwrng is a dummy node
+-		 *   without HW backend. You can get the HW RNG function by
+-		 *   IOCTL command provided from this driver on Agilex devices.
+-		 * 3 In the future, it may be implemented in a different way.
+-		 */
+-		dev_notice(dev, "/dev/hwrng is not supported on Agilex devices.\n");
+ 	}
+ 
+ 	platform_set_drvdata(pdev, priv);
+@@ -3989,7 +3978,6 @@ static int fcs_driver_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-/* Note: /dev/hwrng is not supported on Agilex devices now! */
+ static const struct socfpga_fcs_data agilex_fcs_data = {
+ 	.have_hwrng	= false,
+ };
+-- 
+2.34.1
+

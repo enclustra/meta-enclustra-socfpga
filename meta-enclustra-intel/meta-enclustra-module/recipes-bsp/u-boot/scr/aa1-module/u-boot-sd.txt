@@ -1,6 +1,0 @@
-bridge enable HPS-to-FPGA
-bridge enable FPGA-to-HPS
-fatload mmc 0:1 ${ram_addr_kernel} uImage
-fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
-setenv bootargs "earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2"
-bootm ${ram_addr_kernel} - ${ram_addr_devicetree}

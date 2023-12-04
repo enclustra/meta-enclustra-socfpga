@@ -1,10 +1,10 @@
-From 593c0bdd81f0b8a9e8e24420a3d56b496534ac89 Mon Sep 17 00:00:00 2001
+From b741731b242d45658034ff01750e01519df78653 Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Thu, 23 Nov 2023 20:22:57 +0000
 Subject: [PATCH 4/5] crypto: atmel: add AT-SHA204 EEPROM support
 
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
-Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
+Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 ---
  drivers/staging/Kconfig                     |   2 +
  drivers/staging/Makefile                    |   1 +

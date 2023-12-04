@@ -1,9 +1,9 @@
-From 91ef61ca1016c30073dc9556186a43bc11f972a3 Mon Sep 17 00:00:00 2001
+From c164fd8ab3aa241247e50a723bdd9d6e9da216ac Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 08:47:08 +0000
-Subject: [PATCH 1/8] Add Enclustra devicetree to Makefile
+Subject: [PATCH 4/8] Add Enclustra devicetree to Makefile
 
-Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
+Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  arch/arm/dts/Makefile | 3 ++-

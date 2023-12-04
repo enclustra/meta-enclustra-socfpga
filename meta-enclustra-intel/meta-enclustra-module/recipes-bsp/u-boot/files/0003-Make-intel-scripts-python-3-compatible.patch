@@ -1,9 +1,9 @@
-From 6fb526e3ebd9a7aa7c8c0b05dbeb770e631074c0 Mon Sep 17 00:00:00 2001
+From 824f392695963f42ff496518d4b3eb766007c6df Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 09:01:31 +0000
-Subject: [PATCH 2/8] Make intel scripts python 3 compatible
+Subject: [PATCH 5/8] Make intel scripts python 3 compatible
 
-Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
+Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  .../arm/mach-socfpga/cv_bsp_generator/emif.py | 148 +++++++++---------

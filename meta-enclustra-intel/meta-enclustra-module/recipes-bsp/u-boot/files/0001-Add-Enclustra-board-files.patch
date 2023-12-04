@@ -1,16 +1,16 @@
-From 7ccd17fd00eb771faca00c51f52f9f0d5f0518e9 Mon Sep 17 00:00:00 2001
+From da55dbae5c6d0209a5563f549b8bbeb922ff69b9 Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 09:08:47 +0000
 Subject: [PATCH 3/8] Add Enclustra board files
 
-Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
+Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  arch/arm/mach-socfpga/Kconfig             |  21 +++
- board/enclustra/bootscripts/qspi-aa1.cmd  |   7 +
- board/enclustra/bootscripts/qspi.cmd      |   9 +
- board/enclustra/bootscripts/sd-aa1.cmd    |   5 +
- board/enclustra/bootscripts/sd.cmd        |   7 +
+ board/enclustra/bootscripts/qspi-aa1.cmd  |   6 +
+ board/enclustra/bootscripts/qspi.cmd      |   8 +
+ board/enclustra/bootscripts/sd-aa1.cmd    |   8 +
+ board/enclustra/bootscripts/sd.cmd        |   6 +
  board/enclustra/mercury_aa1/Kconfig       |  15 ++
  board/enclustra/mercury_aa1/MAINTAINERS   |   5 +
  board/enclustra/mercury_aa1/Makefile      |   1 +
@@ -103,12 +103,11 @@ index 71eda42dfb..8619947c73 100644
  endif
 diff --git a/board/enclustra/bootscripts/qspi-aa1.cmd b/board/enclustra/bootscripts/qspi-aa1.cmd
 new file mode 100644
-index 0000000000..01740f720c
+index 0000000000..db518442f0
 --- /dev/null
 +++ b/board/enclustra/bootscripts/qspi-aa1.cmd
-@@ -0,0 +1,7 @@
-+bridge enable HPS-to-FPGA
-+bridge enable FPGA-to-HPS
+@@ -0,0 +1,6 @@
++bridge enable
 +sf probe
 +sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
 +sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
@@ -116,40 +115,41 @@ index 0000000000..01740f720c
 +bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
 diff --git a/board/enclustra/bootscripts/qspi.cmd b/board/enclustra/bootscripts/qspi.cmd
 new file mode 100644
-index 0000000000..dc3f47760c
+index 0000000000..0c715b5ddc
 --- /dev/null
 +++ b/board/enclustra/bootscripts/qspi.cmd
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,8 @@
 +sf probe
 +sf read ${ram_addr_bitstream} ${qspi_offset_addr_bitstream} ${size_bitstream}
 +fpga load 0 ${ram_addr_bitstream} ${size_bitstream}
-+bridge enable HPS-to-FPGA
-+bridge enable FPGA-to-HPS
++bridge enable
 +sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
 +sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
 +sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
 +bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
 diff --git a/board/enclustra/bootscripts/sd-aa1.cmd b/board/enclustra/bootscripts/sd-aa1.cmd
 new file mode 100644
-index 0000000000..bc6ccd58bf
+index 0000000000..bd712c3dc1
 --- /dev/null
 +++ b/board/enclustra/bootscripts/sd-aa1.cmd
-@@ -0,0 +1,5 @@
-+bridge enable HPS-to-FPGA
-+bridge enable FPGA-to-HPS
+@@ -0,0 +1,8 @@
++bridge enable
 +fatload mmc 0:1 ${ram_addr_kernel} uImage
 +fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
-+bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
++fatload mmc 0:1 ${ram_addr_rootfs} uramdisk
++
++altera_set_storage QSPI
++
++bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
 diff --git a/board/enclustra/bootscripts/sd.cmd b/board/enclustra/bootscripts/sd.cmd
 new file mode 100644
-index 0000000000..aceca34015
+index 0000000000..27c1d58648
 --- /dev/null
 +++ b/board/enclustra/bootscripts/sd.cmd
-@@ -0,0 +1,7 @@
+@@ -0,0 +1,6 @@
 +fatload mmc 0:1 ${ram_addr_bitstream} fpga.rbf
 +fpga load 0 ${ram_addr_bitstream} 0x${filesize}
-+bridge enable HPS-to-FPGA;
-+bridge enable FPGA-to-HPS
++bridge enable
 +fatload mmc 0:1 ${ram_addr_kernel} uImage
 +fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
 +bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
@@ -194,7 +194,7 @@ index 0000000000..2a10231b33
 +obj-y	:= mercury_aa1.o
 diff --git a/board/enclustra/mercury_aa1/bitstream.its b/board/enclustra/mercury_aa1/bitstream.its
 new file mode 100644
-index 0000000000..aa18c2d10d
+index 0000000000..d16e4598de
 --- /dev/null
 +++ b/board/enclustra/mercury_aa1/bitstream.its
 @@ -0,0 +1,32 @@
@@ -207,7 +207,7 @@ index 0000000000..aa18c2d10d
 +	images {
 +		fpga-periph-1 {
 +			description = "FPGA peripheral bitstream";
-+			data = /incbin/("bitstream-periph.rbf");
++			data = /incbin/("bitstream.periph.rbf");
 +			type = "fpga";
 +			arch = "arm";
 +			compression = "none";
@@ -215,7 +215,7 @@ index 0000000000..aa18c2d10d
 +
 +		fpga-core-1 {
 +			description = "FPGA core bitstream";
-+			data = /incbin/("bitstream-core.rbf");
++			data = /incbin/("bitstream.core.rbf");
 +			type = "fpga";
 +			arch = "arm";
 +			compression = "none";

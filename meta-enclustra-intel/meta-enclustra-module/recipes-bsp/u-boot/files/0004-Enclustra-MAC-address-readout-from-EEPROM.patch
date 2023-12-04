@@ -1,12 +1,12 @@
-From b88a2173637a85249b38140335678c3339e6dc74 Mon Sep 17 00:00:00 2001
+From eb26b5b3725fd5cc6ff5735bb5de0016a8fb458d Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 09:59:28 +0000
-Subject: [PATCH 4/8] Enclustra MAC address readout from EEPROM
+Subject: [PATCH 6/8] Enclustra MAC address readout from EEPROM
 
 Introduce the Enclustra EEPROM MAC setup. Apply AT-SHA204
 wakeup fix.
 
-Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
+Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  board/enclustra/mercury_aa1/mercury_aa1.c | 66 +++++++++++++++

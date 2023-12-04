@@ -1,9 +1,9 @@
-From 46007e0ea75230644851fd055377c805648dd527 Mon Sep 17 00:00:00 2001
+From ed5df1c1944e843d3940c48aabee626a2391a3b9 Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 10:14:09 +0000
-Subject: [PATCH 5/8] Add SI5338 configuration
+Subject: [PATCH 7/8] Add SI5338 configuration
 
-Signed-off-by: Andreas Buerki <andreas.buerki@enclustra.com>
+Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
 ---
  board/enclustra/mercury_aa1/mercury_aa1.c |   4 +

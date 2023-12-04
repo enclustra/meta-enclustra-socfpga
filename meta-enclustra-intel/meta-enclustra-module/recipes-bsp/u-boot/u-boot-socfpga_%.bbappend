@@ -13,11 +13,12 @@ DEPENDS:append = " xxd-native"
 
 SRC_URI:append = " \
     file://fit_spl_fpga.its \
-    file://0001-Add-Enclustra-devicetree-to-Makefile.patch \
-    file://0002-Make-intel-scripts-python-3-compatible.patch \
-    file://0003-Add-Enclustra-board-files.patch \
+    file://0001-Add-Enclustra-board-files.patch \
+    file://0002-Add-Enclustra-devicetree-to-Makefile.patch \
+    file://0003-Make-intel-scripts-python-3-compatible.patch \
     file://0004-Enclustra-MAC-address-readout-from-EEPROM.patch \
     file://0005-Add-SI5338-configuration.patch \
+    file://0006-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
     file://0100-yocto-adjust-rootfs-partition-to-wic-image-layout.patch \
     file://Si5338-RevB-Registers.h \
 "
@@ -27,9 +28,12 @@ SRC_URI:append = " \
 
 ## TODO to be extended by more UBOOT_CONFIG modes
 SRC_URI:append:aa1-module = " \
-    file://socfpga_enclustra_mercury_aa1_sdmmc_defconfig \
+    file://socfpga_enclustra_mercury_aa1_mmc_defconfig \
+    file://socfpga_enclustra_mercury_aa1_qspi_defconfig \
     file://socfpga_enclustra_mercury_aa1.dtsi \
-    file://socfpga_enclustra_mercury_aa1_${UBOOT_CONFIG}_boot.dtsi \
+    file://socfpga_enclustra_mercury_aa1_emmc_boot.dtsi \
+    file://socfpga_enclustra_mercury_aa1_sdmmc_boot.dtsi \
+    file://socfpga_enclustra_mercury_aa1_qspi_boot.dtsi \
 "
 
 SRC_URI:append:aa1sx270e3-module = " \
@@ -45,14 +49,16 @@ SRC_URI:append:aa1sx480i2-module = " \
 "
 
 SRC_URI:append:sa1-module = " \
-    file://socfpga_enclustra_mercury_sa1_${UBOOT_CONFIG}_defconfig \
+    file://socfpga_enclustra_mercury_sa1_mmc_defconfig \
+    file://socfpga_enclustra_mercury_sa1_qspi_defconfig \
     file://ME-SA1-C6-7I-D10.dtsi \
     file://socfpga_enclustra_mercury_sa1.dtsi \
 "
 
 # TODO .dtsi files missing for sa2
 SRC_URI:append:sa2-module = " \
-    file://socfpga_enclustra_mercury_sa2_${UBOOT_CONFIG}_defconfig \
+    file://socfpga_enclustra_mercury_sa2_mmc_defconfig \
+    file://socfpga_enclustra_mercury_sa2_qspi_defconfig \
     file://ME-SA2-D6-7I-D11.dtsi \
     file://socfpga_enclustra_mercury_sa2.dtsi \
 "
@@ -65,7 +71,11 @@ do_add_enclustra_files() {
 do_add_enclustra_files:append:aa1-module() {
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_${UBOOT_CONFIG}_boot.dtsi ${S}/arch/arm/dts
-    cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_${UBOOT_CONFIG}_defconfig ${S}/configs
+    if [ "qspi" == "$UBOOT_CONFIG" ]; then
+        cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_qspi_defconfig ${S}/configs
+    else
+        cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_mmc_defconfig ${S}/configs
+    fi
 }
 
 do_add_enclustra_files:append:aa1sx270e3-module() {
@@ -83,13 +93,21 @@ do_add_enclustra_files:append:aa1sx480i2-module() {
 do_add_enclustra_files:append:sa1-module() {
     cp ${WORKDIR}/ME-SA1-C6-7I-D10.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_enclustra_mercury_sa1.dtsi ${S}/arch/arm/dts
-    cp ${WORKDIR}/socfpga_mercury_sa1_${UBOOT_CONFIG}_defconfig ${S}/configs
+    if [ "qspi" == "$UBOOT_CONFIG" ]; then
+        cp ${WORKDIR}/socfpga_mercury_sa1_qspi_defconfig ${S}/configs
+    else
+        cp ${WORKDIR}/socfpga_mercury_sa1_mmc_defconfig ${S}/configs
+    fi
 }
 
 do_add_enclustra_files:append:sa2-module() {
     cp ${WORKDIR}/ME-SA2-D6-7I-D11.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_enclustra_mercury_sa2.dtsi ${S}/arch/arm/dts
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_${UBOOT_CONFIG}_defconfig ${S}/configs
+    if [ "qspi" == "$UBOOT_CONFIG" ]; then
+        cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_qspi_defconfig ${S}/configs
+    else
+        cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_mmc_defconfig ${S}/configs
+    fi
 }
 addtask do_add_enclustra_files after do_patch before do_configure
 

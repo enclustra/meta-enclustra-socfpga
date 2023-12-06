@@ -5,9 +5,6 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files/devicetree:"
 
 DEPENDS:append = " hw-ref-design"
 
-## NB: use .h files instead of u-boot-socfpga-env approach
-## the flatfile approach is not working out here
-
 ## TODO needed?    
 DEPENDS:append = " xxd-native"
 
@@ -22,9 +19,6 @@ SRC_URI:append = " \
     file://0100-yocto-adjust-rootfs-partition-to-wic-image-layout.patch \
     file://Si5338-RevB-Registers.h \
 "
-
-## TODO check if this is also needed or not           
-#     file://0008-Rest-Remaining-u-boot-changesets.patch 
 
 ## TODO to be extended by more UBOOT_CONFIG modes
 SRC_URI:append:aa1-module = " \

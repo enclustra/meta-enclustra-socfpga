@@ -11,7 +11,8 @@
 #include "socfpga_arria10-handoff.dtsi"
 #include "socfpga_arria10_handoff_u-boot.dtsi"
 #include "socfpga_enclustra_mercury_aa1.dtsi"
-#include "socfpga_enclustra_mercury_aa1_mmc_boot.dtsi"
+// TODO         
+//#include "socfpga_enclustra_mercury_aa1_mmc_boot.dtsi"
 #include "ME-AA1-270-2I2-D11E-NFX3.dtsi"
 
 // TODO legacy

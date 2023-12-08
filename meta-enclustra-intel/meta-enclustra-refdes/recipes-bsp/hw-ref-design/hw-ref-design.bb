@@ -9,62 +9,62 @@ PROVIDES = "virtual/bitstream"
 
 
 SRC_URI:refdes-aa1sx480i2-pe1 = "\
-    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE1.zip; name=ME-AA1-480-2I3-D12E-NFX3_PE1 \
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE1 \
 "
 
 SRC_URI:refdes-aa1sx480i2-pe3 = "\
-    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE3.zip; name=ME-AA1-480-2I3-D12E-NFX3_PE3 \
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE3.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE3 \
 "
 
 SRC_URI:refdes-aa1sx480i2-st1 = "\
-    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_ST1.zip; name=ME-AA1-480-2I3-D12E-NFX3_ST1 \
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_ST1.zip;name=ME-AA1-480-2I3-D12E-NFX3_ST1 \
 "
 
 SRC_URI:refdes-aa1sx270i2-pe1 = "\
-    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE1.zip; name=ME-AA1-270-2I2-D11E-NFX3_PE1 \
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE1 \
 "
 
 SRC_URI:refdes-aa1sx270i2-pe3 = "\
-    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE3.zip; name=ME-AA1-270-2I2-D11E-NFX3_PE3 \
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE3.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE3 \
 "
 SRC_URI:refdes-aa1sx270i2-st1 = "\
-    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_ST1.zip; name=ME-AA1-270-2I2-D11E-NFX3_ST1 \
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_ST1.zip;name=ME-AA1-270-2I2-D11E-NFX3_ST1 \
 "
 
 SRC_URI:refdes-aa1sx270e3-pe1 = "\
-    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip; name=ME-AA1-270-3E4-D11E-NFX3_PE1 \
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE1 \
 "
 
 SRC_URI:refdes-aa1sx270e3-pe3 = "\
-    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE3.zip; name=ME-AA1-270-3E4-D11E-NFX3_PE3 \
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE3.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE3 \
 "
 
 SRC_URI:refdes-aa1sx270e3-st1 = "\
-    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_ST1.zip; name=ME-AA1-270-3E4-D11E-NFX3_ST1 \
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_ST1.zip;name=ME-AA1-270-3E4-D11E-NFX3_ST1 \
 "
 
 SRC_URI:refdes-sa1-pe1 = "\
-    https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE1.zip; name=ME-SA1-C6-7I-D10_PE1 \
+    https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE1.zip;name=ME-SA1-C6-7I-D10_PE1 \
 "
 
 SRC_URI:refdes-sa1-pe3 = "\
-    https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE3.zip; name=ME-SA1-C6-7I-D10_PE3 \
+    https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE3.zip;name=ME-SA1-C6-7I-D10_PE3 \
 "
 
 SRC_URI:refdes-sa1-st1 = "\
-    https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_ST1.zip; name=ME-SA1-C6-7I-D10_ST1 \
+    https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_ST1.zip;name=ME-SA1-C6-7I-D10_ST1 \
 "
 
 SRC_URI:refdes-sa2-pe1 = "\
-    https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE1.zip; name=ME-SA2-D6-7I-D11_PE1 \
+    https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE1.zip;name=ME-SA2-D6-7I-D11_PE1 \
 "
 
 SRC_URI:refdes-sa2-pe3 = "\
-    https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE3.zip; name=ME-SA2-D6-7I-D11_PE3 \
+    https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE3.zip;name=ME-SA2-D6-7I-D11_PE3 \
 "
 
 SRC_URI:refdes-sa2-st1 = "\
-    https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_ST1.zip; name=ME-SA2-D6-7I-D11_ST1 \
+    https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_ST1.zip;name=ME-SA2-D6-7I-D11_ST1 \
 "
 
 SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE1.sha256sum] = "6e0133670aac0d44d0d724bf44ac5671cf564b60f9b27e563a0a7a8f2541b2a2"

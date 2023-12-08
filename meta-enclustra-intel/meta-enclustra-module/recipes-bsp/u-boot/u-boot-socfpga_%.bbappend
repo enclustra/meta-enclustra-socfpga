@@ -111,37 +111,22 @@ addtask do_add_enclustra_files after do_patch before do_configure
 #}
 
 do_compile:prepend:aa1-module() {
-    cp -r ${DEPLOY_DIR_IMAGE}/hps.xml ${S}/.
+    mkdir -p ${WORKDIR}/handoff
+    cp -r ${DEPLOY_DIR_IMAGE}/handoff/* ${WORKDIR}/handoff
     cp -r ${WORKDIR}/Si5338-RevB-Registers.h ${S}/drivers/misc/
-    ${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${S}/hps.xml ${S}/arch/arm/dts/socfpga_arria10_handoff.h
+    ${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${WORKDIR}/handoff/hps.xml ${S}/arch/arm/dts/socfpga_arria10_handoff.h
 }
 
 do_compile:prepend:sa1-module() {
-# TODO fix name, why using "sa1-handoff" in the sa1 DEPLOY_DIR?
-    mkdir -p ${WORKDIR}/sa1-handoff/system_hps_0 
-    cp -r ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0/* ${WORKDIR}/sa1-handoff/system_hps_0/ 
-    ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/sa1-handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/ 
-#    mkdir -p ${WORKDIR}/handoff/system_hps_0
-#    cp -r ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0/* ${WORKDIR}/handoff/system_hps_0/
-#    ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/
+    mkdir -p ${WORKDIR}/handoff
+    cp -r ${DEPLOY_DIR_IMAGE}/handoff/* ${WORKDIR}/handoff
+    ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff -o ${S}/board/enclustra/mercury_sa1/qts/
 }
 
-# TODO fix name, why using "sa1-handoff" in the sa1 DEPLOY_DIR?
 do_compile:prepend:sa2-module() {
-# TODO fix name, why using "sa1-handoff" in the sa1 DEPLOY_DIR?
-    mkdir -p ${WORKDIR}/sa2-handoff/system_hps_0 
-    cp -r ${DEPLOY_DIR_IMAGE}/sa2-handoff/system_hps_0/* ${WORKDIR}/sa2-handoff/system_hps_0/ 
-    ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/sa2-handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/ 
-#	mkdir -p ${WORKDIR}/handoff/system_hps_0
-#	cp -r ${DEPLOY_DIR_IMAGE}/handoff/system_hps_0/* ${WORKDIR}/sa2-handoff/system_hps_0/
-#	${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff/system_hps_0 -o ${S}/board/altera/cyclone5-socdk/qts/
-
-    if [ "${UBOOT_CONFIG}" == "qspi" ]; then
-        CMD_FILE="qspi.cmd"
-    else
-        CMD_FILE="sd.cmd"
-    fi
-    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/${CMD_FILE} boot.scr
+    mkdir -p ${WORKDIR}/handoff
+    cp -r ${DEPLOY_DIR_IMAGE}/handoff/* ${WORKDIR}/handoff
+    ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff -o ${S}/board/enclustra/mercury_sa2/qts
 }
 
 do_compile:append:aa1-module() {

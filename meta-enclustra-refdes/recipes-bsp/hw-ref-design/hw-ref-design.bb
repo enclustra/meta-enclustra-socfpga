@@ -113,20 +113,20 @@ do_deploy() {
 do_deploy:append:aa1-module() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/* ${DEPLOY_DIR_IMAGE}/handoff
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.core.rbf ${DEPLOY_DIR_IMAGE}
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.core.rbf ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf
 }
 
 do_deploy:append:sa1-module() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA1_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
 }
 
 do_deploy:append:sa2-module() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA2_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
 }
 
 addtask deploy after do_configure

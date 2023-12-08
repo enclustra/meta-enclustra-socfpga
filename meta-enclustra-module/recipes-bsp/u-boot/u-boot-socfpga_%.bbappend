@@ -130,8 +130,8 @@ do_compile:prepend:sa2-module() {
 }
 
 do_compile:append:aa1-module() {
-    cp -r ${DEPLOY_DIR_IMAGE}/core.rbf ${S}/.
-    cp -r ${DEPLOY_DIR_IMAGE}/periph.rbf ${S}/.
+    cp -r ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf ${S}/.
+    cp -r ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf ${S}/.
 
     for config in ${UBOOT_MACHINE}; do
 	cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
@@ -152,8 +152,7 @@ do_compile:append:aa1-module() {
 
 do_compile:append:sa1-module() {
 # TODO verify      
-    cp -r ${DEPLOY_DIR_IMAGE}/core.rbf ${S}/.
-    cp -r ${DEPLOY_DIR_IMAGE}/periph.rbf ${S}/.
+    cp -r ${DEPLOY_DIR_IMAGE}/fpga.rbf ${S}/.
 
     for config in ${UBOOT_MACHINE}; do
 	cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
@@ -174,8 +173,7 @@ do_compile:append:sa1-module() {
 
 do_compile:append:sa2-module() {
 # TODO verify         
-    cp -r ${DEPLOY_DIR_IMAGE}/core.rbf ${S}/.
-    cp -r ${DEPLOY_DIR_IMAGE}/periph.rbf ${S}/.
+    cp -r ${DEPLOY_DIR_IMAGE}/fpga.rbf ${S}/.
 
     for config in ${UBOOT_MACHINE}; do
 	cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin

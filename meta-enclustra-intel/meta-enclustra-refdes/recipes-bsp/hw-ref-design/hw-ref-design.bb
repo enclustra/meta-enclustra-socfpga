@@ -5,66 +5,90 @@ inherit deploy
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Proprietary;md5=0557f9d92cf58f2ccdd50f62f8ac0b28"
 
-SRC_URI:aa1-module = "\
-    http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=aa14802i3pe1 \
-    http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=aa12702i2pe1 \
-    http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=aa12703e4pe1 \
-"
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-480-2I3-D12E-NFX3_PE3.zip;name=aa14802i3pe3 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-2I2-D11E-NFX3_PE3.zip;name=aa12702i2pe3 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-3E4-D11E-NFX3_PE3.zip;name=aa12703e4pe3 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-480-2I3-D12E-NFX3_ST1.zip;name=aa14802i3st1 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-2I2-D11E-NFX3_ST1.zip;name=aa12702i2st1 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-AA1-270-3E4-D11E-NFX3_ST1.zip;name=aa12703e4st1 
-
-
-SRC_URI:sa1-module = "\
-    http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-SA1-C6-7I-D10_PE1.zip;name=sa1c67ipe1 \
-"
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-SA1-C6-7I-D10_PE3.zip;name=sa1c67ipe3 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-SA1-C6-7I-D10_ST1.zip;name=sa1c67ist1 
-
-
-SRC_URI:sa2-module = "\
-    http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-SA2-D6-7I-D11_PE1.zip;name=sa2d67ipe1 \
-"
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-SA2-D6-7I-D11_PE3.zip;name=sa2d67ipe3 
-#   http://www.enclustra.com/binaries/enclustra-bsp/update/refdes/ME-SA2-D6-7I-D11_ST1.zip;name=sa2d67ist1 
-
-
-SRC_URI[aa14802i3pe1.sha256sum] = "8596579fd774028be8bcc88d6aca391c2e3e6ddca3ec094bda3512cc0defebd7"
-SRC_URI[aa12702i2pe1.sha256sum] = "c87b5889fd16b14f66b8d3e5183e97efc7ef36b0fe3d23c8c81ac5c5bbd357b2"
-SRC_URI[aa12703e4pe1.sha256sum] = "fdc8dbd287563b8989f296656262ca559ec668163e76c853d80d9e005a3f9236"
-
-#SRC_URI[aa14802i3pe3.sha256sum] = "8596579fd774028be8bcc88d6aca391c2e3e6ddca3ec094bda3512cc0defebd7"  
-#SRC_URI[aa12702i2pe3.sha256sum] = "c87b5889fd16b14f66b8d3e5183e97efc7ef36b0fe3d23c8c81ac5c5bbd357b2"  
-#SRC_URI[aa12703e4pe3.sha256sum] = "fdc8dbd287563b8989f296656262ca559ec668163e76c853d80d9e005a3f9236"  
-#
-#SRC_URI[aa14802i3st1.sha256sum] = "8596579fd774028be8bcc88d6aca391c2e3e6ddca3ec094bda3512cc0defebd7"  
-#SRC_URI[aa12702i2st1.sha256sum] = "c87b5889fd16b14f66b8d3e5183e97efc7ef36b0fe3d23c8c81ac5c5bbd357b2"  
-#SRC_URI[aa12703e4st1.sha256sum] = "fdc8dbd287563b8989f296656262ca559ec668163e76c853d80d9e005a3f9236"  
-
-SRC_URI[sa1c67ipe1.sha256sum]   = "f87e0a736110b66f863ba3cbfae36c0ac7948212f2f5c36e06c866bb8064ca84"
-#SRC_URI[sa1c67ipe3.sha256sum]   = "0b7dcd822f73baa8bc75468cd98a814df2b9df1ee0be3d02987b74585a14cad8"  
-#SRC_URI[sa1c67ist1.sha256sum]   = "0b7dcd822f73baa8bc75468cd98a814df2b9df1ee0be3d02987b74585a14cad8"  
-
-SRC_URI[sa2d67ipe1.sha256sum]   = "800e369180d0fb5c2a9fe9fd192f2840a5a1cc12d68b8a1b3598157a026295e4"
-#SRC_URI[sa2d67ipe3.sha256sum]   = "095b85d2f574bd46efbbc2179e6949d3c69587b3edda2f0d462ed9305b92af51"  
-#SRC_URI[sa2d67ist1.sha256sum]   = "095b85d2f574bd46efbbc2179e6949d3c69587b3edda2f0d462ed9305b92af51"  
-
-S ?= "${WORKDIR}/${MACHINE}"
-
 PROVIDES = "virtual/bitstream"
 
-# TODO rm
-ENCLUSTRA_BASE_NAME = "foo"  
 
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-pe1 = "Mercury_AA1_PE1"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-pe3 = "Mercury_AA1_PE3"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-st1 = "Mercury_AA1_ST1"
+SRC_URI:refdes-aa1sx480i2-pe1 = "\
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE1.zip; name=ME-AA1-480-2I3-D12E-NFX3_PE1 \
+"
+
+SRC_URI:refdes-aa1sx480i2-pe3 = "\
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE3.zip; name=ME-AA1-480-2I3-D12E-NFX3_PE3 \
+"
+
+SRC_URI:refdes-aa1sx480i2-st1 = "\
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_ST1.zip; name=ME-AA1-480-2I3-D12E-NFX3_ST1 \
+"
+
+SRC_URI:refdes-aa1sx270i2-pe1 = "\
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE1.zip; name=ME-AA1-270-2I2-D11E-NFX3_PE1 \
+"
+
+SRC_URI:refdes-aa1sx270i2-pe3 = "\
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE3.zip; name=ME-AA1-270-2I2-D11E-NFX3_PE3 \
+"
+SRC_URI:refdes-aa1sx270i2-st1 = "\
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_ST1.zip; name=ME-AA1-270-2I2-D11E-NFX3_ST1 \
+"
+
+SRC_URI:refdes-aa1sx270e3-pe1 = "\
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip; name=ME-AA1-270-3E4-D11E-NFX3_PE1 \
+"
+
+SRC_URI:refdes-aa1sx270e3-pe3 = "\
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE3.zip; name=ME-AA1-270-3E4-D11E-NFX3_PE3 \
+"
+
+SRC_URI:refdes-aa1sx270e3-st1 = "\
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_ST1.zip; name=ME-AA1-270-3E4-D11E-NFX3_ST1 \
+"
+
+SRC_URI:refdes-sa1-pe1 = "\
+    https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE1.zip; name=ME-SA1-C6-7I-D10_PE1 \
+"
+
+SRC_URI:refdes-sa1-pe3 = "\
+    https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE3.zip; name=ME-SA1-C6-7I-D10_PE3 \
+"
+
+SRC_URI:refdes-sa1-st1 = "\
+    https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_ST1.zip; name=ME-SA1-C6-7I-D10_ST1 \
+"
+
+SRC_URI:refdes-sa2-pe1 = "\
+    https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE1.zip; name=ME-SA2-D6-7I-D11_PE1 \
+"
+
+SRC_URI:refdes-sa2-pe3 = "\
+    https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE3.zip; name=ME-SA2-D6-7I-D11_PE3 \
+"
+
+SRC_URI:refdes-sa2-st1 = "\
+    https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_ST1.zip; name=ME-SA2-D6-7I-D11_ST1 \
+"
+
+SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE1.sha256sum] = "6e0133670aac0d44d0d724bf44ac5671cf564b60f9b27e563a0a7a8f2541b2a2"
+SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE3.sha256sum] = "f54d4edfa31b123fc62f83fc1a9580ad4c7a091fba08199c2529d55b43ac3e5b"
+SRC_URI[ME-AA1-270-2I2-D11E-NFX3_ST1.sha256sum] = "0e62129a0badb004e1f9e6c505ecda4502f57377ec2f0e33f188483d947503e3"
+SRC_URI[ME-AA1-270-3E4-D11E-NFX3_PE1.sha256sum] = "df3e4d93b77a7f1c948f3d05cead8733bcea78cd8c9e260d7975d114e3c9cf8b"
+SRC_URI[ME-AA1-270-3E4-D11E-NFX3_PE3.sha256sum] = "3823e2c3dcf2a14d4066b4adf005bd085e4efe605433ea4a3ea6f15c0a5a4d9e"
+SRC_URI[ME-AA1-270-3E4-D11E-NFX3_ST1.sha256sum] = "734f44d76a3bd7a3cb46e2e74dc5d3cd84450d288e4bb12c07438e61227aad02"
+SRC_URI[ME-AA1-480-2I3-D12E-NFX3_PE1.sha256sum] = "09d1789e327f7c6b8f3bfdaa37a558b2072d4012aec108e2e865932a73e430d2"
+SRC_URI[ME-AA1-480-2I3-D12E-NFX3_PE3.sha256sum] = "0c0780b9817ed87361e0b21dddaa4edee47c364dbcab6e969d37bd96354c82d5"
+SRC_URI[ME-AA1-480-2I3-D12E-NFX3_ST1.sha256sum] = "6def21b9539c71201fe9593a9f609a9e05e272262d5bd15beb111e4ef63aa03f"
+SRC_URI[ME-SA1-C6-7I-D10_PE1.sha256sum] = "4a9fe6b4ab4b9dd7fa1a1177be8fc6e9ab3dcd7ba3aacd091a99874a2e96ac29"
+SRC_URI[ME-SA1-C6-7I-D10_PE3.sha256sum] = "6242b61c52e74250d6b569ff5c5a557b06c6df5e1a94c07ef23fca31666c7bf1"
+SRC_URI[ME-SA1-C6-7I-D10_ST1.sha256sum] = "e004766c3f3cd221ada325c1be1e2ddab70df806f964bb58f2b791087b73ed6d"
+SRC_URI[ME-SA2-D6-7I-D11_PE1.sha256sum] = "b765e223a4a6e70eda75b884eb4d982dfe3fcb7e1145d05e850750fe77ac79be"
+SRC_URI[ME-SA2-D6-7I-D11_PE3.sha256sum] = "7c3bcf26aaabebe76ba339b79747aaf34e358fbd09dc1993d2edf89eedeb7436"
+SRC_URI[ME-SA2-D6-7I-D11_ST1.sha256sum] = "1773efece2ad2b50417e170a3158e93307589ca4cee4143ee32f7d7ed7e31ee5"
+
 ENCLUSTRA_BASE_NAME:refdes-aa1sx270i2-pe1 = "Mercury_AA1_PE1"
 ENCLUSTRA_BASE_NAME:refdes-aa1sx270i2-pe3 = "Mercury_AA1_PE3"
 ENCLUSTRA_BASE_NAME:refdes-aa1sx270i2-st1 = "Mercury_AA1_ST1"
+ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-pe1 = "Mercury_AA1_PE1"
+ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-pe3 = "Mercury_AA1_PE3"
+ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-st1 = "Mercury_AA1_ST1"
 ENCLUSTRA_BASE_NAME:refdes-aa1sx480i2-pe1 = "Mercury_AA1_PE1"
 ENCLUSTRA_BASE_NAME:refdes-aa1sx480i2-pe3 = "Mercury_AA1_PE3"
 ENCLUSTRA_BASE_NAME:refdes-aa1sx480i2-st1 = "Mercury_AA1_ST1"
@@ -78,26 +102,7 @@ ENCLUSTRA_BASE_NAME:refdes-sa2-st1 = "Mercury_SA2_ST1"
 do_fetch[depends] += "unzip-native:do_populate_sysroot"
 
 do_unpack() {
-}
-
-do_unpack:append:aa1sx270e3-module() {
-     ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-3E4-D11E-NFX3_PE1.zip" -d ${S}
-}
-
-do_unpack:append:aa1sx270i2-module() {
-     ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-270-2I2-D11E-NFX3_PE1.zip" -d ${S}
-}
-
-do_unpack:append:aa1sx480i2-module() {
-    ${bindir}/env unzip -q -o "${DL_DIR}/ME-AA1-480-2I3-D12E-NFX3_PE1.zip" -d ${S}
-}
-
-do_unpack:append:sa1-module() {
-    ${bindir}/env unzip -q -o "${DL_DIR}/ME-SA1-C6-7I-D10_PE1.zip" -d ${S}
-}
-
-do_unpack:append:sa2-module() {
-    ${bindir}/env unzip -q -o "${DL_DIR}/ME-SA2-D6-7I-D11_PE1.zip" -d ${S}
+    ${bindir}/env unzip -q -o "${DL_DIR}/binaries_*_*.zip" -d ${S}
 }
 
 do_deploy[nostamp] = "1"
@@ -106,114 +111,23 @@ do_deploy() {
 }
 
 do_deploy:append:aa1-module() {
-     install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
+    mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
+    cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/* ${DEPLOY_DIR_IMAGE}/handoff
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.core.rbf ${DEPLOY_DIR_IMAGE}
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}
 }
-
-#do_deploy:append:aa1-module() {
-## TODO rm              
-# TODO use, or replace by UBOOT_CONFIG                                 
-#    ENCLUSTRA_BOOTMODE="sdmmc"
-#    if ${@bb.utils.contains('UBOOT_CONFIG','sdmmc','true','false',d)}; then
-#        ENCLUSTRA_BOOTMODE="sdmmc"
-#    elif ${@bb.utils.contains('UBOOT_CONFIG','qspi','true','false',d)}; then
-#        ENCLUSTRA_BOOTMODE="qspi"
-#    fi
-
-#     install -D -m 0644 ${B}/sdmmc/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-#     install -D -m 0644 ${B}/sdmmc/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-#     install -D -m 0644 ${B}/sdmmc/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
-
-## TODO uncomment                   
-#     install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-#     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-#     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
-
-
-    
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-sd','true','false',d)}; then
-#        # TODO further types     
-#        install -D -m 0644 ${B}/sdmmc/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-#        install -D -m 0644 ${B}/sdmmc/Mercury_AA1_PE1.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-#        install -D -m 0644 ${B}/sdmmc/Mercury_AA1_PE1.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
-#    fi
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-aa1-qspi','true','false',d)}; then
-#        install -D -m 0644 ${B}/qspi/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-#        install -D -m 0644 ${B}/qspi/Mercury_AA1_PE1.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-#        install -D -m 0644 ${B}/qspi/Mercury_AA1_PE1.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
-#    fi
-
-## TODO rm
-#        unzip binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip
-#}
 
 do_deploy:append:sa1-module() {
-## TODO test if possible
-#do_deploy:append:sa1-module:sa2-module() {
-
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
-
-
-## TODO                                                   
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-sd','true','false',d)}; then
-#        cp -r ${B}/sdmmc/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/sdmmc/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-qspi','true','false',d)}; then
-#        cp -r ${B}/qspi/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/qspi/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-emmc','true','false',d)}; then
-#        cp -r ${B}/emmc/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/emmc/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
+    mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
+    cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA1_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}
 }
 
-do_deploy:append:mercury-sa2() {
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/hps_isw_handoff/hps.xml ${DEPLOY_DIR_IMAGE}/hps.xml
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.core.rbf ${DEPLOY_DIR_IMAGE}/core.rbf
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.periph.rbf ${DEPLOY_DIR_IMAGE}/periph.rbf
+do_deploy:append:sa2-module() {
+    mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
+    cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA2_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
+    install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}
 }
 
-#do_deploy:append:mercury-sa1() {
-#    install -d ${DEPLOY_DIR_IMAGE}/sa1-handoff
-#    install -d ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-sd','true','false',d)}; then
-#        cp -r ${B}/sdmmc/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/sdmmc/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-qspi','true','false',d)}; then
-#        cp -r ${B}/qspi/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/qspi/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa1-emmc','true','false',d)}; then
-#        cp -r ${B}/emmc/hps_isw_handoff/Mercury_SA1_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/emmc/Mercury_SA1_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#}
-#
-#do_deploy:append:mercury-sa2() {
-#    install -d ${DEPLOY_DIR_IMAGE}/sa2-handoff
-#    install -d ${DEPLOY_DIR_IMAGE}/sa2-handoff/system_hps_0
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa2-sd','true','false',d)}; then
-#        cp -r ${B}/sdmmc/hps_isw_handoff/Mercury_SA2_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/sdmmc/Mercury_SA2_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#
-#    if ${@bb.utils.contains('UBOOT_CONFIG','mercury-sa2-sd','true','false',d)}; then
-#        cp -r ${B}/qspi/hps_isw_handoff/Mercury_SA2_pd_hpd_0/* ${DEPLOY_DIR_IMAGE}/sa1-handoff/system_hps_0
-#	install -D -m 0644 ${B}/qspi/Mercury_SA2_PE1.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
-#    fi
-#}
-#
 addtask deploy after do_configure
+

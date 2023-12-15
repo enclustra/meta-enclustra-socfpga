@@ -1,11 +1,8 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-
-FILESEXTRAPATHS:prepend:aa1sx270e3-module := "${THISDIR}/files/aa1sx270e3-module:"
-FILESEXTRAPATHS:prepend:aa1sx270i2-module := "${THISDIR}/files/aa1sx270i2-module:"
-FILESEXTRAPATHS:prepend:aa1sx480i2-module := "${THISDIR}/files/aa1sx480i2-module:"
-FILESEXTRAPATHS:prepend:sa1-module := "${THISDIR}/files/sa1-module:"
-FILESEXTRAPATHS:prepend:sa2-module := "${THISDIR}/files/sa2-module:"
-
+FILESEXTRAPATHS:prepend:me-aa1-270-2i2-d11d-nfx3 := "${THISDIR}/me-aa1-270-2i2-d11d-nfx3:"
+FILESEXTRAPATHS:prepend:me-aa1-270-3e4-d11d-nfx3 := "${THISDIR}/me-aa1-270-3e4-d11d-nfx3:"
+FILESEXTRAPATHS:prepend:me-aa1-480-2i3-d12d-nfx3 := "${THISDIR}/me-aa1-480-2i3-d12d-nfx3:"
+FILESEXTRAPATHS:prepend:me-sa1-c6-7i-d10 := "${THISDIR}/me-sa1-c6-7i-d10:"
+FILESEXTRAPATHS:prepend:me-sa2-d6-7i-d11 := "${THISDIR}/me-sa2-d6-7i-d11:"
 
 inherit deploy
 

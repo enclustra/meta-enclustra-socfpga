@@ -8,62 +8,62 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Proprietary;md5=0557f9d92cf58f2
 PROVIDES = "virtual/bitstream"
 
 
-SRC_URI:refdes-aa1sx480i2-pe1 = "\
+SRC_URI:refdes-me-aa1-480-2i3-d12e-nfx3-pe1 = "\
     https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE1 \
 "
 
-SRC_URI:refdes-aa1sx480i2-pe3 = "\
+SRC_URI:refdes-me-aa1-480-2i3-d12e-nfx3-pe3 = "\
     https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE3.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE3 \
 "
 
-SRC_URI:refdes-aa1sx480i2-st1 = "\
+SRC_URI:refdes-me-aa1-480-2i3-d12e-nfx3-st1 = "\
     https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_ST1.zip;name=ME-AA1-480-2I3-D12E-NFX3_ST1 \
 "
 
-SRC_URI:refdes-aa1sx270i2-pe1 = "\
+SRC_URI:refdes-me-aa1-270-2i2-d11e-nfx3-pe1 = "\
     https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE1 \
 "
 
-SRC_URI:refdes-aa1sx270i2-pe3 = "\
+SRC_URI:refdes-me-aa1-270-2i2-d11e-nfx3-pe3 = "\
     https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE3.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE3 \
 "
-SRC_URI:refdes-aa1sx270i2-st1 = "\
+SRC_URI:refdes-me-aa1-270-2i2-d11e-nfx3-st1 = "\
     https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_ST1.zip;name=ME-AA1-270-2I2-D11E-NFX3_ST1 \
 "
 
-SRC_URI:refdes-aa1sx270e3-pe1 = "\
+SRC_URI:refdes-me-aa1-270-3e4-d11e-nfx3-pe1 = "\
     https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE1 \
 "
 
-SRC_URI:refdes-aa1sx270e3-pe3 = "\
+SRC_URI:refdes-me-aa1-270-3e4-d11e-nfx3-pe3 = "\
     https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE3.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE3 \
 "
 
-SRC_URI:refdes-aa1sx270e3-st1 = "\
+SRC_URI:refdes-me-aa1-270-3e4-d11e-nfx3-st1 = "\
     https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_ST1.zip;name=ME-AA1-270-3E4-D11E-NFX3_ST1 \
 "
 
-SRC_URI:refdes-sa1-pe1 = "\
+SRC_URI:refdes-me-sa1-c6-7i-d10-pe1 = "\
     https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE1.zip;name=ME-SA1-C6-7I-D10_PE1 \
 "
 
-SRC_URI:refdes-sa1-pe3 = "\
+SRC_URI:refdes-me-sa1-c6-7i-d10-pe3 = "\
     https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE3.zip;name=ME-SA1-C6-7I-D10_PE3 \
 "
 
-SRC_URI:refdes-sa1-st1 = "\
+SRC_URI:refdes-me-sa1-c6-7i-d10-st1 = "\
     https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_ST1.zip;name=ME-SA1-C6-7I-D10_ST1 \
 "
 
-SRC_URI:refdes-sa2-pe1 = "\
+SRC_URI:refdes-me-sa2-d6-7i-d11-pe1 = "\
     https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE1.zip;name=ME-SA2-D6-7I-D11_PE1 \
 "
 
-SRC_URI:refdes-sa2-pe3 = "\
+SRC_URI:refdes-me-sa2-d6-7i-d11-pe3 = "\
     https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE3.zip;name=ME-SA2-D6-7I-D11_PE3 \
 "
 
-SRC_URI:refdes-sa2-st1 = "\
+SRC_URI:refdes-me-sa2-d6-7i-d11-st1 = "\
     https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_ST1.zip;name=ME-SA2-D6-7I-D11_ST1 \
 "
 
@@ -83,21 +83,21 @@ SRC_URI[ME-SA2-D6-7I-D11_PE1.sha256sum] = "b765e223a4a6e70eda75b884eb4d982dfe3fc
 SRC_URI[ME-SA2-D6-7I-D11_PE3.sha256sum] = "7c3bcf26aaabebe76ba339b79747aaf34e358fbd09dc1993d2edf89eedeb7436"
 SRC_URI[ME-SA2-D6-7I-D11_ST1.sha256sum] = "1773efece2ad2b50417e170a3158e93307589ca4cee4143ee32f7d7ed7e31ee5"
 
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270i2-pe1 = "Mercury_AA1_PE1"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270i2-pe3 = "Mercury_AA1_PE3"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270i2-st1 = "Mercury_AA1_ST1"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-pe1 = "Mercury_AA1_PE1"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-pe3 = "Mercury_AA1_PE3"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx270e3-st1 = "Mercury_AA1_ST1"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx480i2-pe1 = "Mercury_AA1_PE1"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx480i2-pe3 = "Mercury_AA1_PE3"
-ENCLUSTRA_BASE_NAME:refdes-aa1sx480i2-st1 = "Mercury_AA1_ST1"
-ENCLUSTRA_BASE_NAME:refdes-sa1-pe1 = "Mercury_SA1_PE1"
-ENCLUSTRA_BASE_NAME:refdes-sa1-pe3 = "Mercury_SA1_PE3"
-ENCLUSTRA_BASE_NAME:refdes-sa1-st1 = "Mercury_SA1_ST1"
-ENCLUSTRA_BASE_NAME:refdes-sa2-pe1 = "Mercury_SA2_PE1"
-ENCLUSTRA_BASE_NAME:refdes-sa2-pe3 = "Mercury_SA2_PE3"
-ENCLUSTRA_BASE_NAME:refdes-sa2-st1 = "Mercury_SA2_ST1"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-2i2-d11e-nfx3-pe1 = "Mercury_AA1_PE1"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-2i2-d11e-nfx3-pe3 = "Mercury_AA1_PE3"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-2i2-d11e-nfx3-st1 = "Mercury_AA1_ST1"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-3e4-d11e-nfx3-pe1 = "Mercury_AA1_PE1"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-3e4-d11e-nfx3-pe3 = "Mercury_AA1_PE3"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-3e4-d11e-nfx3-st1 = "Mercury_AA1_ST1"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-480-2i3-d12e-nfx3-pe1 = "Mercury_AA1_PE1"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-480-2i3-d12e-nfx3-pe3 = "Mercury_AA1_PE3"
+ENCLUSTRA_BASE_NAME:refdes-me-aa1-480-2i3-d12e-nfx3-st1 = "Mercury_AA1_ST1"
+ENCLUSTRA_BASE_NAME:refdes-me-sa1-c6-7i-d10-pe1 = "Mercury_SA1_PE1"
+ENCLUSTRA_BASE_NAME:refdes-me-sa1-c6-7i-d10-pe3 = "Mercury_SA1_PE3"
+ENCLUSTRA_BASE_NAME:refdes-me-sa1-c6-7i-d10-st1 = "Mercury_SA1_ST1"
+ENCLUSTRA_BASE_NAME:refdes-me-sa2-d6-7i-d11-pe1 = "Mercury_SA2_PE1"
+ENCLUSTRA_BASE_NAME:refdes-me-sa2-d6-7i-d11-pe3 = "Mercury_SA2_PE3"
+ENCLUSTRA_BASE_NAME:refdes-me-sa2-d6-7i-d11-st1 = "Mercury_SA2_ST1"
 
 do_fetch[depends] += "unzip-native:do_populate_sysroot"
 
@@ -110,20 +110,20 @@ do_deploy[nostamp] = "1"
 do_deploy() {
 }
 
-do_deploy:append:aa1-module() {
+do_deploy:append:me-aa1-generic() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/* ${DEPLOY_DIR_IMAGE}/handoff
     install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.core.rbf ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf
     install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf
 }
 
-do_deploy:append:sa1-module() {
+do_deploy:append:me-sa1-c6-7i-d10() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA1_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
 }
 
-do_deploy:append:sa2-module() {
+do_deploy:append:me-sa2-d6-7i-d11() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA2_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
     install -D -m 0644 ${B}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf

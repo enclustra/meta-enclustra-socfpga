@@ -1,7 +1,7 @@
 header:
     version: 8
 
-machine: refdes-aa1sx480i2-pe1
+machine: refdes-me-aa1-480-2i3-d12e-nfx3-pe1
 
 distro: nodistro
 

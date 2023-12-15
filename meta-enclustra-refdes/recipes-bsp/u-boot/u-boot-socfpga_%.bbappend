@@ -1,6 +1,6 @@
-FILESEXTRAPATHS:prepend:me-aa1-270-2i2-d11d-nfx3 := "${THISDIR}/me-aa1-270-2i2-d11d-nfx3:"
-FILESEXTRAPATHS:prepend:me-aa1-270-3e4-d11d-nfx3 := "${THISDIR}/me-aa1-270-3e4-d11d-nfx3:"
-FILESEXTRAPATHS:prepend:me-aa1-480-2i3-d12d-nfx3 := "${THISDIR}/me-aa1-480-2i3-d12d-nfx3:"
+FILESEXTRAPATHS:prepend:me-aa1-270-2i2-d11e-nfx3 := "${THISDIR}/me-aa1-270-2i2-d11e-nfx3:"
+FILESEXTRAPATHS:prepend:me-aa1-270-3e4-d11e-nfx3 := "${THISDIR}/me-aa1-270-3e4-d11e-nfx3:"
+FILESEXTRAPATHS:prepend:me-aa1-480-2i3-d12e-nfx3 := "${THISDIR}/me-aa1-480-2i3-d12e-nfx3:"
 FILESEXTRAPATHS:prepend:me-sa1-c6-7i-d10 := "${THISDIR}/me-sa1-c6-7i-d10:"
 FILESEXTRAPATHS:prepend:me-sa2-d6-7i-d11 := "${THISDIR}/me-sa2-d6-7i-d11:"
 
@@ -25,11 +25,6 @@ SRC_URI:append = " \
 do_add_enclustra_files:append() {
     sed -i "s|UBOOT_CONFIG|${UBOOT_CONFIG}|g" ${WORKDIR}/enclustra_generated.dts || true
     cp ${WORKDIR}/enclustra_generated.dts ${S}/arch/arm/dts
-
-## TODO not needed in u-boot, rm          
-#    cp ${WORKDIR}/socfpga_enclustra_mercury_pe1.dtsi ${S}/arch/arm/dts
-#    cp ${WORKDIR}/socfpga_enclustra_mercury_pe3.dtsi ${S}/arch/arm/dts
-#    cp ${WORKDIR}/socfpga_enclustra_mercury_st1.dtsi ${S}/arch/arm/dts
 }
 
 # TODO needed?   

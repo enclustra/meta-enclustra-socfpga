@@ -1,7 +1,7 @@
 header:
     version: 8
 
-machine: mercury-sa1
+machine: refdes-me-sa1-c6-7i-d10-pe1
 
 distro: nodistro
 
@@ -11,28 +11,29 @@ repos:
 
     bitbake:
         url: "https://git.openembedded.org/bitbake"
-        refspec: 2022-10.4-langdale
+        refspec: 2023-04.2-mickledore
         layers:
             .: excluded
-    
+
     openembedded-core:
         url: "https://git.openembedded.org/openembedded-core"
-        refspec: 2022-10.4-langdale
+        refspec: 2023-04.2-mickledore
         layers:
             meta:
-    
-    # we need at least U-Boot 2022.10 for Cyclone V, this was first added in langdale
+
     meta-intel-fpga:
         url: "https://git.yoctoproject.org/meta-intel-fpga"
-        refspec: langdale
+        refspec: mickledore
 
     meta-enclustra-socfpga:
         layers:
-            meta-enclustra-socfpga:
+            meta-enclustra-baseboard:
+            meta-enclustra-module:
+            meta-enclustra-refdes:
 
     meta-openembedded:
         url: http://git.openembedded.org/meta-openembedded
-        refspec: langdale
+        refspec: mickledore
         layers:
             meta-oe:
             meta-python:
@@ -50,3 +51,4 @@ local_conf_header:
         INHERIT:append = " uninative"
         DISTRO_FEATURES:append = " largefile systemd "
         VIRTUAL-RUNTIME_init_manager = "systemd"
+        PREFERRED_VERSION_u-boot-socfpga = "v2023.01%"

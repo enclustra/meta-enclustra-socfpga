@@ -1,7 +1,7 @@
 From 824f392695963f42ff496518d4b3eb766007c6df Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 09:01:31 +0000
-Subject: [PATCH 5/8] Make intel scripts python 3 compatible
+Subject: [PATCH 5/8] Fix CycloneV handoff scripts
 
 Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>

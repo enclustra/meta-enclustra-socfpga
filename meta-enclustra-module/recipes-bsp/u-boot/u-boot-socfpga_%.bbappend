@@ -12,10 +12,11 @@ SRC_URI:append = " \
     file://fit_spl_fpga.its \
     file://0001-Add-Enclustra-board-files.patch \
     file://0002-Add-Enclustra-devicetree-to-Makefile.patch \
-    file://0003-Make-intel-scripts-python-3-compatible.patch \
-    file://0004-Enclustra-MAC-address-readout-from-EEPROM.patch \
-    file://0005-Add-SI5338-configuration.patch \
-    file://0006-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
+    file://0003-Fix-cycloneV-handoff-scripts.patch \
+    file://0004-Make-intel-scripts-python-3-compatible.patch \
+    file://0005-Enclustra-MAC-address-readout-from-EEPROM.patch \
+    file://0006-Add-SI5338-configuration.patch \
+    file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
     file://0100-yocto-adjust-rootfs-partition-to-wic-image-layout.patch \
     file://Si5338-RevB-Registers.h \
 "
@@ -130,19 +131,7 @@ do_compile:prepend:me-sa2-generic() {
     ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff -o ${S}/board/enclustra/mercury_sa2/qts
 }
 
-# TODO: do_compile:append is mostly the same for all modules, do this in one function for all modules
 do_compile:append:me-aa1-generic() {
-    cp -r ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf ${S}/.
-    cp -r ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf ${S}/.
-
-    for config in ${UBOOT_MACHINE}; do
-        cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
-        cp ${B}/${config}/u-boot.dtb ${S}/u-boot.dtb
-    done
-
-    cp ${WORKDIR}/fit_spl_fpga.its ${S}
-    mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
-
     if [ "${UBOOT_CONFIG}" == "qspi" ]; then
         CMD_FILE="qspi-aa1.cmd"
     else
@@ -152,17 +141,6 @@ do_compile:append:me-aa1-generic() {
 }
 
 do_compile:append:me-sa1-generic() {
-# TODO verify      
-    cp -r ${DEPLOY_DIR_IMAGE}/fpga.rbf ${S}/.
-
-    for config in ${UBOOT_MACHINE}; do
-        cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
-        cp ${B}/${config}/u-boot.dtb ${S}/u-boot.dtb
-    done
-
-    cp ${WORKDIR}/fit_spl_fpga.its ${S}
-    mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
-
     if [ "${UBOOT_CONFIG}" == "qspi" ]; then
         CMD_FILE="qspi.cmd"
     else
@@ -172,17 +150,6 @@ do_compile:append:me-sa1-generic() {
 }
 
 do_compile:append:me-sa2-generic() {
-# TODO verify         
-    cp -r ${DEPLOY_DIR_IMAGE}/fpga.rbf ${S}/.
-
-    for config in ${UBOOT_MACHINE}; do
-        cp ${B}/${config}/u-boot-nodtb.bin ${S}/u-boot-nodtb.bin
-        cp ${B}/${config}/u-boot.dtb ${S}/u-boot.dtb
-    done
-
-    cp ${WORKDIR}/fit_spl_fpga.its ${S}
-    mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
-
     if [ "${UBOOT_CONFIG}" == "qspi" ]; then
         CMD_FILE="qspi.cmd"
     else
@@ -191,18 +158,26 @@ do_compile:append:me-sa2-generic() {
     mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/${CMD_FILE} boot.scr
 }
 
-# TODO itb generation for sa1 and sa2   
-
-## generally append
-do_deploy:append() {
-	install -d ${DEPLOYDIR}
-## TODO needed?    
-#	install -m 744 ${B}/fit_uboot.itb ${DEPLOYDIR}/fit_uboot.itb
-
-# TODO move to module
-	install -m 744 ${B}/fit_spl_fpga.itb ${DEPLOYDIR}/fit_spl_fpga.itb
-        ln -sf fit_spl_fpga.itb ${DEPLOYDIR}/bitstream.itb
-
-        ## boot.scr           
-        install -m 0644 ${B}/*.scr ${DEPLOYDIR}/
+do_pack_bitstream() {
 }
+
+do_pack_bitstream:append:me-aa1-generic() {
+    cp -r ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf ${S}/.
+    cp -r ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf ${S}/.
+    cp ${WORKDIR}/fit_spl_fpga.its ${S}
+    mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
+}
+
+addtask do_pack_bitstream after do_compile before do_deploy
+
+do_deploy:append() {
+    install -d ${DEPLOYDIR}
+    install -m 0644 ${B}/boot.scr ${DEPLOYDIR}/
+}
+
+do_deploy:append:me-aa1-generic() {
+    install -d ${DEPLOYDIR}
+    install -m 744 ${B}/fit_spl_fpga.itb ${DEPLOYDIR}/fit_spl_fpga.itb
+    ln -sf fit_spl_fpga.itb ${DEPLOYDIR}/bitstream.itb
+}
+

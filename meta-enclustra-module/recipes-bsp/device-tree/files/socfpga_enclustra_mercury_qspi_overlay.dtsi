@@ -5,7 +5,7 @@
 
 /dts-v1/;
 
-///plugin/;
+/plugin/;
 
 &mmc {
 	status = "disabled";

@@ -6,11 +6,6 @@ FILESEXTRAPATHS:prepend:me-sa2-d6-7i-d11 := "${THISDIR}/me-sa2-d6-7i-d11:"
 
 inherit deploy
 
-## probably not needed
-#RDEPENDS_${PN} = "python"
-
-## TODO refer in module?      
-#DEPENDS:append = " hw-ref-design"
 
 do_compile[deptask] = "do_deploy"
 
@@ -18,13 +13,15 @@ SRC_URI:append = " \
     file://enclustra_generated.dts \
 "
 
-
 # TODO needed? rm?      
 ## generic, split by FILESEXTRAPATH
 # TODO discuss this approach in favor of overriding     
 do_add_enclustra_files:append() {
-    sed -i "s|UBOOT_CONFIG|${UBOOT_CONFIG}|g" ${WORKDIR}/enclustra_generated.dts || true
+##    sed -i "s|UBOOT_CONFIG|${UBOOT_CONFIG}|g" ${WORKDIR}/enclustra_generated.dts || true
     cp ${WORKDIR}/enclustra_generated.dts ${S}/arch/arm/dts
+
+    ## prepare specific boot target
+    sed -i "s|XXX|${UBOOT_CONFIG}|g" ${S}/include/configs/socfpga_mercury_*.h || true
 }
 
 # TODO needed?   

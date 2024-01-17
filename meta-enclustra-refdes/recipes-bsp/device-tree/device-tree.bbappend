@@ -15,3 +15,5 @@ FILESEXTRAPATHS:prepend:refdes-me-sa2-d6-7i-d11-pe3 := "${THISDIR}/refdes-me-sa2
 FILESEXTRAPATHS:prepend:refdes-me-sa2-d6-7i-d11-st1 := "${THISDIR}/refdes-me-sa2-d6-7i-d11-st1:"
 
 SRC_URI:append = " file://enclustra_generated.dts"
+
+COMPATIBLE_MACHINE += "|me-pe1-generic|me-pe3-generic|me-st1-generic"

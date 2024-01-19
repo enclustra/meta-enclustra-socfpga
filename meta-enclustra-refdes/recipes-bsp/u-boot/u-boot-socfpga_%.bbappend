@@ -1,3 +1,4 @@
+## TODO this needs still to be bootmode dependent!!!                            
 FILESEXTRAPATHS:prepend:me-aa1-270-2i2-d11e-nfx3 := "${THISDIR}/me-aa1-270-2i2-d11e-nfx3:"
 FILESEXTRAPATHS:prepend:me-aa1-270-3e4-d11e-nfx3 := "${THISDIR}/me-aa1-270-3e4-d11e-nfx3:"
 FILESEXTRAPATHS:prepend:me-aa1-480-2i3-d12e-nfx3 := "${THISDIR}/me-aa1-480-2i3-d12e-nfx3:"

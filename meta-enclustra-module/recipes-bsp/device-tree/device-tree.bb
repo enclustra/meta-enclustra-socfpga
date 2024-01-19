@@ -64,9 +64,9 @@ do_deploy:append() {
 
     ## overlays
 # TODO rm, will end up in folder $DEPLOYDIR/devicetree (automatically)        
-#    install -Dm 0644 ${B}/socfpga_enclustra_mercury_emmc_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_emmc_overlay.dtbo
-#    install -Dm 0644 ${B}/socfpga_enclustra_mercury_qspi_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_qspi_overlay.dtbo
-#    install -Dm 0644 ${B}/socfpga_enclustra_mercury_sdmmc_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_sdmmc_overlay.dtbo
+    install -Dm 0644 ${B}/socfpga_enclustra_mercury_emmc_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_emmc_overlay.dtbo
+    install -Dm 0644 ${B}/socfpga_enclustra_mercury_qspi_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_qspi_overlay.dtbo
+    install -Dm 0644 ${B}/socfpga_enclustra_mercury_sdmmc_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_sdmmc_overlay.dtbo
 # ## TODO implement baseboard DT for kernel also as .dtbo
 # #        install -Dm 0644 ${B}/socfpga_enclustra_mercury_pe1.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_pe1.dtbo
 # #        install -Dm 0644 ${B}/socfpga_enclustra_mercury_pe3.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_pe3.dtbo

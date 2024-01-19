@@ -132,13 +132,12 @@ do_compile:prepend:me-sa2-generic() {
     ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff -o ${S}/board/enclustra/mercury_sa2/qts
 }
 
+# TODO why not generally always create and provide both - boot-sd.scr and boot-qspi.scr, then copy the currently used to "boot.scr"
 do_compile:append:me-aa1-generic() {
-    if [ "${UBOOT_CONFIG}" == "qspi" ]; then
-        CMD_FILE="qspi-aa1.cmd"
-    else
-        CMD_FILE="sd-aa1.cmd"
-    fi
-    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/${CMD_FILE} boot.scr
+     mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd-aa1.cmd boot-sdmmc.scr
+     mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd-aa1.cmd boot-emmc.scr
+     mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/qspi-aa1.cmd boot-qspi.scr
+     cp boot-${UBOOT_CONFIG}.scr boot.scr
 }
 
 do_compile:append:me-sa1-generic() {
@@ -161,18 +160,19 @@ do_compile:append:me-sa2-generic() {
 
 do_pack_bitstream() {
 }
-
 do_pack_bitstream:append:me-aa1-generic() {
     cp -r ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf ${S}/.
     cp -r ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf ${S}/.
     cp ${WORKDIR}/fit_spl_fpga.its ${S}
     mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
 }
-
 addtask do_pack_bitstream after do_compile before do_deploy
 
 do_deploy:append() {
     install -d ${DEPLOYDIR}
+    install -m 0644 ${B}/boot-sdmmc.scr ${DEPLOYDIR}/
+    install -m 0644 ${B}/boot-emmc.scr ${DEPLOYDIR}/
+    install -m 0644 ${B}/boot-qspi.scr ${DEPLOYDIR}/
     install -m 0644 ${B}/boot.scr ${DEPLOYDIR}/
 }
 

@@ -18,7 +18,6 @@ SRC_URI:append = " \
 ## generic, split by FILESEXTRAPATH
 # TODO discuss this approach in favor of overriding     
 do_add_enclustra_files:append() {
-##    sed -i "s|UBOOT_CONFIG|${UBOOT_CONFIG}|g" ${WORKDIR}/enclustra_generated.dts || true
     cp ${WORKDIR}/enclustra_generated.dts ${S}/arch/arm/dts
 
     ## prepare specific boot target

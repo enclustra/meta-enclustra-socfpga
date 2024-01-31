@@ -99,12 +99,6 @@ ENCLUSTRA_BASE_NAME:refdes-me-sa2-d6-7i-d11-pe1 = "Mercury_SA2_PE1"
 ENCLUSTRA_BASE_NAME:refdes-me-sa2-d6-7i-d11-pe3 = "Mercury_SA2_PE3"
 ENCLUSTRA_BASE_NAME:refdes-me-sa2-d6-7i-d11-st1 = "Mercury_SA2_ST1"
 
-do_fetch[depends] += "unzip-native:do_populate_sysroot"
-
-do_unpack() {
-    ${bindir}/env unzip -q -o "${DL_DIR}/binaries_*_*.zip" -d ${S}
-}
-
 do_deploy[nostamp] = "1"
 
 do_deploy() {
@@ -112,9 +106,9 @@ do_deploy() {
 
 do_deploy:append:me-aa1-generic() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
-    cp -r ${B}/${UBOOT_CONFIG}/hps_isw_handoff/* ${DEPLOY_DIR_IMAGE}/handoff
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.core.rbf ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf
-    install -D -m 0644 ${B}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf
+    cp -r ${WORKDIR}/${UBOOT_CONFIG}/hps_isw_handoff/* ${DEPLOY_DIR_IMAGE}/handoff
+    install -D -m 0644 ${WORKDIR}/${UBOOT_CONFIG}/bitstream.core.rbf ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf
+    install -D -m 0644 ${WORKDIR}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf
 }
 
 do_deploy:append:me-sa1-c6-7i-d10() {

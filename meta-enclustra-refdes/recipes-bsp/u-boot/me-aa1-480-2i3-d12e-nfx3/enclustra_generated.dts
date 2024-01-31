@@ -11,8 +11,7 @@
 #include "socfpga_arria10-handoff.dtsi"
 #include "socfpga_arria10_handoff_u-boot.dtsi"
 #include "socfpga_enclustra_mercury_aa1.dtsi"
-// TODO needed?
-#include "socfpga_enclustra_mercury_aa1_emmc_boot.dtsi"
+#include "socfpga_enclustra_mercury_aa1_XXX_boot.dtsi"
 #include "ME-AA1-480-2I3-D12E-NFX3.dtsi"
 
 // TODO rm

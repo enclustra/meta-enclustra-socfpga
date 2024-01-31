@@ -19,6 +19,8 @@ SRC_URI:append = " \
     file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
     file://0100-yocto-adjust-rootfs-partition-to-wic-image-layout.patch \
     file://0101-add-dtbo-support.patch \
+    file://0102-add-dtbo-support-fixup.patch \
+    file://0103-add-rootwait-for-AA1.patch \
     file://Si5338-RevB-Registers.h \
 "
 

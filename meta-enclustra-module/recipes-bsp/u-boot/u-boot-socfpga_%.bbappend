@@ -141,7 +141,6 @@ do_compile:prepend:me-sa2-generic() {
     ${PYTHON} ${S}/arch/arm/mach-socfpga/cv_bsp_generator/cv_bsp_generator.py -i ${WORKDIR}/handoff -o ${S}/board/enclustra/mercury_sa2/qts
 }
 
-# TODO why not generally always create and provide both - boot-sd.scr and boot-qspi.scr, then copy the currently used to "boot.scr"
 do_compile:append:me-aa1-generic() {
      mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd-aa1.cmd boot-sdmmc.scr
      mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd-aa1.cmd boot-emmc.scr
@@ -150,21 +149,17 @@ do_compile:append:me-aa1-generic() {
 }
 
 do_compile:append:me-sa1-generic() {
-    if [ "${UBOOT_CONFIG}" == "qspi" ]; then
-        CMD_FILE="qspi.cmd"
-    else
-        CMD_FILE="sd.cmd"
-    fi
-    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/${CMD_FILE} boot.scr
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd.cmd boot-sdmmc.scr
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd.cmd boot-emmc.scr
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/qspi.cmd boot-qspi.scr
+    cp boot-${UBOOT_CONFIG}.scr boot.scr
 }
 
 do_compile:append:me-sa2-generic() {
-    if [ "${UBOOT_CONFIG}" == "qspi" ]; then
-        CMD_FILE="qspi.cmd"
-    else
-        CMD_FILE="sd.cmd"
-    fi
-    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/${CMD_FILE} boot.scr
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd.cmd boot-sdmmc.scr
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/sd.cmd boot-emmc.scr
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "Uboot start script" -d ${S}/board/enclustra/bootscripts/qspi.cmd boot-qspi.scr
+    cp boot-${UBOOT_CONFIG}.scr boot.scr
 }
 
 do_pack_bitstream() {

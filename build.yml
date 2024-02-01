@@ -1,11 +1,30 @@
 header:
     version: 8
 
-machine: refdes-me-aa1-480-2i3-d12e-nfx3-pe1
+# machine: refdes-me-aa1-270-2i2-d11e-nfx3-pe1
+# machine: refdes-me-aa1-270-2i2-d11e-nfx3-pe3
+# machine: refdes-me-aa1-270-2i2-d11e-nfx3-st1
+# machine: refdes-me-aa1-270-3e4-d11e-nfx3-pe1
+# machine: refdes-me-aa1-270-3e4-d11e-nfx3-pe3
+# machine: refdes-me-aa1-270-3e4-d11e-nfx3-st1
+# machine: refdes-me-aa1-480-2i3-d12e-nfx3-pe1
+# machine: refdes-me-aa1-480-2i3-d12e-nfx3-pe3
+# machine: refdes-me-aa1-480-2i3-d12e-nfx3-st1
+# machine: refdes-me-sa1-c6-7i-d10-pe1
+# machine: refdes-me-sa1-c6-7i-d10-pe3
+# machine: refdes-me-sa1-c6-7i-d10-st1
+# machine: refdes-me-sa2-d6-7i-d11-pe1
+machine: refdes-me-sa2-d6-7i-d11-pe3
+# machine: refdes-me-sa2-d6-7i-d11-st1
 
 distro: nodistro
 
 target: image-minimal-hwtest
+
+env:
+    UBOOT_CONFIG: sdmmc
+#    UBOOT_CONFIG: emmc
+#    UBOOT_CONFIG: qspi
 
 repos:
 
@@ -25,7 +44,7 @@ repos:
         url: "https://git.yoctoproject.org/meta-intel-fpga"
         refspec: mickledore
 
-    meta-enclustra-intel:
+    meta-enclustra-socfpga:
         layers:
             meta-enclustra-baseboard:
             meta-enclustra-module:

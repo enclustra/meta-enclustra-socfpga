@@ -10,6 +10,8 @@ DEPENDS:append = " xxd-native"
 
 SRC_URI:append = " \
     file://fit_spl_fpga.its \
+    file://socfpga_env_on_mmc.appendix \
+    file://socfpga_env_on_qspi.appendix \
     file://0001-Add-Enclustra-board-files.patch \
     file://0002-Add-Enclustra-devicetree-to-Makefile.patch \
     file://0003-Fix-cycloneV-handoff-scripts.patch \
@@ -26,8 +28,6 @@ SRC_URI:append = " \
 ## TODO to be extended by more UBOOT_CONFIG modes
 SRC_URI:append:me-aa1-generic = " \
     file://socfpga_enclustra_mercury_aa1_defconfig \
-    file://socfpga_env_on_mmc.appendix \
-    file://socfpga_env_on_qspi.appendix \
     file://socfpga_enclustra_mercury_aa1.dtsi \
     file://socfpga_enclustra_mercury_aa1_emmc_boot.dtsi \
     file://socfpga_enclustra_mercury_aa1_sdmmc_boot.dtsi \
@@ -66,11 +66,9 @@ SRC_URI:append:me-sa2-d6-7i-d11 = " \
     file://ME-SA2-D6-7I-D11.dtsi \
 "
 
-## TODO adds aa1/sa1/sa2 files - possible to overload?
 do_add_enclustra_files() {
 }
 
-## TODO integrate from "base" to "module"
 do_add_enclustra_files:append:me-aa1-generic() {
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_*_boot.dtsi ${S}/arch/arm/dts
@@ -83,15 +81,17 @@ do_add_enclustra_files:append:me-aa1-generic() {
 }
 
 do_add_enclustra_files:append:me-sa1-generic() {
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1.dtsi ${S}/arch/arm/dts
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1_qspi_defconfig ${S}/configs
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1_mmc_defconfig ${S}/configs
+    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1.dtsi ${S}/arch/arm/dtsi
+
+    cat ${WORKDIR}/socfpga_enclustra_mercury_sa1_qspi_defconfig ${WORKDIR}/socfpga_env_on_qspi.appendix > ${S}/configs/socfpga_enclustra_mercury_sa1_qspi_defconfig
+    cat ${WORKDIR}/socfpga_enclustra_mercury_sa1_mmc_defconfig ${WORKDIR}/socfpga_env_on_mmc.appendix > ${S}/configs/socfpga_enclustra_mercury_sa1_mmc_defconfig
 }
 
 do_add_enclustra_files:append:me-sa2-generic() {
     cp ${WORKDIR}/socfpga_enclustra_mercury_sa2.dtsi ${S}/arch/arm/dts
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_qspi_defconfig ${S}/configs
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa2_mmc_defconfig ${S}/configs
+
+    cat ${WORKDIR}/socfpga_enclustra_mercury_sa2_qspi_defconfig ${WORKDIR}/socfpga_env_on_qspi.appendix > ${S}/configs/socfpga_enclustra_mercury_sa2_qspi_defconfig
+    cat ${WORKDIR}/socfpga_enclustra_mercury_sa2_mmc_defconfig ${WORKDIR}/socfpga_env_on_mmc.appendix > ${S}/configs/socfpga_enclustra_mercury_sa2_mmc_defconfig
 }
 
 do_add_enclustra_files:append:me-aa1-270-3e4-d11e-nfx3() {

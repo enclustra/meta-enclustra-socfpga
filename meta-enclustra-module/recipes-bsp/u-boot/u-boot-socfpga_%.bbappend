@@ -17,7 +17,6 @@ SRC_URI:append = " \
     file://0005-Enclustra-MAC-address-readout-from-EEPROM.patch \
     file://0006-Add-SI5338-configuration.patch \
     file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
-    file://0100-yocto-adjust-rootfs-partition-to-wic-image-layout.patch \
     file://0101-add-dtbo-support.patch \
     file://0102-add-dtbo-support-fixup.patch \
     file://0103-add-rootwait-for-AA1.patch \

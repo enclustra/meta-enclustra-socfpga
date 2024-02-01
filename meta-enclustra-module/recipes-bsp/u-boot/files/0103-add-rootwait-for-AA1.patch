@@ -16,8 +16,8 @@ index 997d0929e2..dbf4ae04e1 100644
      "fdtload=load ${devtype} ${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8191; fdt apply $ram_addr_devicetree_overlay\0" \
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
--    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2\0" \
-+    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2 rootwait\0" \
+-    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3 rootwait\0" \
      "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
      "qspiboot=source ${ram_addr_boot-script}\0"
  

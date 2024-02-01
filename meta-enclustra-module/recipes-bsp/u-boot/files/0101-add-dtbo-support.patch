@@ -50,7 +50,7 @@ diff -purN a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mer
 +    "fdtload=load ${devtype} ${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8191; fdt apply $ram_addr_devicetree_overlay\0" \
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
-     "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p2\0" \
+     "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3\0" \
 diff -purN a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mercury_sa1.h
 --- a/include/configs/socfpga_mercury_sa1.h	2023-12-15 13:39:41.610526801 +0000
 +++ b/include/configs/socfpga_mercury_sa1.h	2023-12-15 15:52:26.064006503 +0000
@@ -64,7 +64,7 @@ diff -purN a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mer
 +    "fdtload=load ${devtype} ${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8191; fdt apply $ram_addr_devicetree_overlay\0" \
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
-     "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p2\0" \
+     "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
 diff -purN a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mercury_sa2.h
 --- a/include/configs/socfpga_mercury_sa2.h	2023-12-15 13:39:41.610526801 +0000
 +++ b/include/configs/socfpga_mercury_sa2.h	2023-12-15 16:02:31.576488417 +0000
@@ -78,4 +78,4 @@ diff -purN a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mer
 +    "fdtload=load ${devtype} ${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8191; fdt apply $ram_addr_devicetree_overlay\0" \
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
-     "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p2\0" \
+     "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \

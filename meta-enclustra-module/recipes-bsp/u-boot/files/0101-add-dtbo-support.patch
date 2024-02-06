@@ -1,46 +1,82 @@
-diff -purN a/board/enclustra/bootscripts/qspi-aa1.cmd b/board/enclustra/bootscripts/qspi-aa1.cmd
---- a/board/enclustra/bootscripts/qspi-aa1.cmd	2023-12-15 13:39:41.342530084 +0000
-+++ b/board/enclustra/bootscripts/qspi-aa1.cmd	2023-12-15 15:26:49.923217129 +0000
+From 73589d9c1283b9a6cbb11c4bb4f83a422b8c4c11 Mon Sep 17 00:00:00 2001
+From: Lothar Rubusch <lothar.rubusch@enclustra.com>
+Date: Fri, 15 Dec 2023 16:20:01 +0000
+Subject: [PATCH 2/3] dt: setup bootmode as dtbo
+
+Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
+---
+ board/enclustra/bootscripts/qspi-aa1.cmd | 3 ++-
+ board/enclustra/bootscripts/qspi.cmd     | 3 ++-
+ board/enclustra/bootscripts/sd-aa1.cmd   | 8 +++-----
+ board/enclustra/bootscripts/sd.cmd       | 1 +
+ include/configs/socfpga_mercury_aa1.h    | 6 ++++++
+ include/configs/socfpga_mercury_sa1.h    | 3 +++
+ include/configs/socfpga_mercury_sa2.h    | 3 +++
+ 7 files changed, 20 insertions(+), 7 deletions(-)
+
+diff --git a/board/enclustra/bootscripts/qspi-aa1.cmd b/board/enclustra/bootscripts/qspi-aa1.cmd
+index db518442f0..09727bae42 100644
+--- a/board/enclustra/bootscripts/qspi-aa1.cmd
++++ b/board/enclustra/bootscripts/qspi-aa1.cmd
 @@ -3,4 +3,5 @@ sf probe
  sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
  sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
  sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
 -bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
-+run ${fdtload}
++run fdtload
 +bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree} - ${ram_addr_devicetree}
-diff -purN a/board/enclustra/bootscripts/qspi.cmd b/board/enclustra/bootscripts/qspi.cmd
---- a/board/enclustra/bootscripts/qspi.cmd	2023-12-15 13:39:41.342530084 +0000
-+++ b/board/enclustra/bootscripts/qspi.cmd	2023-12-15 15:36:41.539778503 +0000
+diff --git a/board/enclustra/bootscripts/qspi.cmd b/board/enclustra/bootscripts/qspi.cmd
+index 0c715b5ddc..c8602e1d73 100644
+--- a/board/enclustra/bootscripts/qspi.cmd
++++ b/board/enclustra/bootscripts/qspi.cmd
 @@ -5,4 +5,5 @@ bridge enable
  sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
  sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
  sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
 -bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
-+run ${fdtload}
++run fdtload
 +bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree} - ${ram_addr_devicetree}
-diff -purN a/board/enclustra/bootscripts/sd-aa1.cmd b/board/enclustra/bootscripts/sd-aa1.cmd
---- a/board/enclustra/bootscripts/sd-aa1.cmd	2023-12-15 13:39:41.342530084 +0000
-+++ b/board/enclustra/bootscripts/sd-aa1.cmd	2023-12-15 15:37:26.231218580 +0000
-@@ -5,4 +5,5 @@ fatload mmc 0:1 ${ram_addr_rootfs} uramd
- 
- altera_set_storage QSPI
- 
--bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
-+run ${fdtload}
-+bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree} - ${ram_addr_devicetree}
-diff -purN a/board/enclustra/bootscripts/sd.cmd b/board/enclustra/bootscripts/sd.cmd
---- a/board/enclustra/bootscripts/sd.cmd	2023-12-15 13:39:41.342530084 +0000
-+++ b/board/enclustra/bootscripts/sd.cmd	2023-12-15 15:40:32.232892808 +0000
-@@ -3,4 +3,5 @@ fpga load 0 ${ram_addr_bitstream} 0x${fi
+diff --git a/board/enclustra/bootscripts/sd-aa1.cmd b/board/enclustra/bootscripts/sd-aa1.cmd
+index bd712c3dc1..8482af452d 100644
+--- a/board/enclustra/bootscripts/sd-aa1.cmd
++++ b/board/enclustra/bootscripts/sd-aa1.cmd
+@@ -1,8 +1,6 @@
  bridge enable
  fatload mmc 0:1 ${ram_addr_kernel} uImage
  fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
-+run ${fdtload}
+-fatload mmc 0:1 ${ram_addr_rootfs} uramdisk
+-
+-altera_set_storage QSPI
+-
+-bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
++altera_set_storage MMC
++run fdtload
++bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
+diff --git a/board/enclustra/bootscripts/sd.cmd b/board/enclustra/bootscripts/sd.cmd
+index 27c1d58648..946a1587bc 100644
+--- a/board/enclustra/bootscripts/sd.cmd
++++ b/board/enclustra/bootscripts/sd.cmd
+@@ -3,4 +3,5 @@ fpga load 0 ${ram_addr_bitstream} 0x${filesize}
+ bridge enable
+ fatload mmc 0:1 ${ram_addr_kernel} uImage
+ fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
++run fdtload
  bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
-diff -purN a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mercury_aa1.h
---- a/include/configs/socfpga_mercury_aa1.h	2023-12-15 13:39:41.610526801 +0000
-+++ b/include/configs/socfpga_mercury_aa1.h	2023-12-15 16:02:33.360466279 +0000
-@@ -44,7 +44,10 @@
+diff --git a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mercury_aa1.h
+index da4bdc586b..c69b0498b5 100644
+--- a/include/configs/socfpga_mercury_aa1.h
++++ b/include/configs/socfpga_mercury_aa1.h
+@@ -25,6 +25,9 @@
+ 
+ /* U-Boot environment */
+ #define SOCFPGA_BOOT_SETTINGS \
++    "devtype=mmc\0" \
++    "distro_bootpart=1\0" \
++    "fdtfile=devicetree.dtb\0" \
+     "qspi_offset_addr_spl=0x0\0" \
+     "qspi_offset_addr_u-boot=0x100000\0" \
+     "qspi_offset_addr_u-boot-env=0x180000\0" \
+@@ -44,7 +47,10 @@
      "ram_addr_rootfs=0x12000000\0" \
      "ram_addr_kernel=0x11000000\0" \
      "ram_addr_devicetree=0x10000000\0" \
@@ -51,9 +87,10 @@ diff -purN a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mer
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
      "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3\0" \
-diff -purN a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mercury_sa1.h
---- a/include/configs/socfpga_mercury_sa1.h	2023-12-15 13:39:41.610526801 +0000
-+++ b/include/configs/socfpga_mercury_sa1.h	2023-12-15 15:52:26.064006503 +0000
+diff --git a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mercury_sa1.h
+index 23b9aa3462..eaf97ac582 100644
+--- a/include/configs/socfpga_mercury_sa1.h
++++ b/include/configs/socfpga_mercury_sa1.h
 @@ -34,7 +34,10 @@
      "ram_addr_rootfs=0x12000000\0" \
      "ram_addr_kernel=0x11000000\0" \
@@ -65,9 +102,10 @@ diff -purN a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mer
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
      "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
-diff -purN a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mercury_sa2.h
---- a/include/configs/socfpga_mercury_sa2.h	2023-12-15 13:39:41.610526801 +0000
-+++ b/include/configs/socfpga_mercury_sa2.h	2023-12-15 16:02:31.576488417 +0000
+diff --git a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mercury_sa2.h
+index 2635756b9c..d237179a9b 100644
+--- a/include/configs/socfpga_mercury_sa2.h
++++ b/include/configs/socfpga_mercury_sa2.h
 @@ -34,7 +34,10 @@
      "ram_addr_rootfs=0x12000000\0" \
      "ram_addr_kernel=0x11000000\0" \
@@ -79,3 +117,6 @@ diff -purN a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mer
      "bootm_size=0x0a000000\0" \
      "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
      "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
+-- 
+2.34.1
+

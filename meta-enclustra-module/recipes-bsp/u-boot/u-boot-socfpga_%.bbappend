@@ -5,9 +5,6 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files/devicetree:"
 
 DEPENDS:append = " hw-ref-design"
 
-## TODO needed?    
-DEPENDS:append = " xxd-native"
-
 SRC_URI:append = " \
     file://fit_spl_fpga.its \
     file://socfpga_env_on_mmc.appendix \
@@ -20,8 +17,7 @@ SRC_URI:append = " \
     file://0006-Add-SI5338-configuration.patch \
     file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
     file://0101-add-dtbo-support.patch \
-    file://0102-add-dtbo-support-fixup.patch \
-    file://0103-add-rootwait-for-AA1.patch \
+    file://0102-add-rootwait-for-AA1.patch \
     file://Si5338-RevB-Registers.h \
 "
 

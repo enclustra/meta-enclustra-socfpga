@@ -77,7 +77,7 @@ do_add_enclustra_files:append:me-aa1-generic() {
 }
 
 do_add_enclustra_files:append:me-sa1-generic() {
-    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1.dtsi ${S}/arch/arm/dtsi
+    cp ${WORKDIR}/socfpga_enclustra_mercury_sa1.dtsi ${S}/arch/arm/dts
 
     cat ${WORKDIR}/socfpga_enclustra_mercury_sa1_qspi_defconfig ${WORKDIR}/socfpga_env_on_qspi.appendix > ${S}/configs/socfpga_enclustra_mercury_sa1_qspi_defconfig
     cat ${WORKDIR}/socfpga_enclustra_mercury_sa1_mmc_defconfig ${WORKDIR}/socfpga_env_on_mmc.appendix > ${S}/configs/socfpga_enclustra_mercury_sa1_mmc_defconfig

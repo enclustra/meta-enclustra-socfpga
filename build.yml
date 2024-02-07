@@ -1,7 +1,7 @@
 header:
     version: 8
 
-# machine: refdes-me-aa1-270-2i2-d11e-nfx3-pe1
+machine: refdes-me-aa1-270-2i2-d11e-nfx3-pe1
 # machine: refdes-me-aa1-270-2i2-d11e-nfx3-pe3
 # machine: refdes-me-aa1-270-2i2-d11e-nfx3-st1
 # machine: refdes-me-aa1-270-3e4-d11e-nfx3-pe1
@@ -14,7 +14,7 @@ header:
 # machine: refdes-me-sa1-c6-7i-d10-pe3
 # machine: refdes-me-sa1-c6-7i-d10-st1
 # machine: refdes-me-sa2-d6-7i-d11-pe1
-machine: refdes-me-sa2-d6-7i-d11-pe3
+# machine: refdes-me-sa2-d6-7i-d11-pe3
 # machine: refdes-me-sa2-d6-7i-d11-st1
 
 distro: nodistro
@@ -59,7 +59,7 @@ repos:
             meta-networking:
 
 local_conf_header:
-    arria10: |
+    meta-enclustra-socfpga: |
         PACKAGE_CLASSES ?= "package_ipk"
         PATCHRESOLVE = "noop"
         EXTRA_IMAGE_FEATURES:append = " ssh-server-dropbear"

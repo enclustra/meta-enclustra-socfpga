@@ -1,6 +1,6 @@
 # Yocto BSP Layer for Enclustra Modules equipped with Intel FPGA SoCs
 
-This layer provides baseboard support for Enclustra System-on-Chip modules equipped with Intel FPGA SoCs.
+This layer provides support for Enclustra System-on-Chip modules equipped with Intel FPGA SoCs.
 
 For more information on available Enclustra Modules, please visit:
 
@@ -10,13 +10,20 @@ https://www.enclustra.com/en/products/system-on-chip-modules/
 
 This Yocto layer depends on:
 
-URI: https://github.com/enclustra/meta-enclustra-socfpga<br>
-layers: meta-enclustra-module<br>
-revision: TODO
+URI: https://git.openembedded.org/openembedded-core<br>
+layers: meta<br>
+revision: 2023-04.2-mickledore
+
+URI: https://git.yoctoproject.org/meta-intel-fpga<br>
+revision: mickledore
+
+URI: http://git.openembedded.org/meta-openembedded<br>
+layers: meta-oe, meta-python, meta-networking<br>
+revision: mickledore
 
 # Submit Patches / Reporting Bugs
 
-Please report bugs or submit patches against the meta-enclustra-baseboard layer to following address:
+Please report bugs or submit patches against the meta-enclustra-module layer to following address:
 
 support@enclustra.com
 

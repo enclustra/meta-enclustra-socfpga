@@ -111,13 +111,13 @@ do_deploy:append:me-aa1-generic() {
     install -D -m 0644 ${WORKDIR}/${UBOOT_CONFIG}/bitstream.periph.rbf ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf
 }
 
-do_deploy:append:me-sa1-c6-7i-d10() {
+do_deploy:append:me-sa1-generic() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${WORKDIR}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA1_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
     install -D -m 0644 ${WORKDIR}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf
 }
 
-do_deploy:append:me-sa2-d6-7i-d11() {
+do_deploy:append:me-sa2-generic() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/handoff
     cp -r ${WORKDIR}/${UBOOT_CONFIG}/hps_isw_handoff/Mercury_SA2_pd_hps_0/* ${DEPLOY_DIR_IMAGE}/handoff
     install -D -m 0644 ${WORKDIR}/${UBOOT_CONFIG}/${ENCLUSTRA_BASE_NAME}.rbf ${DEPLOY_DIR_IMAGE}/fpga.rbf

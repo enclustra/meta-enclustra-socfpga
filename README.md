@@ -28,7 +28,7 @@ The reference design is based on [meta-intel-fpga](https://git.yoctoproject.org/
 - U-Boot: 2023.01
 - Linux:  kernel 6.1.0
 
-## FPGA Reference Designs for Microchip Libero
+## Reference Designs for AMD Vivado
 
 The generated binaries are compatible with the binaries of following reference designs:
 
@@ -152,13 +152,168 @@ Note that the device of the SD card (\<device\>) needs to be replaced with the S
 
 ### eMMC Memory
 
-TODO
+On the Mercury SA1-R3 and Mercury AA1+ modules the MMC bus lines are shared between eMMC flash and SD card. It is not possible to simultaneously access the SD card and eMMC memory. In the following approach an SD card is used to transfer the data including all the partitions to the eMMC memory.
 
+1. Prepare 2 bootable SD cards (See section [Creating a Bootable SD Card](#creating-a-bootable-sd-card) for the steps required to prepare an SD card):
+    - One with a default SD card image, which is only used to boot until U-Boot console.
+    - The second SD card contains the image to be written to the eMMC flash. Make sure that the image to be written to the eMMC is small enough to fit into the DDR memory. The recommended partition sizes are: fat 50Mbyte, raw 2Mbyte, ext4 300Mbyte. The rootfs partition size can be increased in a later step.
+
+2. Boot from the first SD card until U-Boot console
+
+3. Replace the SD card with the one containing the eMMC image
+
+4. Copy the SD card content into the DDR memory (assuming the total size is smaller than 512Mbyte)
+
+```
+mmc rescan
+mmc dev 0
+mmc read 0 0 0x100000   # copy 512Mbyte of data (block size = 512bytes)
+```
+
+5. Switch to the eMMC memory
+
+```
+altera_set_storage EMMC
+```
+
+6. Copy the data from the DDR memory to the eMMC memory
+
+```
+mmc rescan
+mmc write 0 0 0x100000
+```
+
+7. When completed, remove the SD card and configure the hardware for eMMC boot.
+
+8. Optional: If a bigger rootfs partition is required, it can be increased after booting from eMMC memory into Linux. The data on the disk will be preserved while the partition table is modified.
+
+Run fdisk tool:
+
+```
+fdisk /dev/mmcblk0
+```
+
+Within fdisk run the following commands:
+
+```
+# delete rootfs partition
+d
+3
+# show partition table
+p
+
+# as example, following is shown
+Device       Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id Type
+/dev/mmcblk0p1    0,32,33     12,223,19         2048     206847     204800  100M  c Win95 FAT32 (LBA)
+/dev/mmcblk0p2    12,223,20   13,33,20        206848     210943       4096 2048K a2 Unknow
+
+# create a new partition
+n
+p
+3
+# set last sector of a2 partition plus one as first sector, as printed in the partition table in column 'EndLBA'
+210944
+# leave default end sector
+
+# set the 3rd partition type to Linux
+t
+3
+83
+# write changes and exit
+w
+```
+
+Reboot and run following command to resize the partition
+
+```
+resize2fs /dev/mmcblk0p3
+```
 
 ### QSPI flash ###
 
-TODO
+The QSPI flash can be programmed via JTAG with the vendor tools. An alternative is described following. It requires booting from SD card to update the QSPI flash in U-Boot.
 
+1. Prepare an SD card according to section [Creating a Bootable SD Card](#creating-a-bootable-sd-card)
+
+2. Create a directory on the SD card and copy the required files for QSPI boot to the SD card into this newly created directory. The directory name is assumed `qspi` in the following steps.
+
+3. Configure the hardware to boot from SD card and boot from SD card until U-Boot console
+
+4. Copy the files from the SD card to the DDR memory and write the data into the QSPI flash
+
+For Mercury SA1 and Mercury+ SA2:
+
+```
+mmc dev 0
+
+fatload mmc 0:1 ${qspi_offset_addr_spl} qspi/u-boot-with-spl.sfp
+fatload mmc 0:1 ${qspi_offset_addr_boot-script} qspi/boot.scr
+fatload mmc 0:1 ${qspi_offset_addr_devicetree} qspi/devicetree.dtb
+fatload mmc 0:1 ${qspi_offset_addr_bitstream} qspi/fpga.rbf
+fatload mmc 0:1 ${qspi_offset_addr_kernel} qspi/uImage
+fatload mmc 0:1 ${qspi_offset_addr_rootfs} qspi/uramdisk
+
+sf probe
+
+sf update ${qspi_offset_addr_spl} ${qspi_offset_addr_spl} $filesize
+sf update ${qspi_offset_addr_boot-script} ${qspi_offset_addr_boot-script} $filesize
+sf update ${qspi_offset_addr_devicetree} ${qspi_offset_addr_devicetree} $filesize
+sf update ${qspi_offset_addr_bitstream} ${qspi_offset_addr_bitstream} $filesize
+sf update ${qspi_offset_addr_kernel} ${qspi_offset_addr_kernel} $filesize
+sf update ${qspi_offset_addr_rootfs} ${qspi_offset_addr_rootfs} $filesize
+```
+
+For Mercury+ AA1:
+
+```
+mmc dev 0
+
+fatload mmc 0:1 ${qspi_offset_addr_spl} qspi/u-boot-splx4.sfp
+fatload mmc 0:1 ${qspi_offset_addr_u-boot} qspi/u-boot.img
+fatload mmc 0:1 ${qspi_offset_addr_boot-script} qspi/boot.scr
+fatload mmc 0:1 ${qspi_offset_addr_devicetree} qspi/devicetree.dtb
+fatload mmc 0:1 ${qspi_offset_addr_bitstream} qspi/bitstream.itb
+fatload mmc 0:1 ${qspi_offset_addr_kernel} qspi/uImage
+fatload mmc 0:1 ${qspi_offset_addr_rootfs} qspi/uramdisk
+
+altera_set_storage QSPI
+sf probe
+
+sf update ${qspi_offset_addr_spl} ${qspi_offset_addr_spl} $filesize
+sf update ${qspi_offset_addr_u-boot} ${qspi_offset_addr_u-boot} $filesize
+sf update ${qspi_offset_addr_boot-script} ${qspi_offset_addr_boot-script} $filesize
+sf update ${qspi_offset_addr_devicetree} ${qspi_offset_addr_devicetree} $filesize
+sf update ${qspi_offset_addr_bitstream} ${qspi_offset_addr_bitstream} $filesize
+sf update ${qspi_offset_addr_kernel} ${qspi_offset_addr_kernel} $filesize
+sf update ${qspi_offset_addr_rootfs} ${qspi_offset_addr_rootfs} $filesize
+```
+
+5. Remove the SD card and configure the hardware for QSPI boot.
+
+#### QSPI Flash Layout for Mercury SA1 and Mercury+ SA2
+
+Partition          | Filename            | Offset    | Size
+------------------ | ------------------- | --------- | ----------
+U-Boot with SPL    | u-boot-with-spl.sfp | 0x0       | 0x180000
+U-Boot environment | -                   | 0x180000  | 0x80000
+U-Boot script      | boot.scr            | 0x200000  | 0x80000
+Linux devicetree   | devicetree.dtb      | 0x280000  | 0x80000
+FPGA bitstream     | fpga.rbf            | 0x300000  | 0xd00000
+Linux kernel       | uImage              | 0x1000000 | 0x1000000
+Rootfs             | uramdisk            | 0x2000000 | 0x2000000
+
+#### QSPI Flash Layout for Mercury+ AA1
+
+Partition          | Filename         | Offset    | Size
+------------------ | ---------------- | --------- | ---------
+U-Boot SPL         | u-boot-splx4.sfp | 0x0       | 0x80000
+U-Boot             | u-boot.img       | 0x100000  | 0x80000
+U-Boot environment | -                | 0x180000  | 0x80000
+U-Boot script      | boot.scr         | 0x200000  | 0x80000
+Linux devicetree   | devicetree.dtb   | 0x280000  | 0x80000
+FPGA bitstream     | bitstream.itb    | 0x300000  | 0xd00000
+Linux kernel       | uImage           | 0x1000000 | 0x1000000
+Rootfs             | uramdisk         | 0x2000000 | 0x2000000
 
 ## Login on Target
 
@@ -252,4 +407,57 @@ The U-Boot patch [0006-Add-SI5338-configuration.patch](meta-enclustra-module/rec
 
 ## Known Issues:
 
-TODO
+### 1. Protection bits are set in QSPI flash
+
+#### Affected hardware:
+
+All Enclustra modules equipped with a S25FL512S device (all product models of Mercury+ AA1, Mercury SA1 and Mercury+ SA2).
+
+#### Description
+
+It can happen that all bits of the configuration register 1 of the QSPI flash device are set. One potential cause is when the power supply is turned off during a write command to this register. This register contains a one time programmable bit that defines the reset status of the block protection flags. When this bit is set by accident, the flash device is write protected after power up. As workaround a patch was added to U-Boot and Linux to clear these protection flags.
+
+:warning: If the block protection feature of the QSPI flash device is enabled on purpose, this feature needs to be disabled.
+
+### 2. SD Card access is not reliable
+
+#### Affected hardware:
+
+This issue was only observed on Mercury+ AA1 module equipped on Mercury ST1 base board.
+
+#### Description
+
+Linux does not boot or gets stuck while booting. Sometimes the SD Card stops working after Linux is up and running.
+
+### 3. AA1 Linux is limited to 2 Gbyte DDR memory size
+
+#### Affected hardware
+
+All Arria 10 modules equipped with more than 2 Gbyte DDR of memory connected to the HPS:
+
+- ME-AA1-480-2I3-D12E-NFX3
+
+#### Description
+
+The memory size is limited in U-Boot to max. 2 Gbyte. Therefore, only 2 Gbyte is available for U-Boot and Linux. However, the upper 2Gbyte can still be accessed by the FPGA fabric.
+
+### 4. I2C frequency is wrong in U-Boot
+
+#### Affected hardware
+
+All Intel modules.
+
+#### Description
+
+In U-Boot, the I2C frequency is configured to be 100kHz. The frequency changes to 400kHz after "i2c probe" is executed. I2C gets reinitialized when probing fails (when "I2C probe" probes a non existent address), which changes the bus frequency.
+
+### 5. USB host mode does not work in U-Boot
+
+#### Affected hardware
+
+All Mercury+ AA1 product models on PE1, ST1 and PE3 baseboards.
+
+#### Description
+
+USB host mode does not work in U-Boot because the U-Boot USB driver does not support overriding the mode dictated by the USB ID signal.
+

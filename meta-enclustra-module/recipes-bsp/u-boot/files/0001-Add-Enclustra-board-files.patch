@@ -238,7 +238,7 @@ index 0000000000..1f764e1896
 @@ -0,0 +1,208 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
-+ * Copyright (C) 2023 Enclustra GmbH
++ * Copyright (C) 2024 Enclustra GmbH
 + * <info@enclustra.com>
 + */
 +
@@ -491,7 +491,7 @@ index 0000000000..228bbcec23
 @@ -0,0 +1,210 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
-+ * Copyright (C) 2023 Enclustra GmbH
++ * Copyright (C) 2024 Enclustra GmbH
 + * <info@enclustra.com>
 + */
 +
@@ -746,7 +746,7 @@ index 0000000000..deedc14113
 @@ -0,0 +1,157 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
-+ * Copyright (C) 2023 Enclustra GmbH
++ * Copyright (C) 2024 Enclustra GmbH
 + * <info@enclustra.com>
 + */
 +
@@ -909,7 +909,7 @@ index 0000000000..da4bdc586b
 @@ -0,0 +1,71 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
-+ * Copyright (C) 2023 Enclustra GmbH
++ * Copyright (C) 2024 Enclustra GmbH
 + * <info@enclustra.com>
 + */
 +
@@ -986,7 +986,7 @@ index 0000000000..23b9aa3462
 @@ -0,0 +1,47 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
-+ * Copyright (C) 2023 Enclustra GmbH
++ * Copyright (C) 2024 Enclustra GmbH
 + * <info@enclustra.com>
 + */
 +
@@ -1039,7 +1039,7 @@ index 0000000000..2635756b9c
 @@ -0,0 +1,47 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
-+ * Copyright (C) 2023 Enclustra GmbH
++ * Copyright (C) 2024 Enclustra GmbH
 + * <info@enclustra.com>
 + */
 +

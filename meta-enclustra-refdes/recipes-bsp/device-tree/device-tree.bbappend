@@ -15,7 +15,7 @@ FILESEXTRAPATHS:prepend:refdes-me-sa2-d6-7i-d11-pe1 := "${THISDIR}/refdes-me-sa2
 FILESEXTRAPATHS:prepend:refdes-me-sa2-d6-7i-d11-pe3 := "${THISDIR}/refdes-me-sa2-d6-7i-d11-pe3:"
 FILESEXTRAPATHS:prepend:refdes-me-sa2-d6-7i-d11-st1 := "${THISDIR}/refdes-me-sa2-d6-7i-d11-st1:"
 
-SRC_URI:append = " file://enclustra_generated.dts"
+SRC_URI:append = " file://enclustra-user.dts"
 SRC_URI:append:me-pe1-generic = " file://socfpga_enclustra_mercury_pe1.dtsi"
 SRC_URI:append:me-pe3-generic = " file://socfpga_enclustra_mercury_pe3.dtsi"
 SRC_URI:append:me-st1-generic = " file://socfpga_enclustra_mercury_st1.dtsi"

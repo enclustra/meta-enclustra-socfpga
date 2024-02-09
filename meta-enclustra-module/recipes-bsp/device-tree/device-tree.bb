@@ -60,7 +60,7 @@ SRC_URI:append = " file://socfpga_enclustra_mercury_qspi_overlay.dtsi"
 do_configure[depends] += "virtual/kernel:do_configure"
 
 do_deploy:append() {
-    install -Dm 0644 ${B}/enclustra_generated.dtb ${DEPLOYDIR}/devicetree.dtb
+    install -Dm 0644 ${B}/enclustra-user.dtb ${DEPLOYDIR}/devicetree.dtb
 
     ## overlays
 # TODO rm, will end up in folder $DEPLOYDIR/devicetree (automatically)        

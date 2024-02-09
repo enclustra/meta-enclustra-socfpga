@@ -17,7 +17,7 @@ index 6aa7dc4db2fc..f3f05df293b1 100644
  	s5pv210-smdkv210.dtb \
  	s5pv210-torbreck.dtb
  dtb-$(CONFIG_ARCH_INTEL_SOCFPGA) += \
-+	enclustra_generated.dtb \
++	enclustra-user.dtb \
  	socfpga_arria5_socdk.dtb \
  	socfpga_arria10_chameleonv3.dtb \
  	socfpga_arria10_socdk_nand.dtb \

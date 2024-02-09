@@ -9,14 +9,14 @@ inherit deploy
 do_compile[deptask] = "do_deploy"
 
 SRC_URI:append = " \
-    file://enclustra_generated.dts \
+    file://enclustra-user.dts \
 "
 
 do_add_enclustra_files:append() {
-    cp ${WORKDIR}/enclustra_generated.dts ${S}/arch/arm/dts
+    cp ${WORKDIR}/enclustra-user.dts ${S}/arch/arm/dts
 
     ## adjust to seleted boot mode
-    sed -i "s|XXX|${UBOOT_CONFIG}|g" ${S}/arch/arm/dts/enclustra_generated.dts || true
+    sed -i "s|XXX|${UBOOT_CONFIG}|g" ${S}/arch/arm/dts/enclustra-user.dts || true
 
     ## adjust to selected boot mode
     sed -i "s|XXX|${UBOOT_CONFIG}|g" ${S}/include/configs/socfpga_mercury_*.h || true

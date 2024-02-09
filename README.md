@@ -338,7 +338,7 @@ Login with **root** as user name, no password is set.
 ## Devicetree
 
 The Linux devicetree is generated in a [device-tree.bb](meta-enclustra-module/recipes-bsp/device-tree/device-tree.bb) recipe included in the meta-enclustra-module Yocto layer.
-This layer requires an additional file named **enclustra_generated.dts** which is added in the meta-enclustra-refdes Yocto layer in the [device-tree.bbappend](meta-enclustra-refdes/recipes-bsp/device-tree/device-tree.bbappend) append file. This **enclustra_generated.dts** file includes all the required devicetree include files, e.g:
+This layer requires an additional file named **enclustra-user.dts** which is added in the meta-enclustra-refdes Yocto layer in the [device-tree.bbappend](meta-enclustra-refdes/recipes-bsp/device-tree/device-tree.bbappend) append file. This **enclustra-user.dts** file includes all the required devicetree include files, e.g:
 
 ```
 /dts-v1/;
@@ -364,7 +364,7 @@ Following list show all devicetree include files added by meta-enclustra-module:
 [socfpga_enclustra_mercury_sa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa1.dtsi)                     | Contains a configuration common for all variants of the Mercury SA1 family
 [socfpga_enclustra_mercury_sa2.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa2.dtsi)                     | Contains a configuration common for all variants of the Mercury+ SA2 family
 
-The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the **enclustra-generated.dts** file that is added in the meta-enclustra-refdes Yocto layer.
+The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the **enclustra-user.dts** file that is added in the meta-enclustra-refdes Yocto layer.
 
 ## Patches
 

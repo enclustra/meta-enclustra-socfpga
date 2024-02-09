@@ -46,7 +46,6 @@ repos:
 
     meta-enclustra-socfpga:
         layers:
-            meta-enclustra-baseboard:
             meta-enclustra-module:
             meta-enclustra-refdes:
 

@@ -16,10 +16,16 @@ See [License](meta-enclustra-module/COPYING.MIT)
 
 ## Description
 
-This repository contains Yocto layers to generate Linux reference designs for following Enclustra products:
+This repository contains Yocto layers to generate Linux reference designs for following Enclustra SoC module families:
 - [Enclustra Mercury+ AA1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-aa1/).
 - [Enclustra Mercury SA1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-sa1/).
 - [Enclustra Mercury+ SA2 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-sa2/).
+
+The reference designs are compatible with following base boards::
+
+- [Enclustra Mercury+ PE1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400)
+- [Enclustra Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3)
+- [Enclustra Mercury+ ST1](https://www.enclustra.com/en/products/base-boards/mercury-st1)
 
 The [meta-enclustra-module](meta-enclustra-module) Yocto layer can be included into an own project or the [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer can be used to generate a reference design. The reference design can be built by manually setting up bitbake or the provided [build.yml](build.yml) can be used in combination with [kas](https://kas.readthedocs.io/en/latest/#) tool.
 The reference design is based on [meta-intel-fpga](https://git.yoctoproject.org/meta-intel-fpga) that uses following versions.
@@ -76,30 +82,23 @@ See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/s
 
 The product model can be specified as target device (variable: **MACHINE**). Following product models are supported:
 
-- refdes-me-aa1-270-2i2-d11e-nfx3-pe1
-- refdes-me-aa1-270-2i2-d11e-nfx3-pe3
-- refdes-me-aa1-270-2i2-d11e-nfx3-st1
-- refdes-me-aa1-270-3e4-d11e-nfx3-pe1
-- refdes-me-aa1-270-3e4-d11e-nfx3-pe3
-- refdes-me-aa1-270-3e4-d11e-nfx3-st1
-- refdes-me-aa1-480-2i3-d12e-nfx3-pe1
-- refdes-me-aa1-480-2i3-d12e-nfx3-pe3
-- refdes-me-aa1-480-2i3-d12e-nfx3-st1
-- refdes-me-sa1-c6-7i-d10-pe1
-- refdes-me-sa1-c6-7i-d10-pe3
-- refdes-me-sa1-c6-7i-d10-st1
-- refdes-me-sa2-d6-7i-d11-pe1
-- refdes-me-sa2-d6-7i-d11-pe3
-- refdes-me-sa2-d6-7i-d11-st1
-
-
-### Supported Enclustra Base Boards
-
-Following base boards are supported:
-
-- pe1 ([Mercury+ PE1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400))
-- pe3 ([Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3))
-- st1 ([Mercury+ ST1](https://www.enclustra.com/en/products/base-boards/mercury-st1))
+Machine Name                        | Module                   | Base board
+----------------------------------- | ------------------------ | -----------
+refdes-me-aa1-270-2i2-d11e-nfx3-pe1 | ME-AA1-270-2I2-D11E-NFX3 | ME-PE1-*
+refdes-me-aa1-270-2i2-d11e-nfx3-pe3 | ME-AA1-270-2I2-D11E-NFX3 | ME-PE3-*
+refdes-me-aa1-270-2i2-d11e-nfx3-st1 | ME-AA1-270-2I2-D11E-NFX3 | ME-ST1-W
+refdes-me-aa1-270-3e4-d11e-nfx3-pe1 | ME-AA1-270-3E4-D11E-NFX3 | ME-PE1-*
+refdes-me-aa1-270-3e4-d11e-nfx3-pe3 | ME-AA1-270-3E4-D11E-NFX3 | ME-PE3-*
+refdes-me-aa1-270-3e4-d11e-nfx3-st1 | ME-AA1-270-3E4-D11E-NFX3 | ME-ST1-W
+refdes-me-aa1-480-2i3-d12e-nfx3-pe1 | ME-AA1-480-2I3-D12E-NFX3 | ME-PE1-*
+refdes-me-aa1-480-2i3-d12e-nfx3-pe3 | ME-AA1-480-2I3-D12E-NFX3 | ME-PE3-*
+refdes-me-aa1-480-2i3-d12e-nfx3-st1 | ME-AA1-480-2I3-D12E-NFX3 | ME-ST1-W
+refdes-me-sa1-c6-7i-d10-pe1         | ME-SA1-C6-7I-D10         | ME-PE1-*
+refdes-me-sa1-c6-7i-d10-pe3         | ME-SA1-C6-7I-D10         | ME-PE3-*
+refdes-me-sa1-c6-7i-d10-st1         | ME-SA1-C6-7I-D10         | ME-ST1-W
+refdes-me-sa2-d6-7i-d11-pe1         | ME-SA2-D6-7I-D11         | ME-PE1-*
+refdes-me-sa2-d6-7i-d11-pe3         | ME-SA2-D6-7I-D11         | ME-PE3-*
+refdes-me-sa2-d6-7i-d11-st1         | ME-SA2-D6-7I-D11         | ME-ST1-W
 
 ### Accelerate Build
 
@@ -112,7 +111,7 @@ As example:
 
 ### KAS
 
-The recommended build flow is to use kas, which is a Python based tool that provides an easy mechanism to setup a bitbake project. The configuration file [build.yml](build.yml) provides all required settings. See [documentation](https://kas.readthedocs.io/en/latest/command-line.html) for more details.
+The recommended build flow is to use kas, which is a Python based tool that provides an easy mechanism to setup a bitbake project. The configuration file [build.yml](build.yml) provides all required settings. See [kas documentation](https://kas.readthedocs.io/en/latest/command-line.html) for more details.
 
 #### Installation
 
@@ -338,12 +337,34 @@ Login with **root** as user name, no password is set.
 
 ## Devicetree
 
+The Linux devicetree is generated in a [device-tree.bb](meta-enclustra-module/recipes-bsp/device-tree/device-tree.bb) recipe included in the meta-enclustra-module Yocto layer.
+This layer requires an additional file named **enclustra_generated.dts** which is added in the meta-enclustra-refdes Yocto layer in the [device-tree.bbappend](meta-enclustra-refdes/recipes-bsp/device-tree/device-tree.bbappend) append file. This **enclustra_generated.dts** file includes all the required devicetree include files, e.g:
+
+```
+/dts-v1/;
+
+#include "socfpga_arria10.dtsi"
+#include "socfpga_enclustra_mercury_aa1.dtsi"
+#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
+```
+
 Following list show all devicetree include files added by meta-enclustra-module:
 
-| File name                            | Description |
-|--------------------------------------|-------------|
-| [TODO.dtsi](TODO)                    | TODO |
+ File name                                                                                                                                       | Description
+-------------------------------------------------------------------------------------------------------------------------------------------------|-------------
+[ME-AA1-270-2I2-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-2I2-D11E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-270-2I2-D11E-NFX3
+[ME-AA1-270-3E4-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-3E4-D11E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-270-3E4-D11E-NFX3
+[ME-AA1-480-2I3-D12E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-480-2I3-D12E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-480-2I3-D12E-NFX3
+[ME-SA1-C6-7I-D10.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-SA1-C6-7I-D10.dtsi)                                               | Module specificconfigurations for ME-SA1-C6-7I-D10
+[ME-SA2-D6-7I-D11.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-SA2-D6-7I-D11.dtsi)                                               | Module specificconfigurations for ME-SA2-D6-7I-D11
+[socfpga_enclustra_mercury_aa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_aa1.dtsi)                     | Contains a configuration common for all variants of the Mercury+ AA1 family
+[socfpga_enclustra_mercury_sdmmc_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sdmmc_overlay.dtsi) | Devicetree overlay for Mercury+ AA1 SD card boot
+[socfpga_enclustra_mercury_emmc_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_emmc_overlay.dtsi)   | Devicetree overlay for Mercury+ AA1 eMMC boot
+[socfpga_enclustra_mercury_qspi_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_qspi_overlay.dtsi)   | Devicetree overlay for Mercury+ AA1 QSPI boot
+[socfpga_enclustra_mercury_sa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa1.dtsi)                     | Contains a configuration common for all variants of the Mercury SA1 family
+[socfpga_enclustra_mercury_sa2.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa2.dtsi)                     | Contains a configuration common for all variants of the Mercury+ SA2 family
 
+The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the **enclustra-generated.dts** file that is added in the meta-enclustra-refdes Yocto layer.
 
 ## Patches
 
@@ -489,7 +510,7 @@ The U-Boot patch [0006-Add-SI5338-configuration.patch](meta-enclustra-module/rec
 
        CONFIG_SI5338_CONFIGURATION=y
 
-### Program the flash memory from Linux?
+### Program the flash memory from Linux
 
 In order to program a flash memory from Linux, a script like the following one can be used. - All required files need to be present in the current folder. They can be loaded via TFTP or from USB drive / SD card.
 

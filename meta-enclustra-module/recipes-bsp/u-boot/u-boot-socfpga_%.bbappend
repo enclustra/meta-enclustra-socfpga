@@ -79,7 +79,7 @@ do_add_enclustra_files:append:me-aa1-generic() {
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1.dtsi ${S}/arch/arm/dts
     cp ${WORKDIR}/socfpga_enclustra_mercury_aa1_*_boot.dtsi ${S}/arch/arm/dts
 
-    if [ "${UBOOT_CONFIG}" == "qspi" ]; then
+    if [ "${UBOOT_CONFIG}" = "qspi" ]; then
         cat ${WORKDIR}/socfpga_enclustra_mercury_aa1_defconfig ${WORKDIR}/socfpga_env_on_qspi.appendix > ${S}/configs/socfpga_enclustra_mercury_aa1_defconfig
     else
         cat ${WORKDIR}/socfpga_enclustra_mercury_aa1_defconfig ${WORKDIR}/socfpga_env_on_mmc.appendix > ${S}/configs/socfpga_enclustra_mercury_aa1_defconfig

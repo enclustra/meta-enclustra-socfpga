@@ -288,6 +288,7 @@ fatload mmc 0:1 ${qspi_offset_addr_spl} qspi/u-boot-splx4.sfp
 fatload mmc 0:1 ${qspi_offset_addr_u-boot} qspi/u-boot.img
 fatload mmc 0:1 ${qspi_offset_addr_boot-script} qspi/boot.scr
 fatload mmc 0:1 ${qspi_offset_addr_devicetree} qspi/devicetree.dtb
+fatload mmc 0:1 ${qspi_offset_addr_dtoverlay} qspi/socfpga_enclustra_mercury_qspi_overlay.dtbo
 fatload mmc 0:1 ${qspi_offset_addr_bitstream} qspi/bitstream.itb
 fatload mmc 0:1 ${qspi_offset_addr_kernel} qspi/uImage
 fatload mmc 0:1 ${qspi_offset_addr_rootfs} qspi/uramdisk
@@ -299,6 +300,7 @@ sf update ${qspi_offset_addr_spl} ${qspi_offset_addr_spl} $filesize
 sf update ${qspi_offset_addr_u-boot} ${qspi_offset_addr_u-boot} $filesize
 sf update ${qspi_offset_addr_boot-script} ${qspi_offset_addr_boot-script} $filesize
 sf update ${qspi_offset_addr_devicetree} ${qspi_offset_addr_devicetree} $filesize
+sf update ${qspi_offset_addr_dtoverlay} ${qspi_offset_addr_dtoverlay} $filesize
 sf update ${qspi_offset_addr_bitstream} ${qspi_offset_addr_bitstream} $filesize
 sf update ${qspi_offset_addr_kernel} ${qspi_offset_addr_kernel} $filesize
 sf update ${qspi_offset_addr_rootfs} ${qspi_offset_addr_rootfs} $filesize
@@ -316,20 +318,21 @@ U-Boot script      | boot.scr            | 0x200000  | 0x80000
 Linux devicetree   | devicetree.dtb      | 0x280000  | 0x80000
 FPGA bitstream     | fpga.rbf            | 0x300000  | 0xd00000
 Linux kernel       | uImage              | 0x1000000 | 0x1000000
-Rootfs             | uramdisk            | 0x2000000 | 0x2000000
+Rootfs             | *.cpio.gz.u-boot    | 0x2000000 | 0x2000000
 
 #### QSPI Flash Layout for Mercury+ AA1
 
-Partition          | Filename         | Offset    | Size
------------------- | ---------------- | --------- | ---------
-U-Boot SPL         | u-boot-splx4.sfp | 0x0       | 0x80000
-U-Boot             | u-boot.img       | 0x100000  | 0x80000
-U-Boot environment | -                | 0x180000  | 0x80000
-U-Boot script      | boot.scr         | 0x200000  | 0x80000
-Linux devicetree   | devicetree.dtb   | 0x280000  | 0x80000
-FPGA bitstream     | bitstream.itb    | 0x300000  | 0xd00000
-Linux kernel       | uImage           | 0x1000000 | 0x1000000
-Rootfs             | uramdisk         | 0x2000000 | 0x2000000
+Partition                | Filename                                    | Offset    | Size
+------------------------ | ------------------------------------------- | --------- | ---------
+U-Boot SPL               | u-boot-splx4.sfp                            | 0x0       | 0x80000
+U-Boot                   | u-boot.img                                  | 0x100000  | 0x80000
+U-Boot environment       | -                                           | 0x180000  | 0x80000
+U-Boot script            | boot.scr                                    | 0x200000  | 0x80000
+Linux devicetree         | devicetree.dtb                              | 0x280000  | 0x40000
+Linux devicetree overlay | socfpga_enclustra_mercury_qspi_overlay.dtbo | 0x2C0000  | 0x40000
+FPGA bitstream           | bitstream.itb                               | 0x300000  | 0xd00000
+Linux kernel             | uImage                                      | 0x1000000 | 0x1000000
+Rootfs                   | *.cpio.gz.u-boot                            | 0x2000000 | 0x2000000
 
 ## Login on Target
 
@@ -564,6 +567,7 @@ SPL_FILE="u-boot-splx4.sfp"
 UBOOT_FILE="u-boot.img"
 SCRIPT_FILE="boot.scr"
 DEVICETREE_FILE="devicetree.dtb"
+OVERLAY_FILE="socfpga_enclustra_mercury_QSPI_overlay.dtbo"
 BITSTREAM_FILE="bitstream.itb"
 KERNEL_FILE="uImage"
 ROOTFS_FILE="uramdisk"
@@ -572,6 +576,7 @@ SPL_OFFSET=0x0
 UBOOT_OFFSET=0x100000
 SCRIPT_OFFSET=0x200000
 DEVICETREE_OFFSET=0x280000
+OVERLAY_OFFSET=0x2C0000
 BITSTREAM_OFFSET=0x300000
 KERNEL_OFFSET=0x1000000
 ROOTFS_OFFSET=0x2000000
@@ -598,6 +603,11 @@ mtd_debug write /dev/mtd0 ${SCRIPT_OFFSET} ${FILESIZE} ${SCRIPT_FILE}
 FILESIZE=`getsize ${DEVICETREE_FILE}`
 echo writing devicetree ${DEVICETREE_FILE} size ${FILESIZE}
 mtd_debug write /dev/mtd0 ${DEVICETREE_OFFSET} ${FILESIZE} ${DEVICETREE_FILE}
+
+# write overlay
+FILESIZE=`getsize ${OVERLAY_FILE}`
+echo writing devicetree ${OVERLAY_FILE} size ${FILESIZE}
+mtd_debug write /dev/mtd0 ${OVERLAY_OFFSET} ${FILESIZE} ${OVERLAY_FILE}
 
 # write bitstream
 FILESIZE=`getsize ${BITSTREAM_FILE}`

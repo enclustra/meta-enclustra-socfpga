@@ -20,6 +20,7 @@ SRC_URI:append = " \
     file://0102-add-rootwait-for-AA1.patch \
     file://0103-fix-dtbo-setup-for-qspiboot.patch \
     file://0104-fix-dtbo-for-qspiboot-sa12.patch \
+    file://0105-fix-SD-card-access.patch \
     file://Si5338-RevB-Registers.h \
 "
 

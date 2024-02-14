@@ -128,9 +128,9 @@ Use following command to build the target specified in the build.yml file.
 
 Use following command to specify the bitbake command to be executed. **MACHINE** variable can be overridden according to section [Supported Machine Targets](#supported-machine-targets).
 
-    kas shell build.yml -c 'MACHINE=refdes-me-sa1-c6-7i-d10-pe1 bitbake image-minimal-hwtest'
+    kas shell build.yml -c 'MACHINE=refdes-me-sa1-c6-7i-d10-pe1 bitbake image-minimal-refdes'
 
-Note that the image [image-minimal-hwtest](meta-enclustra-refdes/recipes-core/images/image-minimal-hwtest.bb) can be replaced by any available image recipe. Following are a few examples provided by openembedded-core layer:
+Note that the image [image-minimal-refdes](meta-enclustra-refdes/recipes-core/images/image-minimal-refdes.bb) can be replaced by any available image recipe. Following are a few examples provided by openembedded-core layer:
 - core-image-base
 - core-image-minimal
 - core-image-minimal-dev
@@ -142,7 +142,7 @@ The tool kas can be used to checkout the repositories and setup the build direct
 
     kas checkout kas-project.yml
     source openembedded-core/oe-init-build-env
-    MACHINE=refdes-me-sa1-c6-7i-d10-pe1 bitbake image-minimal-hwtest
+    MACHINE=refdes-me-sa1-c6-7i-d10-pe1 bitbake image-minimal-refdes
 
 ## Deployment
 
@@ -150,7 +150,7 @@ This chapter describes how to prepare the hardware to boot from different boot m
 
 ### SD Card
 
-The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD card/eMMC. The partitions are configured in the OpenEmbedded kickstart file ([sdimage-enclustra-arria10.wks](meta-enclustra-refdes/wic/sdimage-enclustra-arria10.wks) / [sdimage-enclustra-cyclonev.wks](meta-enclustra-refdes/wic/sdimage-enclustra-cyclonev.wks)). The image file to be deployed on SD card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-hwtest-refdes-me-sa1-c6-7i-d10-pe1.wic**.
+The OpenEmbedded Image Creator (wic) creates a partitioned image file for SD card/eMMC. The partitions are configured in the OpenEmbedded kickstart file ([sdimage-enclustra-arria10.wks](meta-enclustra-refdes/wic/sdimage-enclustra-arria10.wks) / [sdimage-enclustra-cyclonev.wks](meta-enclustra-refdes/wic/sdimage-enclustra-cyclonev.wks)). The image file to be deployed on SD card/eMMC can be found in **build/tmp-glibc/deploy/images/\<MACHINE\>** directory, e.g. **image-minimal-refdes-refdes-me-sa1-c6-7i-d10-pe1.wic**.
 
 The partitions are configured in the kickstart file as follows:
 
@@ -162,7 +162,7 @@ Partition | Type       | Size      | Usage
 
  To create a bootable SD card, copy the image file to a SD card e.g.
 
-    dd if=image-minimal-hwtest-refdes-me-sa1-c6-7i-d10-pe1.wic of=<device> && sync
+    dd if=image-minimal-refdes-refdes-me-sa1-c6-7i-d10-pe1.wic of=<device> && sync
 
 Note that the device of the SD card (\<device\>) needs to be replaced with the SD card device on your host (e.g. /dev/sdd).
 

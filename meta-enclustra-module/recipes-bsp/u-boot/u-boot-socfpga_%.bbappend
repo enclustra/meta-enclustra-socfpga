@@ -24,7 +24,6 @@ SRC_URI:append = " \
     file://Si5338-RevB-Registers.h \
 "
 
-## TODO to be extended by more UBOOT_CONFIG modes
 SRC_URI:append:me-aa1-generic = " \
     file://socfpga_enclustra_mercury_aa1_defconfig \
     file://socfpga_enclustra_mercury_aa1.dtsi \
@@ -122,15 +121,13 @@ do_add_enclustra_files:append:me-sa2-d6-7i-d11() {
 
 addtask do_add_enclustra_files after do_patch before do_configure
 
-#do_compile:prepend() {
-## TODO rm, use .h approach    
-#	cp -L ${DEPLOY_DIR_IMAGE}/uboot.env ${S}/
-#}
+do_compile:prepend() {
+    cp -r ${WORKDIR}/Si5338-RevB-Registers.h ${S}/drivers/misc/
+}
 
 do_compile:prepend:me-aa1-generic() {
     mkdir -p ${WORKDIR}/handoff
     cp -r ${DEPLOY_DIR_IMAGE}/handoff/* ${WORKDIR}/handoff
-    cp -r ${WORKDIR}/Si5338-RevB-Registers.h ${S}/drivers/misc/
     ${S}/arch/arm/mach-socfpga/qts-filter-a10.sh ${WORKDIR}/handoff/hps.xml ${S}/arch/arm/dts/socfpga_arria10_handoff.h
 }
 
@@ -169,12 +166,14 @@ do_compile:append:me-sa2-generic() {
 
 do_pack_bitstream() {
 }
+
 do_pack_bitstream:append:me-aa1-generic() {
     cp -r ${DEPLOY_DIR_IMAGE}/bitstream.core.rbf ${S}/.
     cp -r ${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf ${S}/.
     cp ${WORKDIR}/fit_spl_fpga.its ${S}
     mkimage -E -f ${S}/fit_spl_fpga.its ${B}/fit_spl_fpga.itb
 }
+
 addtask do_pack_bitstream after do_compile before do_deploy
 
 do_deploy:append() {

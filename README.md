@@ -384,7 +384,7 @@ Patch Name                                                                      
 [0004-Make-intel-scripts-python-3-compatible.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0004-Make-intel-scripts-python-3-compatible.patch)               | Modify Python scripts to be compatible with Python 3
 [0005-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0005-Enclustra-MAC-address-readout-from-EEPROM.patch)         | Add code to configure SI5338 clock generator device on Enclustra base boards
 [0006-Add-SI5338-configuration.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0006-Add-SI5338-configuration.patch)                                           |
-[0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](1-protection-bits-are-set-in-qspi-flash
+[0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
 
 
 ### Linux Kernel
@@ -395,8 +395,7 @@ Patch Name                                                                      
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------
 [0001-Add-Enclustra-devicetree-to-Makefile.patch](meta-enclustra-module/recipes-kernel/linux/files/0001-Add-Enclustra-devicetree-to-Makefile.patch)                   | Add enclustra-user.dtb as build target to Makefile
 [0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch](meta-enclustra-module/recipes-kernel/linux/files/0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch)         | Add driver to read module serial number
-[0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-kernel/linux/files/0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](1-protection-bits-are-set-in-qspi-flash
-))
+[0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-kernel/linux/files/0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
 
 ## Integrate meta-enclustra-module Layer into user Project
 

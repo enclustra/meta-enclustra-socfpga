@@ -156,9 +156,9 @@ The partitions are configured in the kickstart file as follows:
 
 Partition | Type       | Size      | Usage
 --------- | ---------- | --------- | -----
-1         | FAT        | 100 Mbyte | Boot partition
+1         | FAT        | 50 Mbyte  | Boot partition
 2         | RAW (0xA2) | 2 Mbyte   | SPL Bootloader
-3         | ext4       | 500 Mbyte | Root file system
+3         | ext4       | 400 Mbyte | Root file system
 
  To create a bootable SD card, copy the image file to a SD card e.g.
 
@@ -170,9 +170,9 @@ Note that the device of the SD card (\<device\>) needs to be replaced with the S
 
 On the Mercury SA1-R3 and Mercury AA1+ modules the MMC bus lines are shared between eMMC flash and SD card. It is not possible to simultaneously access the SD card and eMMC memory. In the following approach an SD card is used to transfer the data including all the partitions to the eMMC memory.
 
-1. Prepare 2 bootable SD cards (See section [Creating a Bootable SD Card](#creating-a-bootable-sd-card) for the steps required to prepare an SD card):
+1. Prepare 2 bootable SD cards (See section [SD Card](#sd-card) for the steps required to prepare an SD card):
     - One with a default SD card image, which is only used to boot until U-Boot console.
-    - The second SD card contains the image to be written to the eMMC flash. Make sure that the image to be written to the eMMC is small enough to fit into the DDR memory. The recommended partition sizes are: fat 50Mbyte, raw 2Mbyte, ext4 300Mbyte. The rootfs partition size can be increased in a later step.
+    - The second SD card contains the image to be written to the eMMC flash. Make sure that the image to be written to the eMMC is small enough to fit into the DDR memory. The recommended partition sizes are: fat 50Mbyte, raw 2Mbyte, ext4 400Mbyte. The rootfs partition size can be increased in a later step.
 
 2. Boot from the first SD card until U-Boot console
 
@@ -249,7 +249,7 @@ resize2fs /dev/mmcblk0p3
 
 The QSPI flash can be programmed via JTAG with the vendor tools. An alternative is described following. It requires booting from SD card to update the QSPI flash in U-Boot.
 
-1. Prepare an SD card according to section [Creating a Bootable SD Card](#creating-a-bootable-sd-card)
+1. Prepare an SD card according to section [SD Card](#sd-card)
 
 2. Create a directory on the SD card and copy the required files for QSPI boot to the SD card into this newly created directory. The directory name is assumed `qspi` in the following steps.
 

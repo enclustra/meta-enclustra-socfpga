@@ -10,9 +10,9 @@ See [License](meta-enclustra-module/COPYING.MIT)
 
 ## Changelog
 
-| Date       | Version       | Comment       |
-|------------|---------------|---------------|
-| xxx        | 2022.1_v1.0.0 | First release |
+Date       | Version       | Comment
+---------- | ------------- | -------------
+xxx        | 2022.1_v1.0.0 | First release
 
 ## Description
 
@@ -267,7 +267,7 @@ fatload mmc 0:1 0x10200000 qspi/boot.scr
 fatload mmc 0:1 0x10300000 qspi/devicetree.dtb
 fatload mmc 0:1 0x11000000 qspi/fpga.rbf
 fatload mmc 0:1 0x12000000 qspi/uImage
-fatload mmc 0:1 0x13000000 qspi/<image-machine>.rootfs.cpio.gz.u-boot
+fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
 
 
 sf probe
@@ -292,7 +292,7 @@ fatload mmc 0:1 0x10300000 qspi/devicetree.dtb
 fatload mmc 0:1 0x10400000 qspi/socfpga_enclustra_mercury_qspi_overlay.dtbo
 fatload mmc 0:1 0x11000000 qspi/bitstream.itb
 fatload mmc 0:1 0x12000000 qspi/uImage
-fatload mmc 0:1 0x13000000 qspi/<image-machine>.rootfs.cpio.gz.u-boot
+fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
 
 altera_set_storage QSPI
 sf probe
@@ -311,21 +311,21 @@ sf update 0x13000000 ${qspi_offset_addr_rootfs} ${size_rootfs}
 
 #### QSPI Flash Layout for Mercury SA1 and Mercury+ SA2
 
-Partition          | Filename            | Offset    | Size
------------------- | ------------------- | --------- | ----------
-U-Boot with SPL    | u-boot-with-spl.sfp | 0x0       | 0x180000
-U-Boot environment | -                   | 0x180000  | 0x80000
-U-Boot script      | boot.scr            | 0x200000  | 0x80000
-Linux devicetree   | devicetree.dtb      | 0x280000  | 0x80000
-FPGA bitstream     | fpga.rbf            | 0x300000  | 0xd00000
-Linux kernel       | uImage              | 0x1000000 | 0x1000000
-Rootfs             | *.cpio.gz.u-boot    | 0x2000000 | 0x2000000
+Partition          | Filename                            | Offset    | Size
+------------------ | ----------------------------------- | --------- | ----------
+U-Boot with SPL    | u-boot-with-spl.sfp                 | 0x0       | 0x180000
+U-Boot environment | -                                   | 0x180000  | 0x80000
+U-Boot script      | boot.scr                            | 0x200000  | 0x80000
+Linux devicetree   | devicetree.dtb                      | 0x280000  | 0x80000
+FPGA bitstream     | fpga.rbf                            | 0x300000  | 0xd00000
+Linux kernel       | uImage                              | 0x1000000 | 0x1000000
+Rootfs             | <image>-<machine>.cpio.gz.u-boot    | 0x2000000 | 0x2000000
 
 #### QSPI Flash Layout for Mercury+ AA1
 
 Partition                | Filename                                    | Offset    | Size
 ------------------------ | ------------------------------------------- | --------- | ---------
-U-Boot SPL               | u-boot-splx4.sfp                            | 0x0       | 0x80000
+U-Boot SPL               | u-boot-splx4.sfp                            | 0x0       | 0x100000
 U-Boot                   | u-boot.img                                  | 0x100000  | 0x80000
 U-Boot environment       | -                                           | 0x180000  | 0x80000
 U-Boot script            | boot.scr                                    | 0x200000  | 0x80000
@@ -333,7 +333,7 @@ Linux devicetree         | devicetree.dtb                              | 0x28000
 Linux devicetree overlay | socfpga_enclustra_mercury_qspi_overlay.dtbo | 0x2C0000  | 0x40000
 FPGA bitstream           | bitstream.itb                               | 0x300000  | 0xd00000
 Linux kernel             | uImage                                      | 0x1000000 | 0x1000000
-Rootfs                   | *.cpio.gz.u-boot                            | 0x2000000 | 0x2000000
+Rootfs                   | <image>-<machine>.cpio.gz.u-boot            | 0x2000000 | 0x2000000
 
 ## Login on Target
 
@@ -354,8 +354,8 @@ This layer requires an additional file named **enclustra-user.dts** which is add
 
 Following list show all devicetree include files added by [meta-enclustra-module](meta-enclustra-module):
 
- File name                                                                                                                                       | Description
--------------------------------------------------------------------------------------------------------------------------------------------------|-------------
+File name                                                                                                                                        | Description
+------------------------------------------------------------------------------------------------------------------------------------------------ | ------------
 [ME-AA1-270-2I2-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-2I2-D11E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-270-2I2-D11E-NFX3
 [ME-AA1-270-3E4-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-3E4-D11E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-270-3E4-D11E-NFX3
 [ME-AA1-480-2I3-D12E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-480-2I3-D12E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-480-2I3-D12E-NFX3
@@ -376,17 +376,27 @@ The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-
 
 Following U-Boot patches are added.
 
-| Patch Name                                                | Description |
-|-----------------------------------------------------------|-------------|
-| [0001-TODO.patch](im-a-broken-link)                       | TODO |
+Patch Name                                                                                                                                                          | Description
+------------------------------------------------------------------------------------------------------------------------------------------------------------------- |-------------
+[0001-Add-Enclustra-board-files.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0001-Add-Enclustra-board-files.patch)                                         | Add support for Enclustra modules
+[0002-Add-Enclustra-devicetree-to-Makefile.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0002-Add-Enclustra-devicetree-to-Makefile.patch)                   | Add enclustra-user.dtb as build target to Makefile
+[0003-Fix-cycloneV-handoff-scripts.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0003-Fix-cycloneV-handoff-scripts.patch)                                   | Fix Python scripts to generate header files from Quartus handoff directory
+[0004-Make-intel-scripts-python-3-compatible.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0004-Make-intel-scripts-python-3-compatible.patch)               | Modify Python scripts to be compatible with Python 3
+[0005-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0005-Enclustra-MAC-address-readout-from-EEPROM.patch)         | Add code to configure SI5338 clock generator device on Enclustra base boards
+[0006-Add-SI5338-configuration.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0006-Add-SI5338-configuration.patch)                                           |
+[0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](1-protection-bits-are-set-in-qspi-flash
+
 
 ### Linux Kernel
 
 Following Linux kernel patches are added.
 
-| Patch Name                                                | Description |
-|-----------------------------------------------------------|-------------|
-| [0001-TODO.patch](im-a-broken-link)                       | TODO |
+Patch Name                                                                                                                                                            | Description
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------
+[0001-Add-Enclustra-devicetree-to-Makefile.patch](meta-enclustra-module/recipes-kernel/linux/files/0001-Add-Enclustra-devicetree-to-Makefile.patch)                   | Add enclustra-user.dtb as build target to Makefile
+[0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch](meta-enclustra-module/recipes-kernel/linux/files/0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch)         | Add driver to read module serial number
+[0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-kernel/linux/files/0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](1-protection-bits-are-set-in-qspi-flash
+))
 
 ## Integrate meta-enclustra-module Layer into user Project
 
@@ -571,7 +581,7 @@ DEVICETREE_FILE="devicetree.dtb"
 OVERLAY_FILE="socfpga_enclustra_mercury_QSPI_overlay.dtbo"
 BITSTREAM_FILE="bitstream.itb"
 KERNEL_FILE="uImage"
-ROOTFS_FILE="<image-machine>.rootfs.cpio.gz.u-boot"
+ROOTFS_FILE="<image>-<machine>.cpio.gz.u-boot"
 
 SPL_OFFSET=0x0
 UBOOT_OFFSET=0x100000

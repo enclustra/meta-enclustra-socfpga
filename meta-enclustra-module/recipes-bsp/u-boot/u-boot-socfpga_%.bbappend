@@ -3,7 +3,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files/bitstream:"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files/configs:"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files/devicetree:"
 
-DEPENDS:append = " hw-ref-design"
+DEPENDS:append = " exported-binaries"
 
 SRC_URI:append = " \
     file://fit_spl_fpga.its \

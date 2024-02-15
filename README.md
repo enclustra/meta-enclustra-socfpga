@@ -401,7 +401,7 @@ File name                                                                       
 [socfpga_enclustra_mercury_sa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa1.dtsi)                     | Contains a configuration common for all variants of the Mercury SA1 family
 [socfpga_enclustra_mercury_sa2.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa2.dtsi)                     | Contains a configuration common for all variants of the Mercury+ SA2 family
 
-The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the `enclustra-user.dts` file that is added in the meta-enclustra-refdes Yocto layer.
+The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the `enclustra-user.dts` file that is added in the [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer.
 
 ### Patches
 
@@ -443,19 +443,19 @@ meta-test
     │   ├── device-tree.bbappend
     │   └── files
     │       └── enclustra-user.dts
-    ├── hw-ref-design
+    ├── exported-binaries
     │   ├── files
     │   │   ├── handoff
     │   │   ├── fpga.periph.rbf
     │   │   └── fpga.core.rbf
-    │   └── hw-ref-design.bb
+    │   └── exported-binaries.bb
     └── u-boot
         ├── files
         │   └── enclustra-user.dts
         └── u-boot-socfpga_%.bbappend
 ```
 
-The binaries exported from Quartus II tool can be added in an own yocto recipe. Important is that all files from the HPS handoff directory are copied to `${DEPLOY_DIR_IMAGE}/handoff` directory and the bitstream to `${DEPLOY_DIR_IMAGE}/fpga.rbf` for Mercury SA1 and Mercury+ SA2 or `${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf` and `${DEPLOY_DIR_IMAGE}/bitstream.core.rbf` for Mercury+ AA1.
+The binaries exported from Quartus II tool can be added in an own yocto recipe named `exported-binaries`. Important is that all files from the HPS handoff directory are copied to `${DEPLOY_DIR_IMAGE}/handoff` directory and the bitstream to `${DEPLOY_DIR_IMAGE}/fpga.rbf` for Mercury SA1 and Mercury+ SA2 or `${DEPLOY_DIR_IMAGE}/bitstream.periph.rbf` and `${DEPLOY_DIR_IMAGE}/bitstream.core.rbf` for Mercury+ AA1.
 
 The U-Boot and Linux devicetree files need to be named `enclustra-user.dts` and provided by the `device-tree.bbappend` and `u-boot-socfpga_%.bbappend` recipes. The files are copied to the correct location by the base recipes.
 

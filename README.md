@@ -73,7 +73,7 @@ Following packages are required for building this reference design on Ubuntu:
 
     gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool libyaml-dev libelf-dev python3-distutils
 
-The packages can be installed with `sudo apt install \<package\>` command.
+The packages can be installed with `sudo apt install <package>` command.
 See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/system-requirements.html?highlight=host) for more details about requirements for Linux distributions other than Ubuntu.
 
 ## Build Reference Design
@@ -119,9 +119,9 @@ Following boot modes are supported:
 
 Module   | Supported Boot Modes
 -------- | -------------------
-ME-AA1-* | MMC*, eMMC, QSPI
-ME-SA1-* | MMC, eMMC, QSPI
-ME-SA3-* | MMC, QSPI
+ME-AA1-* | sdmmc*, emmc, qspi
+ME-SA1-* | sdmmc, emmc, qspi
+ME-SA2-* | sdmmc, qspi
 
 * see [Known Issues](#2-sd-card-access-is-not-reliable)
 
@@ -166,8 +166,10 @@ The tool kas can be used to checkout the repositories and setup the build direct
 
     kas checkout build.yml
     source openembedded-core/oe-init-build-env
-    export BB_ENV_EXTRAWHITE="UBOOT_CONFIG"
-    MACHINE=refdes-me-sa1-c6-7i-d10-pe1 bitbake image-minimal-refdes
+    export BB_ENV_PASSTHROUGH_ADDITIONS="MACHINE UBOOT_CONFIG DL_DIR SSTATE_DIR"
+    export MACHINE=refdes-me-sa1-c6-7i-d10-pe1
+    export UBOOT_CONFIG=qspi
+    bitbake image-minimal-refdes
 
 ## Deployment
 

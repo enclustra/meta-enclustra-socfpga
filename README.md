@@ -14,37 +14,38 @@ Date       | Version       | Comment
 ---------- | ------------- | -------------
 xxx        | 2022.1_v1.0.0 | First release
 
-## Description
+## Introduction
 
 This repository contains Yocto layers to generate Linux reference designs for following Enclustra SoC module families:
 - [Enclustra Mercury+ AA1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-aa1/).
 - [Enclustra Mercury SA1 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-sa1/).
 - [Enclustra Mercury+ SA2 product series](https://www.enclustra.com/en/products/system-on-chip-modules/mercury-sa2/).
 
-The reference designs are compatible with following base boards::
+The reference designs are compatible with following base boards:
 
 - [Enclustra Mercury+ PE1](https://www.enclustra.com/en/products/base-boards/mercury-pe1-200-300-400)
 - [Enclustra Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3)
 - [Enclustra Mercury+ ST1](https://www.enclustra.com/en/products/base-boards/mercury-st1)
 
-The [meta-enclustra-module](meta-enclustra-module) Yocto layer can be included into an own project or the [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer can be used to generate a reference design. The reference design can be built by manually setting up bitbake or the provided [build.yml](build.yml) can be used in combination with [kas](https://kas.readthedocs.io/en/latest/#) tool.
-The reference design is based on [meta-intel-fpga](https://git.yoctoproject.org/meta-intel-fpga) that uses following versions.
+The [meta-enclustra-module](meta-enclustra-module) Yocto layer contains everything required to run Linux on Enclustra modules equipped with Intel SoCs. This layer can be included into an own project (see [Integrate meta-enclustra-module Layer into user Project](#integrate-meta-enclustra-module-layer-into-user-project)). The [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer builds up on this layer and can be used to generate a reference design using prebuilt binaries (see [Reference Designs for Intel Quartus II](#reference-designs-for-intel-quartus-ii)). These reference designs can be built by manually setting up bitbake or the provided [build.yml](build.yml) can be used in combination with [kas](https://kas.readthedocs.io/en/latest/#) tool.
+
+The reference design is based on [meta-intel-fpga](https://git.yoctoproject.org/meta-intel-fpga) that uses following versions:
 
 - Yocto: mickledore
 - U-Boot: 2023.01
-- Linux:  kernel 6.1.0
+- Linux kernel: 6.1.0
 
 ## Supported Devices
 
-Family          | Module , Revision | Base boards
+Family          | Module , Revision | Base Boards
 --------------- | ----------------- | --------------
-Intel Cyclone V | Mercury  SA1 , R3 | Mercury PE1 / PE3 / ST1
-Intel Cyclone V | Mercury+ SA2 , R1 | Mercury PE1 / PE3 / ST1
-Intel Arria 10  | Mercury+ AA1 , R2 | Mercury PE1 / PE3 / ST1
+Intel Cyclone V | Mercury  SA1 , R3 | Mercury+ PE1 / Mercury+ PE3 / Mercury+ ST1
+Intel Cyclone V | Mercury+ SA2 , R1 | Mercury+ PE1 / Mercury+ PE3 / Mercury+ ST1
+Intel Arria 10  | Mercury+ AA1 , R2 | Mercury+ PE1 / Mercury+ PE3 / Mercury+ ST1
 
 ## Reference Designs for Intel Quartus II
 
-The generated binaries are compatible with the binaries of following reference designs:
+The `[meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer in this reference design uses prebuilt binaries of following reference designs:
 
 - [Mercury+ AA1 PE3 Reference Design](https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design)
 - [Mercury+ AA1 ST1 Reference Design](https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design)
@@ -57,7 +58,6 @@ The generated binaries are compatible with the binaries of following reference d
 - [Mercury+ SA2 PE3 Reference Design](https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design)
 - [Mercury+ SA2 ST1 Reference Design](https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design)
 - [Mercury+ SA2 PE1 Reference Design](https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design)
-
 
 ## Host Requirements
 
@@ -78,11 +78,48 @@ See [Yocto System Requirements](https://docs.yoctoproject.org/3.4.2/ref-manual/s
 
 ## Build Reference Design
 
+### KAS
+
+The recommended build flow is to use kas, which is a Python based tool that provides an easy mechanism to setup a bitbake project. The configuration file [build.yml](build.yml) provides all required settings. See [kas documentation](https://kas.readthedocs.io/en/latest/command-line.html) for more details.
+
+#### Installation
+
+    pip install kas
+    export PATH=$PATH:${HOME}/.local/bin
+
+#### Usage \#1
+
+Use following command to build the target specified in the build.yml file.
+
+    kas build build.yml
+
+#### Usage \#2
+
+Use following command to specify the bitbake command to be executed. `MACHINE` and `UBOOT_CONFIG` variable can be overridden according to section [Supported Machine Targets](#supported-machine-targets) and [Supported Boot Modes](#supported-boot-modes).
+
+    kas shell build.yml -c 'MACHINE=refdes-me-sa1-c6-7i-d10-pe1 UBOOT_CONFIG=qspi bitbake image-minimal-refdes'
+
+Note that the image [image-minimal-refdes](meta-enclustra-refdes/recipes-core/images/image-minimal-refdes.bb) can be replaced by any available image recipe. Following are a few examples provided by openembedded-core layer:
+- core-image-base
+- core-image-minimal
+- core-image-minimal-dev
+
+#### Usage \#3
+
+The tool kas can be used to checkout the repositories and setup the build directory. The build process can be started independently with bitbake as shown in following example.
+
+    kas checkout build.yml
+    source openembedded-core/oe-init-build-env
+    export BB_ENV_PASSTHROUGH_ADDITIONS="MACHINE UBOOT_CONFIG DL_DIR SSTATE_DIR"
+    export MACHINE=refdes-me-sa1-c6-7i-d10-pe1
+    export UBOOT_CONFIG=qspi
+    bitbake image-minimal-refdes
+
 ### Supported Machine Targets
 
 Following product models are supported:
 
-Machine Name                        | Module                   | Base board
+Machine Name                        | Module                   | Base Board
 ----------------------------------- | ------------------------ | -----------
 refdes-me-aa1-270-2i2-d11e-nfx3-pe1 | ME-AA1-270-2I2-D11E-NFX3 | ME-PE1-*
 refdes-me-aa1-270-2i2-d11e-nfx3-pe3 | ME-AA1-270-2I2-D11E-NFX3 | ME-PE3-*
@@ -134,50 +171,13 @@ As example:
     export SSTATE_DIR="${HOME}/yocto-cache/mickledore-arm-ss"
     export DL_DIR="${HOME}/yocto-cache/mickledore-arm-dl"
 
-### KAS
-
-The recommended build flow is to use kas, which is a Python based tool that provides an easy mechanism to setup a bitbake project. The configuration file [build.yml](build.yml) provides all required settings. See [kas documentation](https://kas.readthedocs.io/en/latest/command-line.html) for more details.
-
-#### Installation
-
-    pip install kas
-    export PATH=$PATH:${HOME}/.local/bin
-
-#### Usage \#1
-
-Use following command to build the target specified in the build.yml file.
-
-    kas build build.yml
-
-#### Usage \#2
-
-Use following command to specify the bitbake command to be executed. `MACHINE` and `UBOOT_CONFIG` variable can be overridden according to section [Supported Machine Targets](#supported-machine-targets) and [Supported Boot Modes](#supported-boot-modes).
-
-    kas shell build.yml -c 'MACHINE=refdes-me-sa1-c6-7i-d10-pe1 UBOOT_CONFIG=qspi bitbake image-minimal-refdes'
-
-Note that the image [image-minimal-refdes](meta-enclustra-refdes/recipes-core/images/image-minimal-refdes.bb) can be replaced by any available image recipe. Following are a few examples provided by openembedded-core layer:
-- core-image-base
-- core-image-minimal
-- core-image-minimal-dev
-
-#### Usage \#3
-
-The tool kas can be used to checkout the repositories and setup the build directory. The build process can be started independently with bitbake as shown in following example.
-
-    kas checkout build.yml
-    source openembedded-core/oe-init-build-env
-    export BB_ENV_PASSTHROUGH_ADDITIONS="MACHINE UBOOT_CONFIG DL_DIR SSTATE_DIR"
-    export MACHINE=refdes-me-sa1-c6-7i-d10-pe1
-    export UBOOT_CONFIG=qspi
-    bitbake image-minimal-refdes
-
 ## Deployment
 
 This chapter describes how to prepare the hardware to boot from different boot media, using the binaries generated by this reference design.
 
 ### Generated Binary Files
 
-After the reference design was built successfully, the generated files can be found in `build/tmp-glibc/deploy/images/\<MACHINE\>` directory. The <MACHINE> variable depends on your selected build target (see [Supported Machine Targets](#supported-machine-targets)).
+After the reference design was built successfully, the generated files can be found in `build/tmp-glibc/deploy/images/<MACHINE>` directory. The <MACHINE> variable depends on your selected build target (see [Supported Machine Targets](#supported-machine-targets)).
 
 ### SD Card
 
@@ -366,11 +366,13 @@ FPGA bitstream           | bitstream.itb                               | 0x30000
 Linux kernel             | uImage                                      | 0x1000000 | 0x1000000
 Rootfs                   | <image>-<machine>.cpio.gz.u-boot            | 0x2000000 | 0x2000000
 
-## Login on Target
+## Additional Information
+
+### Login on Target
 
 Login with `root` as user name, no password is set.
 
-## Devicetree
+### Devicetree
 
 The Linux devicetree is generated in a [device-tree.bb](meta-enclustra-module/recipes-bsp/device-tree/device-tree.bb) recipe included in the [meta-enclustra-module](meta-enclustra-module) Yocto layer.
 This layer requires an additional file named `enclustra-user.dts` which is added in the [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer in the [device-tree.bbappend](meta-enclustra-refdes/recipes-bsp/device-tree/device-tree.bbappend) append file. This `enclustra-user.dts` file includes all the required devicetree include files, e.g:
@@ -401,9 +403,9 @@ File name                                                                       
 
 The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the `enclustra-user.dts` file that is added in the meta-enclustra-refdes Yocto layer.
 
-## Patches
+### Patches
 
-### U-Boot
+#### U-Boot
 
 Following U-Boot patches are added.
 
@@ -418,7 +420,7 @@ Patch Name                                                                      
 [0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
 
 
-### Linux Kernel
+#### Linux Kernel
 
 Following Linux kernel patches are added.
 
@@ -428,7 +430,7 @@ Patch Name                                                                      
 [0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch](meta-enclustra-module/recipes-kernel/linux/files/0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch)         | Add driver to read module serial number
 [0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-kernel/linux/files/0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
 
-## Integrate meta-enclustra-module Layer into user Project
+### Integrate meta-enclustra-module Layer into user Project
 
 When the [meta-enclustra-module](meta-enclustra-module) layer is integrated into an own projet, the binaries exported from Quartus II tool and devicetree files need to be provided by an external layer. The directory structure of a minimal layer providing these files is shown below.
 
@@ -465,7 +467,6 @@ The user project should use one of the following machine configuations (named th
 - me-sa1-c6-7i-d10
 - me-sa2-d6-7i-d11
 
-## Additional Information
 
 ### Storage Multiplexing
 

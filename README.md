@@ -160,7 +160,7 @@ ME-AA1-* | sdmmc*, emmc, qspi
 ME-SA1-* | sdmmc, emmc, qspi
 ME-SA2-* | sdmmc, qspi
 
-* see [Known Issues](#2-sd-card-access-is-not-reliable)
+\* see [Known Issues](#2-sd-card-access-is-not-reliable)
 
 ### Accelerate Build
 
@@ -177,7 +177,7 @@ This chapter describes how to prepare the hardware to boot from different boot m
 
 ### Generated Binary Files
 
-After the reference design was built successfully, the generated files can be found in `build/tmp-glibc/deploy/images/<MACHINE>` directory. The <MACHINE> variable depends on your selected build target (see [Supported Machine Targets](#supported-machine-targets)).
+After the reference design was built successfully, the generated files can be found in `build/tmp-glibc/deploy/images/<MACHINE>` directory. The \<MACHINE\> variable depends on your selected build target (see [Supported Machine Targets](#supported-machine-targets)).
 
 ### SD Card
 
@@ -188,7 +188,7 @@ The partitions are configured in the kickstart file as follows:
 Partition | Type       | Size      | Usage
 --------- | ---------- | --------- | -----
 1         | FAT        | 50 Mbyte  | Boot partition
-2         | RAW (0xA2) | 2 Mbyte   | SPL Bootloader
+2         | RAW (0xA2) | 2 Mbyte   | SPL bootloader
 3         | ext4       | 400 Mbyte | Root file system
 
  To create a bootable SD card, copy the image file to a SD card e.g.
@@ -541,7 +541,7 @@ Each Enclustra module is delivered with two unique MAC addresses stored in the E
 
 ### Reading Serial Number of Module
 
-The serial number of the module can be read by following command:
+On modules equipped with a ATSHA204a EEPROM, the serial number can be read by following command:
 
     cat /sys/bus/i2c/devices/1-0064/serial
 
@@ -549,37 +549,12 @@ The serial number is reported as follows:
 
     248173
 
-### Read OTP region of EEPROM
-
-The one time programmable region of the EEPROM contains the serial number, MAC address and information about the module. A detailed description can be found in the user manual of the module. The entire region can be read by following command:
-
-    cat /sys/bus/i2c/devices/1-0064/otp
-
-The 512 bits of the OTP region are reported as follows:
-
-    00 03 C9 6D
-    03 39 00 01
-    00 88 51 23
-    77 FF FF FF
-    20 B0 F7 07
-    92 DA FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-    FF FF FF FF
-
 ### Rootfs Partition Size
 
-The size of the rootfs partition is set to 500 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file ([sdimage-enclustra-arria10.wks](meta-enclustra-refdes/wic/sdimage-enclustra-arria10.wks) / [sdimage-enclustra-cyclonev.wks](meta-enclustra-refdes/wic/sdimage-enclustra-cyclonev.wks)) needs to be modified. The partition size is defined by `--fixed-size` parameter as shown below.
+The size of the rootfs partition is set to 400 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file ([sdimage-enclustra-arria10.wks](meta-enclustra-refdes/wic/sdimage-enclustra-arria10.wks) / [sdimage-enclustra-cyclonev.wks](meta-enclustra-refdes/wic/sdimage-enclustra-cyclonev.wks)) needs to be modified. The partition size is defined by `--fixed-size` parameter as shown below.
 
 ```
-part / --source rootfs --ondisk mmcblk --fstype=ext4 --label root --align 1024 --fixed-size 500M
+part / --source rootfs --ondisk mmcblk --fstype=ext4 --label root --align 1024 --fixed-size 400M
 ```
 
 ### Configure SI5338 clock generator on Mercury+ PE1 and Mercury+ ST1 base board
@@ -594,7 +569,7 @@ The U-Boot patch [0006-Add-SI5338-configuration.patch](meta-enclustra-module/rec
 
 ### Program the flash memory from Linux
 
-In order to program a flash memory from Linux, a script like the following one can be used. - All required files need to be present in the current folder. They can be loaded via TFTP or from USB drive / SD card.
+To program a flash memory from Linux, a script like the following one can be used. All required files need to be present in the current folder. They can be loaded via TFTP or from USB drive / SD card.
 
 ```
 #!/bin/sh
@@ -708,7 +683,7 @@ All Arria 10 modules equipped with more than 2 Gbyte DDR of memory connected to 
 
 #### Description
 
-The memory size is limited in U-Boot to max. 2 Gbyte. Therefore, only 2 Gbyte is available for U-Boot and Linux. However, the upper 2Gbyte can still be accessed by the FPGA fabric.
+The memory size is limited in U-Boot to max. 2 Gbyte. Therefore, only 2 Gbyte is available for U-Boot and Linux. However, the upper 2 Gbyte can still be accessed by the FPGA fabric.
 
 ### 4. I2C frequency is wrong in U-Boot
 

@@ -418,7 +418,7 @@ Patch Name                                                                      
 [0005-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0005-Enclustra-MAC-address-readout-from-EEPROM.patch)         | Support for configuring MAC address with address stored in module EEPROM
 [0006-Add-SI5338-configuration.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0006-Add-SI5338-configuration.patch)                                           | Add code to configure SI5338 clock generator device on Enclustra base boards
 [0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
-
+[0008-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0008-Workaround-for-AA1-ST1-SD-card-boot.patch)                     | Workaround for SD card access issues on AA1/ST1
 
 #### Linux Kernel
 
@@ -659,7 +659,7 @@ All Enclustra modules equipped with a S25FL512S device (all product models of Me
 
 #### Description
 
-It can happen that all bits of the configuration register 1 of the QSPI flash device are set. One potential cause is when the power supply is turned off during a write command to this register. This register contains a one time programmable bit that defines the reset status of the block protection flags. When this bit is set by accident, the flash device is write protected after power up. As workaround a patch was added to U-Boot and Linux to clear these protection flags.
+It can happen that all bits of the configuration register 1 of the QSPI flash device are set. One potential cause is when the power supply is turned off during a write command to this register. This register contains a one time programmable bit that defines the reset status of the block protection flags. When this bit is set by accident, the flash device is write protected after power up. As workaround a patch was added to U-Boot and Linux to clear these protection flags ([0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch)).
 
 :warning: If the block protection feature of the QSPI flash device is enabled on purpose, this feature needs to be disabled.
 
@@ -672,6 +672,8 @@ This issue was only observed on Mercury+ AA1 module equipped on Mercury ST1 base
 #### Description
 
 Linux does not boot or gets stuck while booting. Sometimes the SD Card stops working after Linux is up and running.
+A patch is included which contains a workaround to fix the SD card access issues ([0008-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0008-Workaround-for-AA1-ST1-SD-card-boot.patch)).
+However, this fix only partially solves the problem, SD card access might still fail when the SPL is loaded by the boot ROM code.
 
 ### 3. AA1 Linux is limited to 2 Gbyte DDR memory size
 

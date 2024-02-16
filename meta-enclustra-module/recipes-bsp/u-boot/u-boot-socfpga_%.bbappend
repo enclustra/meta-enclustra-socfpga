@@ -16,11 +16,11 @@ SRC_URI:append = " \
     file://0005-Enclustra-MAC-address-readout-from-EEPROM.patch \
     file://0006-Add-SI5338-configuration.patch \
     file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
+    file://0008-Workaround-for-AA1-ST1-SD-card-boot.patch \
     file://0101-add-dtbo-support.patch \
     file://0102-add-rootwait-for-AA1.patch \
     file://0103-fix-dtbo-setup-for-qspiboot.patch \
     file://0104-fix-dtbo-for-qspiboot-sa12.patch \
-    file://0105-fix-SD-card-access.patch \
     file://0106-fix-bootscripts.patch \
     file://Si5338-RevB-Registers.h \
 "

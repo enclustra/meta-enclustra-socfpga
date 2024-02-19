@@ -1,0 +1,33 @@
+From 15a6179e6ece640192d70112526cc0ae1144c4b1 Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Mon, 19 Feb 2024 16:08:37 +0000
+Subject: [PATCH] Add dtbo for AA1 boot
+
+---
+ board/enclustra/bootscripts/qspi-aa1.cmd | 1 +
+ board/enclustra/bootscripts/sd-aa1.cmd   | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/board/enclustra/bootscripts/qspi-aa1.cmd b/board/enclustra/bootscripts/qspi-aa1.cmd
+index db518442f0..62b05a6653 100644
+--- a/board/enclustra/bootscripts/qspi-aa1.cmd
++++ b/board/enclustra/bootscripts/qspi-aa1.cmd
+@@ -3,4 +3,5 @@ sf probe
+ sf read ${ram_addr_kernel} ${qspi_offset_addr_kernel} ${size_kernel}
+ sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}
+ sf read ${ram_addr_rootfs} ${qspi_offset_addr_rootfs} ${size_rootfs}
++run fdtload_qspi
+ bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
+diff --git a/board/enclustra/bootscripts/sd-aa1.cmd b/board/enclustra/bootscripts/sd-aa1.cmd
+index 69e6d219cc..cc926900c4 100644
+--- a/board/enclustra/bootscripts/sd-aa1.cmd
++++ b/board/enclustra/bootscripts/sd-aa1.cmd
+@@ -1,4 +1,5 @@
+ bridge enable
+ fatload mmc 0:1 ${ram_addr_kernel} uImage
+ fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
++run fdtload
+ bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
+-- 
+2.34.1
+

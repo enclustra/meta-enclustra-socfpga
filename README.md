@@ -418,6 +418,7 @@ Patch Name                                                                      
 [0006-Add-SI5338-configuration.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0006-Add-SI5338-configuration.patch)                                           | Add code to configure SI5338 clock generator device on Enclustra base boards
 [0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
 [0008-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0008-Workaround-for-AA1-ST1-SD-card-boot.patch)                     | Workaround for SD card access issues on AA1/ST1
+[0009-Add-dtbo-for-AA1-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0009-Add-dtbo-for-AA1-boot.patch)                                                 | Load devicetree overlay in U-Boot boot script for Mercury+ AA1
 
 #### Linux Kernel
 

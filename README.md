@@ -300,7 +300,6 @@ fatload mmc 0:1 0x11000000 qspi/fpga.rbf
 fatload mmc 0:1 0x12000000 qspi/uImage
 fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
 
-
 sf probe
 
 sf update 0x10000000 ${qspi_offset_addr_spl} ${size_spl}
@@ -413,12 +412,11 @@ Patch Name                                                                      
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |-------------
 [0001-Add-Enclustra-board-files.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0001-Add-Enclustra-board-files.patch)                                         | Add support for Enclustra modules
 [0002-Add-Enclustra-devicetree-to-Makefile.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0002-Add-Enclustra-devicetree-to-Makefile.patch)                   | Add enclustra-user.dtb as build target to Makefile
-[0003-Fix-cycloneV-handoff-scripts.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0003-Fix-cycloneV-handoff-scripts.patch)                                   | Fix Python scripts to generate header files from Quartus handoff directory
-[0004-Make-intel-scripts-python-3-compatible.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0004-Make-intel-scripts-python-3-compatible.patch)               | Modify Python scripts to be compatible with Python 3
-[0005-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0005-Enclustra-MAC-address-readout-from-EEPROM.patch)         | Support for configuring MAC address with address stored in module EEPROM
-[0006-Add-SI5338-configuration.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0006-Add-SI5338-configuration.patch)                                           | Add code to configure SI5338 clock generator device on Enclustra base boards
-[0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
-[0008-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0008-Workaround-for-AA1-ST1-SD-card-boot.patch)                     | Workaround for SD card access issues on AA1/ST1
+[0003-Make-intel-scripts-python-3-compatible.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0003-Make-intel-scripts-python-3-compatible.patch)               | Modify Python scripts to be compatible with Python 3 / Fix Python scripts to generate header files from Quartus handoff directory
+[0004-Enclustra-MAC-address-readout-from-EEPROM.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0004-Enclustra-MAC-address-readout-from-EEPROM.patch)         | Support for configuring MAC address with address stored in module EEPROM
+[0005-Add-SI5338-configuration.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0005-Add-SI5338-configuration.patch)                                           | Add code to configure SI5338 clock generator device on Enclustra base boards
+[0006-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0006-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
+[0007-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0007-Workaround-for-AA1-ST1-SD-card-boot.patch)                     | Workaround for SD card access issues on AA1/ST1
 
 #### Linux Kernel
 

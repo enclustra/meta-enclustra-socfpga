@@ -1,7 +1,7 @@
-From eb26b5b3725fd5cc6ff5735bb5de0016a8fb458d Mon Sep 17 00:00:00 2001
+From 36f0e071e02b7a282a2f701b93a2957a920ce696 Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 09:59:28 +0000
-Subject: [PATCH 6/8] Enclustra MAC address readout from EEPROM
+Subject: [PATCH 5/8] Enclustra MAC address readout from EEPROM
 
 Introduce the Enclustra EEPROM MAC setup. Apply AT-SHA204
 wakeup fix.
@@ -20,7 +20,7 @@ Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
  create mode 100644 include/enclustra/eeprom-mac.h
 
 diff --git a/board/enclustra/mercury_aa1/mercury_aa1.c b/board/enclustra/mercury_aa1/mercury_aa1.c
-index 1f764e1896..3bba96c3c0 100644
+index 97ca3c42cb..d211dae7a5 100644
 --- a/board/enclustra/mercury_aa1/mercury_aa1.c
 +++ b/board/enclustra/mercury_aa1/mercury_aa1.c
 @@ -11,6 +11,7 @@
@@ -286,7 +286,7 @@ index 0000000000..e4d737b339
 +EXPORT_SYMBOL_GPL(atsha204_get_mac);
 diff --git a/include/enclustra/eeprom-mac.h b/include/enclustra/eeprom-mac.h
 new file mode 100644
-index 0000000000..4d84b880ee
+index 0000000000..1807b1bd4a
 --- /dev/null
 +++ b/include/enclustra/eeprom-mac.h
 @@ -0,0 +1,14 @@

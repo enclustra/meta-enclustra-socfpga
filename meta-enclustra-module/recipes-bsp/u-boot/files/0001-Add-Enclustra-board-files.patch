@@ -1,7 +1,7 @@
-From da55dbae5c6d0209a5563f549b8bbeb922ff69b9 Mon Sep 17 00:00:00 2001
+From 90611ba4c807d6bb5a6c9000f8a529a92f18d71c Mon Sep 17 00:00:00 2001
 From: Lothar Rubusch <lothar.rubusch@enclustra.com>
 Date: Fri, 24 Nov 2023 09:08:47 +0000
-Subject: [PATCH 3/8] Add Enclustra board files
+Subject: [PATCH 1/8] Add Enclustra board files
 
 Signed-off-by: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
@@ -9,7 +9,7 @@ Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
  arch/arm/mach-socfpga/Kconfig             |  21 +++
  board/enclustra/bootscripts/qspi-aa1.cmd  |   6 +
  board/enclustra/bootscripts/qspi.cmd      |   8 +
- board/enclustra/bootscripts/sd-aa1.cmd    |   8 +
+ board/enclustra/bootscripts/sd-aa1.cmd    |   4 +
  board/enclustra/bootscripts/sd.cmd        |   6 +
  board/enclustra/mercury_aa1/Kconfig       |  15 ++
  board/enclustra/mercury_aa1/MAINTAINERS   |   5 +
@@ -24,10 +24,10 @@ Signed-off-by: Lothar Rubusch <lothar.rubusch@enclustra.com>
  board/enclustra/mercury_sa2/MAINTAINERS   |   5 +
  board/enclustra/mercury_sa2/Makefile      |   1 +
  board/enclustra/mercury_sa2/mercury_sa2.c | 157 ++++++++++++++++
- include/configs/socfpga_mercury_aa1.h     |  71 ++++++++
- include/configs/socfpga_mercury_sa1.h     |  47 +++++
- include/configs/socfpga_mercury_sa2.h     |  47 +++++
- 21 files changed, 884 insertions(+)
+ include/configs/socfpga_mercury_aa1.h     |  78 ++++++++
+ include/configs/socfpga_mercury_sa1.h     |  54 ++++++
+ include/configs/socfpga_mercury_sa2.h     |  54 ++++++
+ 21 files changed, 901 insertions(+)
  create mode 100644 board/enclustra/bootscripts/qspi-aa1.cmd
  create mode 100644 board/enclustra/bootscripts/qspi.cmd
  create mode 100644 board/enclustra/bootscripts/sd-aa1.cmd
@@ -129,18 +129,14 @@ index 0000000000..0c715b5ddc
 +bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
 diff --git a/board/enclustra/bootscripts/sd-aa1.cmd b/board/enclustra/bootscripts/sd-aa1.cmd
 new file mode 100644
-index 0000000000..bd712c3dc1
+index 0000000000..69e6d219cc
 --- /dev/null
 +++ b/board/enclustra/bootscripts/sd-aa1.cmd
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,4 @@
 +bridge enable
 +fatload mmc 0:1 ${ram_addr_kernel} uImage
 +fatload mmc 0:1 ${ram_addr_devicetree} devicetree.dtb
-+fatload mmc 0:1 ${ram_addr_rootfs} uramdisk
-+
-+altera_set_storage QSPI
-+
-+bootm ${ram_addr_kernel} ${ram_addr_rootfs} ${ram_addr_devicetree}
++bootm ${ram_addr_kernel} - ${ram_addr_devicetree}
 diff --git a/board/enclustra/bootscripts/sd.cmd b/board/enclustra/bootscripts/sd.cmd
 new file mode 100644
 index 0000000000..27c1d58648
@@ -232,7 +228,7 @@ index 0000000000..d16e4598de
 +};
 diff --git a/board/enclustra/mercury_aa1/mercury_aa1.c b/board/enclustra/mercury_aa1/mercury_aa1.c
 new file mode 100644
-index 0000000000..1f764e1896
+index 0000000000..97ca3c42cb
 --- /dev/null
 +++ b/board/enclustra/mercury_aa1/mercury_aa1.c
 @@ -0,0 +1,208 @@
@@ -485,7 +481,7 @@ index 0000000000..7d752d0459
 +obj-y	:= mercury_sa1.o
 diff --git a/board/enclustra/mercury_sa1/mercury_sa1.c b/board/enclustra/mercury_sa1/mercury_sa1.c
 new file mode 100644
-index 0000000000..228bbcec23
+index 0000000000..c89cb80b9d
 --- /dev/null
 +++ b/board/enclustra/mercury_sa1/mercury_sa1.c
 @@ -0,0 +1,210 @@
@@ -740,7 +736,7 @@ index 0000000000..cb9295dbb3
 +obj-y	:= mercury_sa2.o
 diff --git a/board/enclustra/mercury_sa2/mercury_sa2.c b/board/enclustra/mercury_sa2/mercury_sa2.c
 new file mode 100644
-index 0000000000..deedc14113
+index 0000000000..459b436b0e
 --- /dev/null
 +++ b/board/enclustra/mercury_sa2/mercury_sa2.c
 @@ -0,0 +1,157 @@
@@ -903,10 +899,10 @@ index 0000000000..deedc14113
 +
 diff --git a/include/configs/socfpga_mercury_aa1.h b/include/configs/socfpga_mercury_aa1.h
 new file mode 100644
-index 0000000000..da4bdc586b
+index 0000000000..f368935fe0
 --- /dev/null
 +++ b/include/configs/socfpga_mercury_aa1.h
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,78 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2024 Enclustra GmbH
@@ -934,11 +930,13 @@ index 0000000000..da4bdc586b
 +
 +/* U-Boot environment */
 +#define SOCFPGA_BOOT_SETTINGS \
++    "fdtfile=devicetree.dtb\0" \
 +    "qspi_offset_addr_spl=0x0\0" \
 +    "qspi_offset_addr_u-boot=0x100000\0" \
 +    "qspi_offset_addr_u-boot-env=0x180000\0" \
 +    "qspi_offset_addr_boot-script=0x200000\0" \
 +    "qspi_offset_addr_devicetree=0x280000\0" \
++    "qspi_offset_addr_dtoverlay=0x2c0000\0" \
 +    "qspi_offset_addr_bitstream=0x300000\0" \
 +    "qspi_offset_addr_kernel=0x1000000\0" \
 +    "qspi_offset_addr_rootfs=0x2000000\0" \
@@ -946,17 +944,22 @@ index 0000000000..da4bdc586b
 +    "size_u-boot=0x80000\0" \
 +    "size_u-boot-env=0x80000\0" \
 +    "size_boot-script=0x80000\0" \
-+    "size_devicetree=0x80000\0" \
++    "size_devicetree=0x40000\0" \
++    "size_dtoverlay=0x40000\0" \
 +    "size_bitstream=0xD00000\0" \
 +    "size_kernel=0x1000000\0" \
 +    "size_rootfs=0x2000000\0" \
 +    "ram_addr_rootfs=0x12000000\0" \
 +    "ram_addr_kernel=0x11000000\0" \
 +    "ram_addr_devicetree=0x10000000\0" \
++    "ram_addr_devicetree_overlay=0x100c0000\0" \
 +    "ram_addr_boot-script=0x10800000\0" \
++    "fdtofile=socfpga_enclustra_mercury_XXX_overlay.dtbo\0" \
++    "fdtload=load ${devtype} ${devnum}:${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${devnum}:${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8192; fdt apply $ram_addr_devicetree_overlay\0" \
++    "fdtload_qspi=sf probe; sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}; sf read ${ram_addr_devicetree_overlay} ${qspi_offset_addr_dtoverlay} ${size_dtoverlay}; fdt addr ${ram_addr_devicetree}; fdt resize 8192; fdt apply ${ram_addr_devicetree_overlay}\0" \
 +    "bootm_size=0x0a000000\0" \
 +    "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
-+    "bootargs=earlycon console=ttyS0,115200 rw root=/dev/mmcblk0p3\0" \
++    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
 +    "qspiload=setenv bootargs ${bootargs-qspi}; sf probe; sf read ${ram_addr_boot-script} ${qspi_offset_addr_boot-script} ${size_boot-script}\0" \
 +    "qspiboot=source ${ram_addr_boot-script}\0"
 +
@@ -980,10 +983,10 @@ index 0000000000..da4bdc586b
 +#endif	/* __CONFIG_SOCFGPA_MERCURY_AA1_H__ */
 diff --git a/include/configs/socfpga_mercury_sa1.h b/include/configs/socfpga_mercury_sa1.h
 new file mode 100644
-index 0000000000..23b9aa3462
+index 0000000000..27a20b5a75
 --- /dev/null
 +++ b/include/configs/socfpga_mercury_sa1.h
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,54 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2024 Enclustra GmbH
@@ -1000,11 +1003,13 @@ index 0000000000..23b9aa3462
 +
 +/* U-Boot environment */
 +#define SOCFPGA_BOOT_SETTINGS \
++    "fdtfile=devicetree.dtb\0" \
 +    "qspi_offset_addr_spl=0x0\0" \
 +    "qspi_offset_addr_u-boot=0x100000\0" \
 +    "qspi_offset_addr_u-boot-env=0x180000\0" \
 +    "qspi_offset_addr_boot-script=0x200000\0" \
 +    "qspi_offset_addr_devicetree=0x280000\0" \
++    "qspi_offset_addr_dtoverlay=0x2c0000\0" \
 +    "qspi_offset_addr_bitstream=0x300000\0" \
 +    "qspi_offset_addr_kernel=0x1000000\0" \
 +    "qspi_offset_addr_rootfs=0x2000000\0" \
@@ -1012,7 +1017,8 @@ index 0000000000..23b9aa3462
 +    "size_u-boot=0x80000\0" \
 +    "size_u-boot-env=0x80000\0" \
 +    "size_boot-script=0x80000\0" \
-+    "size_devicetree=0x80000\0" \
++    "size_devicetree=0x40000\0" \
++    "size_dtoverlay=0x40000\0" \
 +    "size_bitstream=0xD00000\0" \
 +    "size_kernel=0x1000000\0" \
 +    "size_rootfs=0x2000000\0" \
@@ -1020,7 +1026,11 @@ index 0000000000..23b9aa3462
 +    "ram_addr_rootfs=0x12000000\0" \
 +    "ram_addr_kernel=0x11000000\0" \
 +    "ram_addr_devicetree=0x10000000\0" \
++    "ram_addr_devicetree_overlay=0x100c0000\0" \
 +    "ram_addr_boot-script=0x10800000\0" \
++    "fdtofile=socfpga_enclustra_mercury_XXX_overlay.dtbo\0" \
++    "fdtload=load ${devtype} ${devnum}:${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${devnum}:${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8192; fdt apply $ram_addr_devicetree_overlay\0" \
++    "fdtload_qspi=sf probe; sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}; sf read ${ram_addr_devicetree_overlay} ${qspi_offset_addr_dtoverlay} ${size_dtoverlay}; fdt addr ${ram_addr_devicetree}; fdt resize 8192; fdt apply ${ram_addr_devicetree_overlay}\0" \
 +    "bootm_size=0x0a000000\0" \
 +    "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
 +    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \
@@ -1033,10 +1043,10 @@ index 0000000000..23b9aa3462
 +#endif	/* __CONFIG_SOCFGPA_MERCURY_SA1_H__ */
 diff --git a/include/configs/socfpga_mercury_sa2.h b/include/configs/socfpga_mercury_sa2.h
 new file mode 100644
-index 0000000000..2635756b9c
+index 0000000000..2509049cb7
 --- /dev/null
 +++ b/include/configs/socfpga_mercury_sa2.h
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,54 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2024 Enclustra GmbH
@@ -1053,11 +1063,13 @@ index 0000000000..2635756b9c
 +
 +/* U-Boot environment */
 +#define SOCFPGA_BOOT_SETTINGS \
++    "fdtfile=devicetree.dtb\0" \
 +    "qspi_offset_addr_spl=0x0\0" \
 +    "qspi_offset_addr_u-boot=0x100000\0" \
 +    "qspi_offset_addr_u-boot-env=0x180000\0" \
 +    "qspi_offset_addr_boot-script=0x200000\0" \
 +    "qspi_offset_addr_devicetree=0x280000\0" \
++    "qspi_offset_addr_dtoverlay=0x2c0000\0" \
 +    "qspi_offset_addr_bitstream=0x300000\0" \
 +    "qspi_offset_addr_kernel=0x1000000\0" \
 +    "qspi_offset_addr_rootfs=0x2000000\0" \
@@ -1065,7 +1077,8 @@ index 0000000000..2635756b9c
 +    "size_u-boot=0x80000\0" \
 +    "size_u-boot-env=0x80000\0" \
 +    "size_boot-script=0x80000\0" \
-+    "size_devicetree=0x80000\0" \
++    "size_devicetree=0x40000\0" \
++    "size_dtoverlay=0x40000\0" \
 +    "size_bitstream=0xD00000\0" \
 +    "size_kernel=0x1000000\0" \
 +    "size_rootfs=0x2000000\0" \
@@ -1073,7 +1086,11 @@ index 0000000000..2635756b9c
 +    "ram_addr_rootfs=0x12000000\0" \
 +    "ram_addr_kernel=0x11000000\0" \
 +    "ram_addr_devicetree=0x10000000\0" \
++    "ram_addr_devicetree_overlay=0x100c0000\0" \
 +    "ram_addr_boot-script=0x10800000\0" \
++    "fdtofile=socfpga_enclustra_mercury_XXX_overlay.dtbo\0" \
++    "fdtload=load ${devtype} ${devnum}:${distro_bootpart} ${ram_addr_devicetree} ${bootdir}/${fdtfile}; load ${devtype} ${devnum}:${distro_bootpart} ${ram_addr_devicetree_overlay} ${bootdir}/${fdtofile}; fdt addr $ram_addr_devicetree; fdt resize 8192; fdt apply $ram_addr_devicetree_overlay\0" \
++    "fdtload_qspi=sf probe; sf read ${ram_addr_devicetree} ${qspi_offset_addr_devicetree} ${size_devicetree}; sf read ${ram_addr_devicetree_overlay} ${qspi_offset_addr_dtoverlay} ${size_dtoverlay}; fdt addr ${ram_addr_devicetree}; fdt resize 8192; fdt apply ${ram_addr_devicetree_overlay}\0" \
 +    "bootm_size=0x0a000000\0" \
 +    "bootargs-qspi=earlycon console=ttyS0,115200 rw root=/dev/ram0\0" \
 +    "bootargs=earlycon console=ttyS0,115200 rw rootwait root=/dev/mmcblk0p3\0" \

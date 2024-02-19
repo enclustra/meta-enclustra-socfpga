@@ -1,7 +1,7 @@
-From 8be504ffbba144e9ccdc49593a8405b62e616b3c Mon Sep 17 00:00:00 2001
+From 9c784f75fbff8ca26dc5a5207420694a9e63e948 Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
 Date: Fri, 1 Dec 2023 15:38:22 +0100
-Subject: [PATCH 8/8] mtd: spi-nor: Prevent a bricked S25FL512S flash
+Subject: [PATCH 7/8] mtd: spi-nor: Prevent a bricked S25FL512S flash
 
 The block protection flags on S25FL512S QSPI flash devices can
 be set accidentally when power is lost during a write command.

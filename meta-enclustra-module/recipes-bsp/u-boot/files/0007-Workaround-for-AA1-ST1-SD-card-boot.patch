@@ -1,7 +1,7 @@
-From 7e51a1aee62f4a9cf4ed39b77186009a0bf11ea9 Mon Sep 17 00:00:00 2001
+From 3ed066738bc1dd284a676647782b5f588383699f Mon Sep 17 00:00:00 2001
 From: Andreas Buerkler <andreas.buerkler@enclustra.com>
-Date: Fri, 16 Feb 2024 16:44:45 +0000
-Subject: [PATCH] Workaround for AA1/ST1 SD card boot
+Date: Mon, 19 Feb 2024 13:59:45 +0000
+Subject: [PATCH 8/8] Workaround for AA1 ST1 SD card boot
 
 ---
  arch/arm/mach-socfpga/spl_a10.c | 18 ++++++++++++++++++

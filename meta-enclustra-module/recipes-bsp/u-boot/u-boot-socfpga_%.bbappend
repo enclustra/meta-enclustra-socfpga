@@ -11,17 +11,11 @@ SRC_URI:append = " \
     file://socfpga_env_on_qspi.appendix \
     file://0001-Add-Enclustra-board-files.patch \
     file://0002-Add-Enclustra-devicetree-to-Makefile.patch \
-    file://0003-Fix-cycloneV-handoff-scripts.patch \
-    file://0004-Make-intel-scripts-python-3-compatible.patch \
-    file://0005-Enclustra-MAC-address-readout-from-EEPROM.patch \
-    file://0006-Add-SI5338-configuration.patch \
-    file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
-    file://0008-Workaround-for-AA1-ST1-SD-card-boot.patch \
-    file://0101-add-dtbo-support.patch \
-    file://0102-add-rootwait-for-AA1.patch \
-    file://0103-fix-dtbo-setup-for-qspiboot.patch \
-    file://0104-fix-dtbo-for-qspiboot-sa12.patch \
-    file://0106-fix-bootscripts.patch \
+    file://0003-Make-intel-scripts-python-3-compatible.patch \
+    file://0004-Enclustra-MAC-address-readout-from-EEPROM.patch \
+    file://0005-Add-SI5338-configuration.patch \
+    file://0006-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
+    file://0007-Workaround-for-AA1-ST1-SD-card-boot.patch \
     file://Si5338-RevB-Registers.h \
 "
 

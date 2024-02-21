@@ -341,15 +341,15 @@ sf update 0x13000000 ${qspi_offset_addr_rootfs} ${size_rootfs}
 
 #### QSPI Flash Layout for Mercury SA1 and Mercury+ SA2
 
-Partition          | Filename                            | Offset    | Size
------------------- | ----------------------------------- | --------- | ----------
-U-Boot with SPL    | u-boot-with-spl.sfp                 | 0x0       | 0x180000
-U-Boot environment | -                                   | 0x180000  | 0x80000
-U-Boot script      | boot.scr                            | 0x200000  | 0x80000
-Linux devicetree   | devicetree.dtb                      | 0x280000  | 0x80000
-FPGA bitstream     | fpga.rbf                            | 0x300000  | 0xd00000
-Linux kernel       | uImage                              | 0x1000000 | 0x1000000
-Rootfs             | <image>-<machine>.cpio.gz.u-boot    | 0x2000000 | 0x2000000
+Partition          | Filename                             | Offset    | Size
+------------------ | ------------------------------------ | --------- | ----------
+U-Boot with SPL    | u-boot-with-spl.sfp                  | 0x0       | 0x180000
+U-Boot environment | -                                    | 0x180000  | 0x80000
+U-Boot script      | boot.scr                             | 0x200000  | 0x80000
+Linux devicetree   | devicetree.dtb                       | 0x280000  | 0x80000
+FPGA bitstream     | fpga.rbf                             | 0x300000  | 0xd00000
+Linux kernel       | uImage                               | 0x1000000 | 0x1000000
+Rootfs             | \<image\>-\<machine\>.cpio.gz.u-boot | 0x2000000 | 0x2000000
 
 #### QSPI Flash Layout for Mercury+ AA1
 
@@ -363,7 +363,7 @@ Linux devicetree         | devicetree.dtb                              | 0x28000
 Linux devicetree overlay | socfpga_enclustra_mercury_qspi_overlay.dtbo | 0x2C0000  | 0x40000
 FPGA bitstream           | bitstream.itb                               | 0x300000  | 0xd00000
 Linux kernel             | uImage                                      | 0x1000000 | 0x1000000
-Rootfs                   | <image>-<machine>.cpio.gz.u-boot            | 0x2000000 | 0x2000000
+Rootfs                   | \<image\>-\<machine\>.cpio.gz.u-boot        | 0x2000000 | 0x2000000
 
 ## Additional Information
 

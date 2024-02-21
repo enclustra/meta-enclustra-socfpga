@@ -549,9 +549,11 @@ The serial number is reported as follows:
 
     248173
 
-### Rootfs Partition Size
+### Root File System
 
-The size of the rootfs partition is set to 400 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file ([sdimage-enclustra-arria10.wks](meta-enclustra-refdes/wic/sdimage-enclustra-arria10.wks) / [sdimage-enclustra-cyclonev.wks](meta-enclustra-refdes/wic/sdimage-enclustra-cyclonev.wks)) needs to be modified. The partition size is defined by `--fixed-size` parameter as shown below.
+The rootfs is located on the ext4 partition on SD card or eMMC flash. This partition is persistent. For QSPI boot, an initramfs is used, which is copied to RAM while booting. The initramfs is not persistent and changes are lost after a reboot.
+
+The size of the ext4 rootfs partition is set to 400 Mbyte by default. To change the partition size, the OpenEmbedded kickstart file ([sdimage-enclustra-arria10.wks](meta-enclustra-refdes/wic/sdimage-enclustra-arria10.wks) / [sdimage-enclustra-cyclonev.wks](meta-enclustra-refdes/wic/sdimage-enclustra-cyclonev.wks)) needs to be modified. The partition size is defined by `--fixed-size` parameter as shown below.
 
 ```
 part / --source rootfs --ondisk mmcblk --fstype=ext4 --label root --align 1024 --fixed-size 400M

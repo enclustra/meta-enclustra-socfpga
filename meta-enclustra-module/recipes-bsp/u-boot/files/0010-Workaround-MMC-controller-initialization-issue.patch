@@ -1,0 +1,25 @@
+From d2b2ad890c3bd411cd98ed0601fb49eeddbc6029 Mon Sep 17 00:00:00 2001
+From: Andreas Buerkler <andreas.buerkler@enclustra.com>
+Date: Fri, 23 Feb 2024 13:13:19 +0000
+Subject: [PATCH] Workaround MMC controller initialization issue
+
+---
+ drivers/mmc/dw_mmc.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/mmc/dw_mmc.c b/drivers/mmc/dw_mmc.c
+index 5085a3b491..82502ee3c6 100644
+--- a/drivers/mmc/dw_mmc.c
++++ b/drivers/mmc/dw_mmc.c
+@@ -527,6 +527,8 @@ static int dwmci_init(struct mmc *mmc)
+ {
+ 	struct dwmci_host *host = mmc->priv;
+ 
++	udelay(1000);
++
+ 	if (host->board_init)
+ 		host->board_init(host);
+ 
+-- 
+2.34.1
+

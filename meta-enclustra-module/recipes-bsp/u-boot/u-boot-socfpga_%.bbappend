@@ -18,6 +18,7 @@ SRC_URI:append = " \
     file://0007-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
     file://0008-Workaround-for-AA1-ST1-SD-card-boot.patch \
     file://0009-Add-dtbo-for-AA1-boot.patch \
+    file://0010-Workaround-MMC-controller-initialization-issue.patch \
     file://Si5338-RevB-Registers.h \
 "
 

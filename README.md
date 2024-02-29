@@ -27,6 +27,8 @@ The reference designs are compatible with following base boards:
 - [Enclustra Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3)
 - [Enclustra Mercury+ ST1](https://www.enclustra.com/en/products/base-boards/mercury-st1)
 
+This documentation explains how this rererence design can be used and does not go into details of the Yocto project. See [Yocto Project Manual](docs.yoctoproject.org) for more information about the Yocto project.
+
 The [meta-enclustra-module](meta-enclustra-module) Yocto layer contains everything required to run Linux on Enclustra modules equipped with Intel SoCs. This layer can be included into an own project (see [Integrate meta-enclustra-module Layer into user Project](#integrate-meta-enclustra-module-layer-into-user-project)). The [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer builds up on this layer and can be used to generate a reference design using prebuilt binaries (see [Reference Designs for Intel Quartus II](#reference-designs-for-intel-quartus-ii)). These reference designs can be built by manually setting up bitbake or the provided [build.yml](build.yml) can be used in combination with [kas](https://kas.readthedocs.io/en/latest/#) tool.
 
 The reference design is based on [meta-intel-fpga](https://git.yoctoproject.org/meta-intel-fpga) that uses following versions:
@@ -204,6 +206,8 @@ On the Mercury SA1-R3 and Mercury AA1+ modules the MMC bus lines are shared betw
 1. Prepare 2 bootable SD cards (See section [SD Card](#sd-card) for the steps required to prepare an SD card):
     - One with a default SD card image, which is only used to boot until U-Boot console.
     - The second SD card contains the image to be written to the eMMC flash. Make sure that the image to be written to the eMMC is small enough to fit into the DDR memory. The recommended partition sizes are: fat 50Mbyte, raw 2Mbyte, ext4 400Mbyte. The rootfs partition size can be increased in a later step.
+
+Two SD cards are required because on Mercury+ AA1 the U-Boot SPL configures the HPS system differently (e.g. 4 data lines for SD card and 8 data lines for eMMC memory). Programming the eMMC flash on Mercury SA1 might work with only one SD card, containing the image generated for eMMC boot.
 
 2. Boot from the first SD card until U-Boot console
 
@@ -470,7 +474,7 @@ The user project should use one of the following machine configuations (named th
 
 ### Storage Multiplexing
 
-Mercury+ AA1 provides QSPI flash, SD card and eMMC flash, but all these memories are connected to the same IO pins of the SoC device. Mercury SA1 shares SD card and eMMC flash with the same IO pins. The active memory is selected according to the configured boot mode. `altera_set_storage` U-Boot command provides a mechanism to switch the memory device in U-Boot temporarily.
+Mercury+ AA1 provides QSPI flash, SD card and eMMC flash, but all these memories are connected to the same IO pins of the SoC device. Mercury SA1 shares SD card and eMMC flash with the same IO pins. The active memory is selected according to the configured boot mode. `altera_set_storage` U-Boot command provides a mechanism to switch the memory device in U-Boot temporarily. It takes one argument, either `MMC` (to select SD card), `EMMC` (to select eMMC memory) or `QSPI` (to select QSPI flash).
 
 Examples:
 
@@ -571,7 +575,7 @@ The U-Boot patch [0006-Add-SI5338-configuration.patch](meta-enclustra-module/rec
 
 ### Program the flash memory from Linux
 
-To program a flash memory from Linux, a script like the following one can be used. All required files need to be present in the current folder. They can be loaded via TFTP or from USB drive / SD card.
+The following script can be used to flash the QSPI flash memory from Linux. All required files need to be present in the current folder. They can be loaded via TFTP or from USB drive / SD card.
 
 ```
 #!/bin/sh

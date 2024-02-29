@@ -9,79 +9,79 @@ PROVIDES = "virtual/bitstream"
 
 
 SRC_URI:refdes-me-aa1-480-2i3-d12e-nfx3-pe1 = "\
-    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE1 \
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE1.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE1 \
 "
 
 SRC_URI:refdes-me-aa1-480-2i3-d12e-nfx3-pe3 = "\
-    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE3.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE3 \
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_PE3.zip;name=ME-AA1-480-2I3-D12E-NFX3_PE3 \
 "
 
 SRC_URI:refdes-me-aa1-480-2i3-d12e-nfx3-st1 = "\
-    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_ST1.zip;name=ME-AA1-480-2I3-D12E-NFX3_ST1 \
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-480-2I3-D12E-NFX3_ST1.zip;name=ME-AA1-480-2I3-D12E-NFX3_ST1 \
 "
 
 SRC_URI:refdes-me-aa1-270-2i2-d11e-nfx3-pe1 = "\
-    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE1 \
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE1.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE1 \
 "
 
 SRC_URI:refdes-me-aa1-270-2i2-d11e-nfx3-pe3 = "\
-    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE3.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE3 \
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_PE3.zip;name=ME-AA1-270-2I2-D11E-NFX3_PE3 \
 "
 SRC_URI:refdes-me-aa1-270-2i2-d11e-nfx3-st1 = "\
-    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_ST1.zip;name=ME-AA1-270-2I2-D11E-NFX3_ST1 \
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-270-2I2-D11E-NFX3_ST1.zip;name=ME-AA1-270-2I2-D11E-NFX3_ST1 \
 "
 
 SRC_URI:refdes-me-aa1-270-3e4-d11e-nfx3-pe1 = "\
-    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE1 \
+    https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE1.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE1 \
 "
 
 SRC_URI:refdes-me-aa1-270-3e4-d11e-nfx3-pe3 = "\
-    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE3.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE3 \
+    https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_PE3.zip;name=ME-AA1-270-3E4-D11E-NFX3_PE3 \
 "
 
 SRC_URI:refdes-me-aa1-270-3e4-d11e-nfx3-st1 = "\
-    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_ST1.zip;name=ME-AA1-270-3E4-D11E-NFX3_ST1 \
+    https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-AA1-270-3E4-D11E-NFX3_ST1.zip;name=ME-AA1-270-3E4-D11E-NFX3_ST1 \
 "
 
 SRC_URI:refdes-me-sa1-c6-7i-d10-pe1 = "\
-    https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE1.zip;name=ME-SA1-C6-7I-D10_PE1 \
+    https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE1.zip;name=ME-SA1-C6-7I-D10_PE1 \
 "
 
 SRC_URI:refdes-me-sa1-c6-7i-d10-pe3 = "\
-    https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE3.zip;name=ME-SA1-C6-7I-D10_PE3 \
+    https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_PE3.zip;name=ME-SA1-C6-7I-D10_PE3 \
 "
 
 SRC_URI:refdes-me-sa1-c6-7i-d10-st1 = "\
-    https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_ST1.zip;name=ME-SA1-C6-7I-D10_ST1 \
+    https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-SA1-C6-7I-D10_ST1.zip;name=ME-SA1-C6-7I-D10_ST1 \
 "
 
 SRC_URI:refdes-me-sa2-d6-7i-d11-pe1 = "\
-    https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE1.zip;name=ME-SA2-D6-7I-D11_PE1 \
+    https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE1.zip;name=ME-SA2-D6-7I-D11_PE1 \
 "
 
 SRC_URI:refdes-me-sa2-d6-7i-d11-pe3 = "\
-    https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE3.zip;name=ME-SA2-D6-7I-D11_PE3 \
+    https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_PE3.zip;name=ME-SA2-D6-7I-D11_PE3 \
 "
 
 SRC_URI:refdes-me-sa2-d6-7i-d11-st1 = "\
-    https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design/releases/download/2022.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_ST1.zip;name=ME-SA2-D6-7I-D11_ST1 \
+    https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design/releases/download/2023.1_v1.0.0/binaries_ME-SA2-D6-7I-D11_ST1.zip;name=ME-SA2-D6-7I-D11_ST1 \
 "
 
-SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE1.sha256sum] = "6e0133670aac0d44d0d724bf44ac5671cf564b60f9b27e563a0a7a8f2541b2a2"
-SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE3.sha256sum] = "f54d4edfa31b123fc62f83fc1a9580ad4c7a091fba08199c2529d55b43ac3e5b"
-SRC_URI[ME-AA1-270-2I2-D11E-NFX3_ST1.sha256sum] = "0e62129a0badb004e1f9e6c505ecda4502f57377ec2f0e33f188483d947503e3"
-SRC_URI[ME-AA1-270-3E4-D11E-NFX3_PE1.sha256sum] = "df3e4d93b77a7f1c948f3d05cead8733bcea78cd8c9e260d7975d114e3c9cf8b"
-SRC_URI[ME-AA1-270-3E4-D11E-NFX3_PE3.sha256sum] = "3823e2c3dcf2a14d4066b4adf005bd085e4efe605433ea4a3ea6f15c0a5a4d9e"
-SRC_URI[ME-AA1-270-3E4-D11E-NFX3_ST1.sha256sum] = "734f44d76a3bd7a3cb46e2e74dc5d3cd84450d288e4bb12c07438e61227aad02"
-SRC_URI[ME-AA1-480-2I3-D12E-NFX3_PE1.sha256sum] = "09d1789e327f7c6b8f3bfdaa37a558b2072d4012aec108e2e865932a73e430d2"
-SRC_URI[ME-AA1-480-2I3-D12E-NFX3_PE3.sha256sum] = "0c0780b9817ed87361e0b21dddaa4edee47c364dbcab6e969d37bd96354c82d5"
-SRC_URI[ME-AA1-480-2I3-D12E-NFX3_ST1.sha256sum] = "6def21b9539c71201fe9593a9f609a9e05e272262d5bd15beb111e4ef63aa03f"
-SRC_URI[ME-SA1-C6-7I-D10_PE1.sha256sum] = "4a9fe6b4ab4b9dd7fa1a1177be8fc6e9ab3dcd7ba3aacd091a99874a2e96ac29"
-SRC_URI[ME-SA1-C6-7I-D10_PE3.sha256sum] = "6242b61c52e74250d6b569ff5c5a557b06c6df5e1a94c07ef23fca31666c7bf1"
-SRC_URI[ME-SA1-C6-7I-D10_ST1.sha256sum] = "e004766c3f3cd221ada325c1be1e2ddab70df806f964bb58f2b791087b73ed6d"
-SRC_URI[ME-SA2-D6-7I-D11_PE1.sha256sum] = "b765e223a4a6e70eda75b884eb4d982dfe3fcb7e1145d05e850750fe77ac79be"
-SRC_URI[ME-SA2-D6-7I-D11_PE3.sha256sum] = "7c3bcf26aaabebe76ba339b79747aaf34e358fbd09dc1993d2edf89eedeb7436"
-SRC_URI[ME-SA2-D6-7I-D11_ST1.sha256sum] = "1773efece2ad2b50417e170a3158e93307589ca4cee4143ee32f7d7ed7e31ee5"
+SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE1.sha256sum] = "301f50e3371c5dcf5809ed3f1ccadae7293f8a621e164b7c97310f42be2b3cab"
+SRC_URI[ME-AA1-270-2I2-D11E-NFX3_PE3.sha256sum] = "d8947848801bdfa0c38e2d69bb6f2fde7067f60140ebbb0867f6bb964dd91259"
+SRC_URI[ME-AA1-270-2I2-D11E-NFX3_ST1.sha256sum] = "e45f2a76046df285df92b0d25b251910f12b740e725bddee01f63012a26a2374"
+SRC_URI[ME-AA1-270-3E4-D11E-NFX3_PE1.sha256sum] = "242be7f62cd131b80c3f2a3d77619ac6d275f35654df7e6fe0863123dba515c7"
+SRC_URI[ME-AA1-270-3E4-D11E-NFX3_PE3.sha256sum] = "f2e6a7af60cdfc74364f02ca92777cc48015792883c381a420c535b393f387b0"
+SRC_URI[ME-AA1-270-3E4-D11E-NFX3_ST1.sha256sum] = "c0d5b820dd668fd2ed3d9a1ffc2f81a3c3c6f9f55afa533337b441f100cedf8d"
+SRC_URI[ME-AA1-480-2I3-D12E-NFX3_PE1.sha256sum] = "c7f49487ddddaeb075b95068968cdf35806e08f61172625341a01ce910a70337"
+SRC_URI[ME-AA1-480-2I3-D12E-NFX3_PE3.sha256sum] = "f63ad600ed064e60fba4f5cbcb93fd7277f01973ed291559ca03f9127e2b5e99"
+SRC_URI[ME-AA1-480-2I3-D12E-NFX3_ST1.sha256sum] = "ef201224f0a84b4f362fb27e8deed835205559fd72ba6b74f9a84fe5a595c51a"
+SRC_URI[ME-SA1-C6-7I-D10_PE1.sha256sum] = "a3e32dc3fa7375a37678b5476637217a62dce6061a080107bb37b2aebd589e01"
+SRC_URI[ME-SA1-C6-7I-D10_PE3.sha256sum] = "3a6a788d4266ffc6ab289843868955320ade6061d44e608b082740519efedaa4"
+SRC_URI[ME-SA1-C6-7I-D10_ST1.sha256sum] = "9729c1b0fdabdcf65ca22276ec552587adec8d34667f31b6cd7b2f2d0ba067b3"
+SRC_URI[ME-SA2-D6-7I-D11_PE1.sha256sum] = "c3f0d611c9f3cde36f691343da0b39e0f9e35bf9eefa4e8e893b6bb6f7eb9f78"
+SRC_URI[ME-SA2-D6-7I-D11_PE3.sha256sum] = "d2f517820cb46b2785fff98a369f0bf2196a0ee9bcf9fec15995f6bf71f52607"
+SRC_URI[ME-SA2-D6-7I-D11_ST1.sha256sum] = "2d7a7dd62d3ecadcffaa61a56532c148807b94febe276f2cbb011cca979f6a95"
 
 ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-2i2-d11e-nfx3-pe1 = "Mercury_AA1_PE1"
 ENCLUSTRA_BASE_NAME:refdes-me-aa1-270-2i2-d11e-nfx3-pe3 = "Mercury_AA1_PE3"

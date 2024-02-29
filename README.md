@@ -12,7 +12,7 @@ See [License](meta-enclustra-module/COPYING.MIT)
 
 Date       | Version       | Comment
 ---------- | ------------- | -------------
-xxx        | 2022.1_v1.0.0 | First release
+29.02.2024 | 2023.1_v1.0.0 | First release
 
 ## Introduction
 

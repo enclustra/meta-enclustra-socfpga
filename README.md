@@ -27,7 +27,7 @@ The reference designs are compatible with following base boards:
 - [Enclustra Mercury+ PE3](https://www.enclustra.com/en/products/base-boards/mercury-pe3)
 - [Enclustra Mercury+ ST1](https://www.enclustra.com/en/products/base-boards/mercury-st1)
 
-This documentation explains how this rererence design can be used and does not go into details of the Yocto project. See [Yocto Project Manual](docs.yoctoproject.org) for more information about the Yocto project.
+This documentation explains how this rererence design can be used and does not go into details of the Yocto project. See [Yocto Project Manual](https://docs.yoctoproject.org) for more information about the Yocto project.
 
 The [meta-enclustra-module](meta-enclustra-module) Yocto layer contains everything required to run Linux on Enclustra modules equipped with Intel SoCs. This layer can be included into an own project (see [Integrate meta-enclustra-module Layer into user Project](#integrate-meta-enclustra-module-layer-into-user-project)). The [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer builds up on this layer and can be used to generate a reference design using prebuilt binaries (see [Reference Designs for Intel Quartus II](#reference-designs-for-intel-quartus-ii)). These reference designs can be built by manually setting up bitbake or the provided [build.yml](build.yml) can be used in combination with [kas](https://kas.readthedocs.io/en/latest/#) tool.
 

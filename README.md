@@ -158,11 +158,11 @@ Following boot modes are supported:
 
 Module   | Supported Boot Modes
 -------- | -------------------
-ME-AA1-* | sdmmc*, emmc, qspi
-ME-SA1-* | sdmmc, emmc, qspi
+ME-AA1-* | sdmmc\(\*\), emmc, qspi
+ME-SA1-* | sdmmc\(\*\), emmc, qspi
 ME-SA2-* | sdmmc, qspi
 
-\* see [Known Issues](#2-sd-card-access-is-not-reliable)
+\(\*\) see [Known Issues](#2-sd-card-access-is-not-reliable)
 
 ### Accelerate Build
 
@@ -677,12 +677,12 @@ It can happen that all bits of the configuration register 1 of the QSPI flash de
 
 #### Affected hardware:
 
-This issue was only observed on Mercury+ AA1 module equipped on Mercury ST1 base board.
+This issue was observed on Mercury SA1 and Mercury+ AA1 modules equipped on Mercury ST1 base board.
 
 #### Description
 
 Linux does not boot or gets stuck while booting. Sometimes the SD Card stops working after Linux is up and running.
-A patch is included which contains a workaround to fix the SD card access issues ([0008-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0008-Workaround-for-AA1-ST1-SD-card-boot.patch)).
+A patch is included which contains a workaround to fix the SD card access issues for Mercury+ AA1 ([0008-Workaround-for-AA1-ST1-SD-card-boot.patch](meta-enclustra-module/recipes-bsp/u-boot/files/0008-Workaround-for-AA1-ST1-SD-card-boot.patch)).
 However, this fix only partially solves the problem, SD card access might still fail when the SPL is loaded by the boot ROM code.
 
 ### 3. AA1 Linux is limited to 2 Gbyte DDR memory size

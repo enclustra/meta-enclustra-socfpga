@@ -31,6 +31,7 @@ SRC_URI:append:me-aa1-generic = " \
 "
 
 SRC_URI:append:me-sa1-generic = " \
+    file://0011-Configure-MMC-clock-to-25MHz-because-of-Mercury-SA1.patch \
     file://socfpga_enclustra_mercury_sa1_mmc_defconfig \
     file://socfpga_enclustra_mercury_sa1_qspi_defconfig \
     file://socfpga_enclustra_mercury_sa1.dtsi \

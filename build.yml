@@ -70,3 +70,5 @@ local_conf_header:
         DISTRO_FEATURES:append = " largefile systemd "
         VIRTUAL-RUNTIME_init_manager = "systemd"
         PREFERRED_VERSION_u-boot-socfpga = "v2023.01%"
+        PREFERRED_PROVIDER_virtual/kernel = "linux-socfpga-lts"
+        PREFERRED_VERSION_linux-socfpga = "6.1%"

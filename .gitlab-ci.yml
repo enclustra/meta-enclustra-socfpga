@@ -30,16 +30,16 @@ build-yocto:
         - cd ..
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic output
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic.bmap output
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/boot.scr
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp | true
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img | true
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo | true
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp | true
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/boot.scr output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp output | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img output | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo output | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp output | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf output | true
         - rm -rf build
     rules:
         - when: manual

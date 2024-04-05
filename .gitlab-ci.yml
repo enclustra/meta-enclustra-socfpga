@@ -1,0 +1,56 @@
+variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    GIT_CLONE_PATH: $CI_BUILDS_DIR/${PROJECT_ID}_${CI_JOB_ID}
+    SSTATE_DIR: "/opt/Intel/23.1-yocto/sstate-cache"
+    DL_DIR: "/opt/Intel/23.1-yocto/downloads"
+    BB_ENV_PASSTHROUGH_ADDITIONS: "MACHINE UBOOT_CONFIG DL_DIR SSTATE_DIR"
+
+default:
+    before_script:
+        - pip install kas
+        - export PATH=$PATH:/home/gitlab-runner/.local/bin
+        - sudo apt-get -y install zstd chrpath diffstat lz4
+        - mkdir -p ${SSTATE_DIR}
+        - mkdir -p ${DL_DIR}
+
+stages:
+    - build
+
+build-yocto:
+    tags:
+        - Ubuntu_22_04
+    stage: build
+    script:
+        - mkdir output
+        - kas checkout build.yml
+        - source openembedded-core/oe-init-build-env
+        - export MACHINE=refdes-${MODULE}-${BASEBOARD}
+        - export UBOOT_CONFIG=${BOOT_MODE}
+        - bitbake image-minimal-refdes
+        - cd ..
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic.bmap output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/boot.scr
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp | true
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf | true
+        - rm -rf build
+    rules:
+        - when: manual
+    parallel:
+        matrix:
+            - BASEBOARD: ["st1", "pe1", "pe3"]
+              BOOT_MODE: ["sdmmc", "emmc", "qspi"]
+              MODULE: ["me-aa1-270-2i2-d11e", "me-aa1-270-3e4-d11e", "me-aa1-480-2i3-d12e", "me-sa1-c6-7i-d10", "me-sa2-d6-7i-d11"]
+    timeout: 1 hours
+    artifacts:
+        name: build_${MODULE}-${BOOT_MODE}-${BASEBOARD}_${CI_JOB_ID}
+        paths:
+            - output
+        expire_in: 1 day

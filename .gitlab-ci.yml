@@ -34,12 +34,16 @@ build-yocto:
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb output
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage output
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot output
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp output 2>/dev/null || :
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img output 2>/dev/null || :
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo output 2>/dev/null || :
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp output 2>/dev/null || :
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf output 2>/dev/null || :
-        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb output 2>/dev/null || :
+        - |
+            if [ ${MODULE} = "me-sa1-c6-7i-d10" ] || [ ${MODULE} = "me-sa2-d6-7i-d11" ]; then
+            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp output;
+            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf output;
+            else
+            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp output;
+            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img output;
+            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo output;
+            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb output;
+            fi
         - rm -rf build
     rules:
         - when: manual

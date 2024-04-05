@@ -16,10 +16,21 @@ default:
 stages:
     - build
 
-build-yocto:
+.build-template:
     tags:
         - Ubuntu_22_04
     stage: build
+    rules:
+        - when: manual
+    timeout: 1 hours
+    artifacts:
+        name: build_${MODULE}-${BOOT_MODE}-${BASEBOARD}_${CI_JOB_ID}
+        paths:
+            - output
+        expire_in: 1 day
+
+build-sa1:
+    extends: .build-template
     script:
         - mkdir output
         - kas checkout build.yml
@@ -34,27 +45,63 @@ build-yocto:
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb output
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage output
         - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot output
-        - |
-            if [ ${MODULE} = "me-sa1-c6-7i-d10" ] || [ ${MODULE} = "me-sa2-d6-7i-d11" ]; then
-            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp output;
-            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf output;
-            else
-            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp output;
-            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img output;
-            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo output;
-            cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb output;
-            fi
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp output;
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf output;
         - rm -rf build
-    rules:
-        - when: manual
     parallel:
         matrix:
             - BASEBOARD: ["st1", "pe1", "pe3"]
               BOOT_MODE: ["sdmmc", "emmc", "qspi"]
-              MODULE: ["me-aa1-270-2i2-d11e-nfx3", "me-aa1-270-3e4-d11e-nfx3", "me-aa1-480-2i3-d12e-nfx3", "me-sa1-c6-7i-d10", "me-sa2-d6-7i-d11"]
-    timeout: 1 hours
-    artifacts:
-        name: build_${MODULE}-${BOOT_MODE}-${BASEBOARD}_${CI_JOB_ID}
-        paths:
-            - output
-        expire_in: 1 day
+              MODULE: ["me-sa1-c6-7i-d10"]
+
+build-sa2:
+    extends: .build-template
+    script:
+        - mkdir output
+        - kas checkout build.yml
+        - source openembedded-core/oe-init-build-env
+        - export MACHINE=refdes-${MODULE}-${BASEBOARD}
+        - export UBOOT_CONFIG=${BOOT_MODE}
+        - bitbake image-minimal-refdes
+        - cd ..
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic.bmap output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/boot.scr output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-with-spl.sfp output;
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/fpga.rbf output;
+        - rm -rf build
+    parallel:
+        matrix:
+            - BASEBOARD: ["st1", "pe1", "pe3"]
+              BOOT_MODE: ["sdmmc", "qspi"]
+              MODULE: ["me-sa2-d6-7i-d11"]
+
+build-aa1:
+    extends: .build-template
+    script:
+        - mkdir output
+        - kas checkout build.yml
+        - source openembedded-core/oe-init-build-env
+        - export MACHINE=refdes-${MODULE}-${BASEBOARD}
+        - export UBOOT_CONFIG=${BOOT_MODE}
+        - bitbake image-minimal-refdes
+        - cd ..
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.wic.bmap output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/boot.scr output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/devicetree.dtb output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/uImage output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/image-minimal-refdes-refdes-${MODULE}-${BASEBOARD}.cpio.gz.u-boot output
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot-splx4.sfp output;
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/u-boot.img output;
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/socfpga_enclustra_mercury_${BOOT_MODE}_overlay.dtbo output;
+        - cp build/tmp-glibc/deploy/images/refdes-${MODULE}-${BASEBOARD}/bitstream.itb output;
+        - rm -rf build
+    parallel:
+        matrix:
+            - BASEBOARD: ["st1", "pe1", "pe3"]
+              BOOT_MODE: ["sdmmc", "emmc", "qspi"]
+              MODULE: ["me-aa1-270-2i2-d11e-nfx3", "me-aa1-270-3e4-d11e-nfx3", "me-aa1-480-2i3-d12e-nfx3"]

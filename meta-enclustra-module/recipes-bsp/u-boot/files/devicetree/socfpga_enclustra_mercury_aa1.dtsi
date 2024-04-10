@@ -8,13 +8,24 @@
 
 	aliases {
 		serial0 = &uart1;
+		ethernet0 = &gmac0;
 		spi0 = &qspi;
 		i2c0 = &i2c1;
+		i2c1 = &i2c0;
 	};
 
 	chosen {
 		stdout-path = "serial0:115200n8";
 	};
+
+	/* define i2c label to be used in baseboard dtsi */
+	soc {
+		i2c_encl: i2c@ffc02300 {
+		};
+		i2c_encl_fpga: i2c@ffc02200 {
+		};
+	};
+
 };
 
 &osc1 {
@@ -58,7 +69,7 @@
 	status = "okay";
 };
 
-&i2c1 {
+&i2c_encl {
 	i2c-sda-hold-time-ns = <300>;
 	status = "okay";
 
@@ -69,6 +80,11 @@
 		compatible = "atmel,atsha204a";
 		reg = <0x64>;
 	};
+};
+
+&i2c_encl_fpga {
+	i2c-sda-hold-time-ns = <300>;
+	status = "disabled";
 };
 
 &mmc {

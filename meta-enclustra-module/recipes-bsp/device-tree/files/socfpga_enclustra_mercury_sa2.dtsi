@@ -18,6 +18,8 @@
 	soc {
 		i2c_encl: i2c@ffc04000 {
 		};
+		i2c_encl_fpga: i2c@ffc05000 {
+		};
 	};
 
 };
@@ -40,6 +42,11 @@
 		compatible = "atmel,atsha204a";
 		reg = <0x64>;
 	};
+};
+
+&i2c_encl_fpga {
+	i2c-sda-hold-time-ns = <300>;
+	status = "disabled";
 };
 
 &uart0 {

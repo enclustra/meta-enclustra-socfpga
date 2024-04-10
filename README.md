@@ -12,7 +12,7 @@ See [License](meta-enclustra-module/COPYING.MIT)
 
 Date       | Version       | Comment
 ---------- | ------------- | -------------
-29.02.2024 | 2023.1_v1.0.0 | First release
+10.04.2024 | 2023.1_v1.0.0 | First release
 
 ## Introduction
 
@@ -394,21 +394,24 @@ Following list show all devicetree include files added by [meta-enclustra-module
 
 File name                                                                                                                                        | Description
 ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------
-[ME-AA1-270-2I2-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-2I2-D11E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-270-2I2-D11E-NFX3
-[ME-AA1-270-3E4-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-3E4-D11E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-270-3E4-D11E-NFX3
-[ME-AA1-480-2I3-D12E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-480-2I3-D12E-NFX3.dtsi)                               | Module specificconfigurations for ME-AA1-480-2I3-D12E-NFX3
-[ME-SA1-C6-7I-D10.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-SA1-C6-7I-D10.dtsi)                                               | Module specificconfigurations for ME-SA1-C6-7I-D10
-[ME-SA2-D6-7I-D11.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-SA2-D6-7I-D11.dtsi)                                               | Module specificconfigurations for ME-SA2-D6-7I-D11
+[ME-AA1-270-2I2-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-2I2-D11E-NFX3.dtsi)                               | Module specific configurations for ME-AA1-270-2I2-D11E-NFX3
+[ME-AA1-270-3E4-D11E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-270-3E4-D11E-NFX3.dtsi)                               | Module specific configurations for ME-AA1-270-3E4-D11E-NFX3
+[ME-AA1-480-2I3-D12E-NFX3.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-AA1-480-2I3-D12E-NFX3.dtsi)                               | Module specific configurations for ME-AA1-480-2I3-D12E-NFX3
+[ME-SA1-C6-7I-D10.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-SA1-C6-7I-D10.dtsi)                                               | Module specific configurations for ME-SA1-C6-7I-D10
+[ME-SA2-D6-7I-D11.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/ME-SA2-D6-7I-D11.dtsi)                                               | Module specific configurations for ME-SA2-D6-7I-D11
 [socfpga_enclustra_mercury_aa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_aa1.dtsi)                     | Contains a configuration common for all variants of the Mercury+ AA1 family
 [socfpga_enclustra_mercury_sdmmc_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sdmmc_overlay.dtsi) | Devicetree overlay for Mercury+ AA1 SD card boot
 [socfpga_enclustra_mercury_emmc_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_emmc_overlay.dtsi)   | Devicetree overlay for Mercury+ AA1 eMMC boot
 [socfpga_enclustra_mercury_qspi_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_qspi_overlay.dtsi)   | Devicetree overlay for Mercury+ AA1 QSPI boot
 [socfpga_enclustra_mercury_sa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa1.dtsi)                     | Contains a configuration common for all variants of the Mercury SA1 family
 [socfpga_enclustra_mercury_sa2.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa2.dtsi)                     | Contains a configuration common for all variants of the Mercury+ SA2 family
+[socfpga_enclustra_mercury_pe1.dtsi](meta-enclustra-refdes/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_pe1.dtsi)                     | Contains additions for the Mercury+ PE1 base board
+[socfpga_enclustra_mercury_pe3.dtsi](meta-enclustra-refdes/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_pe3.dtsi)                     | Contains additions for the Mercury+ PE3 base board
+[socfpga_enclustra_mercury_st1.dtsi](meta-enclustra-refdes/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_st1.dtsi)                     | Contains additions for the Mercury+ ST1 base board
 
 The U-Boot devicetree is created similar to the Linux devicetree in the [u-boot-socfpga](meta-enclustra-module/recipes-bsp/u-boot/u-boot-socfpga_%.bbappend) recipe. Because overlays can't be used, the boot mode specific include file must be included in the `enclustra-user.dts` file that is added in the [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer.  
 
-Note: The setup i.e. u-boot and kernel, is generally prepared to handle also device-tree overlays (.dtbo files). The different bootmodes are applied by the u-boot as corresponding .dtbo files. The available .dtb files thus can be extended by further .dtbo files.  
+Note: The setup i.e. u-boot and kernel, is generally prepared to handle also device-tree overlays (.dtbo files). The different bootmodes are applied by the u-boot as corresponding .dtbo files. The available .dtb files thus can be extended by further .dtbo files.
 
 ### Patches
 

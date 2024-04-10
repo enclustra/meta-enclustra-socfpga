@@ -12,4 +12,5 @@
 #include "socfpga_arria10_handoff_u-boot.dtsi"
 #include "socfpga_enclustra_mercury_aa1.dtsi"
 #include "socfpga_enclustra_mercury_aa1_XXX_boot.dtsi"
-#include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
+#include "socfpga_enclustra_mercury_pe3.dtsi"
+#include "ME-AA1-480-2I3-D12E-NFX3.dtsi"

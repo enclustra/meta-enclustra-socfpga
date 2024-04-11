@@ -557,7 +557,7 @@ Each Enclustra module is delivered with two unique MAC addresses stored in the E
 
 On modules equipped with a ATSHA204a EEPROM, the serial number can be read by following command:
 
-    cat /sys/bus/i2c/devices/1-0064/serial
+    cat /sys/bus/i2c/devices/0-0064/serial
 
 The serial number is reported as follows:
 

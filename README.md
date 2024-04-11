@@ -47,19 +47,19 @@ Intel Arria 10  | Mercury+ AA1 , R2 | Mercury+ PE1 / Mercury+ PE3 / Mercury+ ST1
 
 ## Reference Designs for Intel Quartus II
 
-The `[meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer in this reference design uses prebuilt binaries of following reference designs:
+The [meta-enclustra-refdes](meta-enclustra-refdes) Yocto layer in this reference design uses prebuilt binaries of following reference designs:
 
+- [Mercury+ AA1 PE1 Reference Design](https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design)
 - [Mercury+ AA1 PE3 Reference Design](https://github.com/enclustra/Mercury_AA1_PE3_Reference_Design)
 - [Mercury+ AA1 ST1 Reference Design](https://github.com/enclustra/Mercury_AA1_ST1_Reference_Design)
-- [Mercury+ AA1 PE1 Reference Design](https://github.com/enclustra/Mercury_AA1_PE1_Reference_Design)
 
 - [Mercury SA1 PE1 Reference Design](https://github.com/enclustra/Mercury_SA1_PE1_Reference_Design)
 - [Mercury SA1 PE3 Reference Design](https://github.com/enclustra/Mercury_SA1_PE3_Reference_Design)
 - [Mercury SA1 ST1 Reference Design](https://github.com/enclustra/Mercury_SA1_ST1_Reference_Design)
 
+- [Mercury+ SA2 PE1 Reference Design](https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design)
 - [Mercury+ SA2 PE3 Reference Design](https://github.com/enclustra/Mercury_SA2_PE3_Reference_Design)
 - [Mercury+ SA2 ST1 Reference Design](https://github.com/enclustra/Mercury_SA2_ST1_Reference_Design)
-- [Mercury+ SA2 PE1 Reference Design](https://github.com/enclustra/Mercury_SA2_PE1_Reference_Design)
 
 ## Host Requirements
 
@@ -199,7 +199,7 @@ $ cd <folder where the .bmap file resides>
 $ bmaptool copy image-minimal-refdes-refdes-me-sa1-c6-7i-d10-pe1.wic /dev/sdX`
 ```
 
-Note that the device of the SD card (\<device\>) needs to be replaced with the SD card device on your host (e.g. /dev/sdd). Figure out the available devices with `lsblk` in the linux shell.
+Note that the device of the SD card (/dev/sdX) needs to be replaced with the SD card device on your host (e.g. /dev/sdd). Figure out the available devices with `lsblk` in the linux shell.
 
 ### eMMC Memory
 
@@ -209,7 +209,7 @@ On the Mercury SA1-R3 and Mercury AA1+ modules the MMC bus lines are shared betw
     - One with a default SD card image, which is only used to boot until U-Boot console.
     - The second SD card contains the image to be written to the eMMC flash. Make sure that the image to be written to the eMMC is small enough to fit into the DDR memory. The recommended partition sizes are: fat 50Mbyte, raw 2Mbyte, ext4 400Mbyte. The rootfs partition size can be increased in a later step.
 
-Two SD cards are required because on Mercury+ AA1 the U-Boot SPL configures the HPS system differently (e.g. 4 data lines for SD card and 8 data lines for eMMC memory). Programming the eMMC flash on Mercury SA1 might work with only one SD card, containing the image generated for eMMC boot.
+   Two SD cards are required because on Mercury+ AA1 the U-Boot SPL configures the HPS system differently (e.g. 4 data lines for SD card and 8 data lines for eMMC memory). Programming the eMMC flash on Mercury SA1 might work with only one SD card, containing the image generated for eMMC boot.
 
 2. Boot from the first SD card until U-Boot console
 
@@ -217,70 +217,70 @@ Two SD cards are required because on Mercury+ AA1 the U-Boot SPL configures the 
 
 4. Copy the SD card content into the DDR memory (assuming the total size is smaller than 512Mbyte)
 
-```
-mmc rescan
-mmc dev 0
-mmc read 0 0 0x100000   # copy 512Mbyte of data (block size = 512bytes)
-```
+   ```
+   mmc rescan
+   mmc dev 0
+   mmc read 0 0 0x100000   # copy 512Mbyte of data (block size = 512bytes)
+   ```
 
 5. Switch to the eMMC memory
 
-```
-altera_set_storage EMMC
-```
+   ```
+   altera_set_storage EMMC
+   ```
 
 6. Copy the data from the DDR memory to the eMMC memory
 
-```
-mmc rescan
-mmc write 0 0 0x100000
-```
+   ```
+   mmc rescan
+   mmc write 0 0 0x100000
+   ```
 
 7. When completed, remove the SD card and configure the hardware for eMMC boot.
 
 8. Optional: If a bigger rootfs partition is required, it can be increased after booting from eMMC memory into Linux. The data on the disk will be preserved while the partition table is modified.
 
-Run fdisk tool:
+   Run fdisk tool:
 
-```
-fdisk /dev/mmcblk0
-```
+   ```
+   fdisk /dev/mmcblk0
+   ```
 
-Within fdisk run the following commands:
+   Within fdisk run the following commands:
 
-```
-# delete rootfs partition
-d
-3
-# show partition table
-p
+   ```
+   # delete rootfs partition
+   d
+   3
+   # show partition table
+   p
 
-# as example, following is shown
-Device       Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id Type
-/dev/mmcblk0p1    0,32,33     12,223,19         2048     206847     204800  100M  c Win95 FAT32 (LBA)
-/dev/mmcblk0p2    12,223,20   13,33,20        206848     210943       4096 2048K a2 Unknow
+   # as example, following is shown
+   Device       Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id Type
+   /dev/mmcblk0p1    0,32,33     12,223,19         2048     206847     204800  100M  c Win95 FAT32 (LBA)
+   /dev/mmcblk0p2    12,223,20   13,33,20        206848     210943       4096 2048K a2 Unknow
 
-# create a new partition
-n
-p
-3
-# set last sector of a2 partition plus one as first sector, as printed in the partition table in column 'EndLBA'
-210944
-# leave default end sector
+   # create a new partition
+   n
+   p
+   3
+   # set last sector of a2 partition plus one as first sector, as printed in the partition table in column 'EndLBA'
+   210944
+   # leave default end sector
 
-# set the 3rd partition type to Linux
-t
-3
-83
-# write changes and exit
-w
-```
+   # set the 3rd partition type to Linux
+   t
+   3
+   83
+   # write changes and exit
+   w
+   ```
 
-Reboot and run following command to resize the partition
+   Reboot and run following command to resize the partition
 
-```
-resize2fs /dev/mmcblk0p3
-```
+   ```
+   resize2fs /dev/mmcblk0p3
+   ```
 
 ### QSPI flash ###
 
@@ -294,54 +294,54 @@ The QSPI flash can be programmed via JTAG with the vendor tools. An alternative 
 
 4. Copy the files from the SD card to the DDR memory and write the data into the QSPI flash
 
-For Mercury SA1 and Mercury+ SA2:
+   For Mercury SA1 and Mercury+ SA2:
 
-```
-mmc dev 0
+   ```
+   mmc dev 0
 
-fatload mmc 0:1 0x10000000 qspi/u-boot-with-spl.sfp
-fatload mmc 0:1 0x10200000 qspi/boot.scr
-fatload mmc 0:1 0x10300000 qspi/devicetree.dtb
-fatload mmc 0:1 0x11000000 qspi/fpga.rbf
-fatload mmc 0:1 0x12000000 qspi/uImage
-fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
+   fatload mmc 0:1 0x10000000 qspi/u-boot-with-spl.sfp
+   fatload mmc 0:1 0x10200000 qspi/boot.scr
+   fatload mmc 0:1 0x10300000 qspi/devicetree.dtb
+   fatload mmc 0:1 0x11000000 qspi/fpga.rbf
+   fatload mmc 0:1 0x12000000 qspi/uImage
+   fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
 
-sf probe
+   sf probe
 
-sf update 0x10000000 ${qspi_offset_addr_spl} ${size_spl}
-sf update 0x10200000 ${qspi_offset_addr_boot-script} ${size_boot-script}
-sf update 0x10300000 ${qspi_offset_addr_devicetree} ${size_devicetree}
-sf update 0x11000000 ${qspi_offset_addr_bitstream} ${size_tstream}
-sf update 0x12000000 ${qspi_offset_addr_kernel} ${size_kernel}
-sf update 0x13000000 ${qspi_offset_addr_rootfs} ${size_rootfs}
-```
+   sf update 0x10000000 ${qspi_offset_addr_spl} ${size_spl}
+   sf update 0x10200000 ${qspi_offset_addr_boot-script} ${size_boot-script}
+   sf update 0x10300000 ${qspi_offset_addr_devicetree} ${size_devicetree}
+   sf update 0x11000000 ${qspi_offset_addr_bitstream} ${size_bitstream}
+   sf update 0x12000000 ${qspi_offset_addr_kernel} ${size_kernel}
+   sf update 0x13000000 ${qspi_offset_addr_rootfs} ${size_rootfs}
+   ```
 
-For Mercury+ AA1:
+   For Mercury+ AA1:
 
-```
-mmc dev 0
+   ```
+   mmc dev 0
 
-fatload mmc 0:1 0x10000000 qspi/u-boot-splx4.sfp
-fatload mmc 0:1 0x10100000 qspi/u-boot.img
-fatload mmc 0:1 0x10200000 qspi/boot.scr
-fatload mmc 0:1 0x10300000 qspi/devicetree.dtb
-fatload mmc 0:1 0x10400000 qspi/socfpga_enclustra_mercury_qspi_overlay.dtbo
-fatload mmc 0:1 0x11000000 qspi/bitstream.itb
-fatload mmc 0:1 0x12000000 qspi/uImage
-fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
+   fatload mmc 0:1 0x10000000 qspi/u-boot-splx4.sfp
+   fatload mmc 0:1 0x10100000 qspi/u-boot.img
+   fatload mmc 0:1 0x10200000 qspi/boot.scr
+   fatload mmc 0:1 0x10300000 qspi/devicetree.dtb
+   fatload mmc 0:1 0x10400000 qspi/socfpga_enclustra_mercury_qspi_overlay.dtbo
+   fatload mmc 0:1 0x11000000 qspi/bitstream.itb
+   fatload mmc 0:1 0x12000000 qspi/uImage
+   fatload mmc 0:1 0x13000000 qspi/<image>-<machine>.cpio.gz.u-boot
 
-altera_set_storage QSPI
-sf probe
+   altera_set_storage QSPI
+   sf probe
 
-sf update 0x10000000 ${qspi_offset_addr_spl} ${size_spl}
-sf update 0x10100000 ${qspi_offset_addr_u-boot} ${size_u-boot}
-sf update 0x10200000 ${qspi_offset_addr_boot-script} ${size_boot-script}
-sf update 0x10300000 ${qspi_offset_addr_devicetree} ${size_devicetree}
-sf update 0x10400000 ${qspi_offset_addr_dtoverlay} ${size_dtoverlay}
-sf update 0x11000000 ${qspi_offset_addr_bitstream} ${size_bitstream}
-sf update 0x12000000 ${qspi_offset_addr_kernel} ${size_kernel}
-sf update 0x13000000 ${qspi_offset_addr_rootfs} ${size_rootfs}
-```
+   sf update 0x10000000 ${qspi_offset_addr_spl} ${size_spl}
+   sf update 0x10100000 ${qspi_offset_addr_u-boot} ${size_u-boot}
+   sf update 0x10200000 ${qspi_offset_addr_boot-script} ${size_boot-script}
+   sf update 0x10300000 ${qspi_offset_addr_devicetree} ${size_devicetree}
+   sf update 0x10400000 ${qspi_offset_addr_dtoverlay} ${size_dtoverlay}
+   sf update 0x11000000 ${qspi_offset_addr_bitstream} ${size_bitstream}
+   sf update 0x12000000 ${qspi_offset_addr_kernel} ${size_kernel}
+   sf update 0x13000000 ${qspi_offset_addr_rootfs} ${size_rootfs}
+   ```
 
 5. Remove the SD card and configure the hardware for QSPI boot.
 
@@ -390,7 +390,7 @@ This layer requires an additional file named `enclustra-user.dts` which is added
 #include "ME-AA1-270-3E4-D11E-NFX3.dtsi"
 ```
 
-Following list show all devicetree include files added by [meta-enclustra-module](meta-enclustra-module):
+Following list shows all devicetree include files added by [meta-enclustra-module](meta-enclustra-module):
 
 File name                                                                                                                                        | Description
 ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------
@@ -405,6 +405,11 @@ File name                                                                       
 [socfpga_enclustra_mercury_qspi_overlay.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_qspi_overlay.dtsi)   | Devicetree overlay for Mercury+ AA1 QSPI boot
 [socfpga_enclustra_mercury_sa1.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa1.dtsi)                     | Contains a configuration common for all variants of the Mercury SA1 family
 [socfpga_enclustra_mercury_sa2.dtsi](meta-enclustra-module/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_sa2.dtsi)                     | Contains a configuration common for all variants of the Mercury+ SA2 family
+
+Following list shows all devicetree include files added by [meta-enclustra-refdes](meta-enclustra-refdes):
+
+File name                                                                                                                                        | Description
+------------------------------------------------------------------------------------------------------------------------------------------------ | ------------
 [socfpga_enclustra_mercury_pe1.dtsi](meta-enclustra-refdes/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_pe1.dtsi)                     | Contains additions for the Mercury+ PE1 base board
 [socfpga_enclustra_mercury_pe3.dtsi](meta-enclustra-refdes/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_pe3.dtsi)                     | Contains additions for the Mercury+ PE3 base board
 [socfpga_enclustra_mercury_st1.dtsi](meta-enclustra-refdes/recipes-bsp/device-tree/files/socfpga_enclustra_mercury_st1.dtsi)                     | Contains additions for the Mercury+ ST1 base board
@@ -520,12 +525,6 @@ Bus Width: 8-bit
 
 # Switch to QSPI
 => altera_set_storage QSPI
-=> mmc rescan
-dwmci_send_cmd: Timeout on data busy
-dwmci_send_cmd: Timeout on data busy
-dwmci_send_cmd: Timeout on data busy
-dwmci_send_cmd: Timeout on data busy
-Card did not respond to voltage select!
 => sf probe
 SF: Detected S25FL512S_256K with page size 512 Bytes, erase size 256 KiB, total 64 MiB
 ```
@@ -542,7 +541,9 @@ This will not overwrite the stored environment but will only restore the default
 
 > **_Note:_**  A `*** Warning - bad CRC, using default environment` warning message that appears when booting into U-Boot indicates that the default environment will be loaded.
 
-Boot storage | Offset            | Size
+Following table shows where the environment is stored depending on the boot mode.
+
+Boot storage | Offset            | Size [bytes]
 ------------ | ----------------- | ---
 MMC          | partition 1 (FAT) | 0x80000
 eMMC         | partition 1 (FAT) | 0x80000
@@ -682,7 +683,7 @@ It can happen that all bits of the configuration register 1 of the QSPI flash de
 
 #### Affected hardware:
 
-This issue was observed on Mercury SA1 and Mercury+ AA1 modules equipped on Mercury ST1 base board.
+This issue was observed on Mercury SA1 and Mercury+ AA1 modules equipped on Mercury+ ST1 base board.
 
 #### Description
 
@@ -694,7 +695,7 @@ However, this fix only partially solves the problem, SD card access might still 
 
 #### Affected hardware
 
-All Arria 10 modules equipped with more than 2 Gbyte DDR of memory connected to the HPS:
+All Arria 10 modules equipped with more than 2 Gbyte of DDR memory connected to the HPS:
 
 - ME-AA1-480-2I3-D12E-NFX3
 
@@ -716,7 +717,7 @@ In U-Boot, the I2C frequency is configured to be 100kHz. The frequency changes t
 
 #### Affected hardware
 
-All Mercury+ AA1 product models on PE1, ST1 and PE3 baseboards.
+All Mercury+ AA1 product models on PE1, ST1 and PE3 base boards.
 
 #### Description
 

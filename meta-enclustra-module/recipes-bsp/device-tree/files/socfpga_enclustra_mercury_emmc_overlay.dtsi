@@ -10,3 +10,7 @@
 &qspi {
 	status = "disabled";
 };
+
+&mmc {
+	bus-width = <8>;
+};

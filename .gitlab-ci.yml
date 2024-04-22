@@ -1,15 +1,12 @@
 variables:
     GIT_SUBMODULE_STRATEGY: recursive
     GIT_CLONE_PATH: $CI_BUILDS_DIR/${PROJECT_ID}_${CI_JOB_ID}
-    SSTATE_DIR: "/opt/Intel/23.1-yocto/sstate-cache"
-    DL_DIR: "/opt/Intel/23.1-yocto/downloads"
+    SSTATE_DIR: "${INTEL_YOCTO_SRC_DIR}/SStateCache"
+    DL_DIR: "${INTEL_YOCTO_SRC_DIR}/Downloads"
     BB_ENV_PASSTHROUGH_ADDITIONS: "MACHINE UBOOT_CONFIG DL_DIR SSTATE_DIR"
 
 default:
     before_script:
-        - pip install kas
-        - export PATH=$PATH:/home/gitlab-runner/.local/bin
-        - sudo apt-get -y install zstd chrpath diffstat lz4
         - mkdir -p ${SSTATE_DIR}
         - mkdir -p ${DL_DIR}
 
@@ -18,7 +15,7 @@ stages:
 
 .build-template:
     tags:
-        - Ubuntu_22_04
+        - Linux, Kas_3_1
     stage: build
     rules:
         - when: manual

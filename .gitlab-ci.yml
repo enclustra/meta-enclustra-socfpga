@@ -1,13 +1,13 @@
 variables:
     GIT_SUBMODULE_STRATEGY: recursive
     GIT_CLONE_PATH: $CI_BUILDS_DIR/${PROJECT_ID}_${CI_JOB_ID}
-    SSTATE_DIR: "$INTEL_YOCTO_SRC_DIR/SStateCache"
-    DL_DIR: "$INTEL_YOCTO_SRC_DIR/Downloads"
     BB_ENV_PASSTHROUGH_ADDITIONS: "MACHINE UBOOT_CONFIG DL_DIR SSTATE_DIR"
 
 default:
     before_script:
         - source ${EN_SYS_ENV}
+        - export SSTATE_DIR="${INTEL_YOCTO_SRC_DIR}/SStateCache"
+        - export DL_DIR="${INTEL_YOCTO_SRC_DIR}/Downloads"
         - mkdir -p ${SSTATE_DIR}
         - mkdir -p ${DL_DIR}
 

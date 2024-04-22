@@ -7,6 +7,8 @@ variables:
 
 default:
     before_script:
+        - source ${EN_SYS_ENV}
+        - echo "dir=${INTEL_YOCTO_SRC_DIR}"
         - mkdir -p ${SSTATE_DIR}
         - mkdir -p ${DL_DIR}
 

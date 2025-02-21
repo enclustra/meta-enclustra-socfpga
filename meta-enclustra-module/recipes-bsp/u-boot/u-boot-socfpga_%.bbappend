@@ -55,6 +55,10 @@ SRC_URI:append:me-aa1-480-2i3-d12e-nfx3 = " \
     file://ME-AA1-480-2I3-D12E-NFX3.dtsi \
 "
 
+SRC_URI:append:me-aa1-480-2i3-d12e = " \
+    file://ME-AA1-480-2I3-D12E.dtsi \
+"
+
 SRC_URI:append:me-sa1-c6-7i-d10 = " \
     file://ME-SA1-C6-7I-D10.dtsi \
 "
@@ -108,6 +112,10 @@ do_add_enclustra_files:append:me-aa1-270-2i2-d11e-nfx3() {
 
 do_add_enclustra_files:append:me-aa1-480-2i3-d12e-nfx3() {
     cp ${WORKDIR}/ME-AA1-480-2I3-D12E-NFX3.dtsi ${S}/arch/arm/dts
+}
+
+do_add_enclustra_files:append:me-aa1-480-2i3-d12e() {
+    cp ${WORKDIR}/ME-AA1-480-2I3-D12E.dtsi ${S}/arch/arm/dts
 }
 
 do_add_enclustra_files:append:me-sa1-c6-7i-d10() {

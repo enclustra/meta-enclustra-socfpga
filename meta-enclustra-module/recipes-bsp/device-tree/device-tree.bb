@@ -46,6 +46,10 @@ SRC_URI:append:me-aa1-480-2i3-d12e-nfx3 = " \
     file://ME-AA1-480-2I3-D12E-NFX3.dtsi \
 "
 
+SRC_URI:append:me-aa1-480-2i3-d12e = " \
+    file://ME-AA1-480-2I3-D12E.dtsi \
+"
+
 SRC_URI:append = " file://socfpga_enclustra_mercury_emmc_overlay.dtsi"
 SRC_URI:append = " file://socfpga_enclustra_mercury_sdmmc_overlay.dtsi"
 SRC_URI:append = " file://socfpga_enclustra_mercury_qspi_overlay.dtsi"
@@ -61,4 +65,4 @@ do_deploy:append() {
     install -Dm 0644 ${B}/socfpga_enclustra_mercury_sdmmc_overlay.dtbo ${DEPLOYDIR}/socfpga_enclustra_mercury_sdmmc_overlay.dtbo
 }
 
-COMPATIBLE_MACHINE = "|me-aa1-270-3e4-d11e-nfx3|me-aa1-270-2i2-d11e-nfx3|me-aa1-480-2i3-d12e-nfx3|me-sa1-c6-7i-d10|me-sa2-d6-7i-d11"
+COMPATIBLE_MACHINE = "|me-aa1-270-3e4-d11e-nfx3|me-aa1-270-2i2-d11e-nfx3|me-aa1-480-2i3-d12e-nfx3|me-aa1-480-2i3-d12e|me-sa1-c6-7i-d10|me-sa2-d6-7i-d11"

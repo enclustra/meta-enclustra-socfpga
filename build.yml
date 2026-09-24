@@ -30,19 +30,19 @@ repos:
 
     bitbake:
         url: "https://git.openembedded.org/bitbake"
-        refspec: 2023-04.2-mickledore
+        refspec: 08033b63ae442c774bd3fce62844eac23e6882d7
         layers:
             .: excluded
 
     openembedded-core:
         url: "https://git.openembedded.org/openembedded-core"
-        refspec: 2023-04.2-mickledore
+        refspec: 3ef283e02b0b91daf64c3a589e1f6bb68d4f5aa1
         layers:
             meta:
 
     meta-intel-fpga:
         url: "https://git.yoctoproject.org/meta-intel-fpga"
-        refspec: mickledore
+        refspec: 0028430032867e91e8aaf22cd40b8767f5100eda
 
     meta-enclustra-socfpga:
         layers:
@@ -51,7 +51,7 @@ repos:
 
     meta-openembedded:
         url: http://git.openembedded.org/meta-openembedded
-        refspec: mickledore
+        refspec: 8e1f0fa6bfac0e96fedc666fe9066f92c85afb27
         layers:
             meta-oe:
             meta-python:

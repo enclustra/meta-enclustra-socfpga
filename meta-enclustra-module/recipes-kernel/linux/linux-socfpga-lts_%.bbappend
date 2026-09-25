@@ -7,6 +7,7 @@ SRC_URI:append = " \
     file://0001-Add-Enclustra-devicetree-to-Makefile.patch \
     file://0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch \
     file://0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch \
+    file://0004-crypto-atmel-sha204a-backport-OTP-support.patch \
 "
 SRC_URI:append:me-aa1-generic = " file://socfpga_enclustra_mercury_aa1_defconfig"
 SRC_URI:append:me-sa1-generic = " file://socfpga_enclustra_mercury_sa1_defconfig"

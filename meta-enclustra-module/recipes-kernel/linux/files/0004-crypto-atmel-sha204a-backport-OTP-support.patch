@@ -1,5 +1,5 @@
 From a48b2349b36c1679f85eaeb0bc21bc8fe137fea5 Mon Sep 17 00:00:00 2001
-From: Kas User <kas@example.com>
+From: Nemanja Jovanovic <nemanja.jovanovic@enclustra.com>
 Date: Fri, 25 Sep 2026 16:16:31 +0000
 Subject: [PATCH] crypto: atmel-sha204a: backport OTP support
 

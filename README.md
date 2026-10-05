@@ -12,6 +12,7 @@ See [License](meta-enclustra-module/COPYING.MIT)
 
 Date       | Version       | Comment
 ---------- | ------------- | -------------
+05.10.2026 | 2023.1_v1.1.0 | Add ATSHA204A EEPROM support for Mercury+ AA1
 10.04.2024 | 2023.1_v1.0.0 | First release
 
 ## Introduction
@@ -447,6 +448,7 @@ Patch Name                                                                      
 [0001-Add-Enclustra-devicetree-to-Makefile.patch](meta-enclustra-module/recipes-kernel/linux/files/0001-Add-Enclustra-devicetree-to-Makefile.patch)                   | Add enclustra-user.dtb as build target to Makefile
 [0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch](meta-enclustra-module/recipes-kernel/linux/files/0002-crypto-atmel-add-AT-SHA204-EEPROM-support.patch)         | Add driver to read module serial number
 [0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch](meta-enclustra-module/recipes-kernel/linux/files/0003-mtd-spi-nor-Prevent-a-bricked-S25FL512S-flash.patch) | Clear protection flags of QSPI flash if they were set accidentally (see [Known Issues](#1-protection-bits-are-set-in-qspi-flash))
+[0004-crypto-atmel-sha204a-backport-OTP-support.patch](meta-enclustra-module/recipes-kernel/linux/files/0004-crypto-atmel-sha204a-backport-OTP-support.patch) | Backport OTP support for the ATSHA204A driver
 
 ### Integrate meta-enclustra-module Layer into user Project
 
